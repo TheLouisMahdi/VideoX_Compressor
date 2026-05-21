@@ -11,7 +11,7 @@
   <a href="#presets">Presets</a> •
   <a href="#parameter-ranges">Parameter Ranges</a> •
   <a href="#license-activation">License</a> •
-  <a href="#فارسی">فارسی</a>
+  <a href="#persian">فارسی</a>
 </p>
 
 ![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
@@ -21,7 +21,7 @@
 ![Status](https://img.shields.io/badge/Status-Beta-blue?style=for-the-badge)
 ![Activation](https://img.shields.io/badge/License-Device%20ID-blueviolet?style=for-the-badge)
 
-**Designed and developed by The Louis Mahdi**  
+**Code, design and development by The Louis Mahdi**  
 **Telegram:** `@thelouis_mahdi`
 
 </div>
@@ -32,20 +32,13 @@
 
 ## 🇬🇧 English
 
-### What is VideoX Compressor?
+## What is VideoX Compressor?
 
 **VideoX Compressor** is a Windows video compression application built to make heavy video files much smaller through a simple graphical interface.
 
 The main focus of the project is **hardware-accelerated compression**. When a supported NVIDIA GPU is available, VideoX uses **NVIDIA NVENC** to offload video encoding work from the CPU to the GPU. This makes compression much faster than typical CPU-only workflows and is especially useful on laptops and PCs with NVIDIA graphics cards.
 
-The strongest current use case is **low-motion video**, such as:
-
-- recorded classes
-- screen recordings
-- tutorials
-- online meetings
-- slide-based educational videos
-- university lecture recordings
+The strongest current use case is **low-motion video**, such as recorded classes, screen recordings, tutorials, online meetings, slide-based educational videos and university lecture recordings.
 
 For this type of content, VideoX can produce a **dramatic file-size reduction** while keeping the output highly usable for watching, sharing and archiving.
 
@@ -53,28 +46,24 @@ For this type of content, VideoX can produce a **dramatic file-size reduction** 
 
 ---
 
-<a id="value"></a>
-
-## 🚀 Why VideoX?
+## Why VideoX?
 
 | Advantage | Explanation |
 |---|---|
 | GPU acceleration | Uses NVIDIA NVENC hardware encoding when available. |
-| Very fast on supported GPUs | Encoding can be much faster than CPU-only compression. |
+| Fast processing | On supported GPUs, encoding can be much faster than CPU-only compression. |
 | Huge reduction on low-motion videos | Especially strong for classes, tutorials and screen recordings. |
-| Simple workflow | Select videos, choose preset, select output folder, compress. |
-| Ready presets | Built-in modes for class recordings, balanced use, gaming, movies and social media. |
+| Simple workflow | Select videos, choose a preset, choose output folder and start compression. |
+| Ready presets | Includes modes for classes, balanced use, gaming, movies and social media. |
 | Editable settings | Presets apply recommended values, but users can still adjust parameters manually. |
 | Progress and final report | Shows progress, output size, reduction percentage and real processing time. |
 | Device-based activation | License is connected to the user device by Device ID. |
 
 ---
 
-<a id="latest-beta"></a>
+## Important Changes in the Latest Beta
 
-## 🆕 Important Changes in the Latest Beta
-
-Compared with the earlier builds, the latest beta adds the most important product-level improvements:
+Compared with earlier builds, the latest beta adds important product-level improvements:
 
 | Area | Added / Improved |
 |---|---|
@@ -95,7 +84,7 @@ Compared with the earlier builds, the latest beta adds the most important produc
 
 <a id="screenshots"></a>
 
-## 📸 Screenshots
+## Screenshots
 
 Upload the screenshots inside the `screenshots/` folder with these exact names:
 
@@ -162,9 +151,7 @@ In testing, VideoX used an **NVIDIA GeForce GTX 1650 Ti** and pushed the GPU vid
 
 <a id="real-compression-example"></a>
 
-## 📉 Real Compression Example
-
-### Recorded Class Compression Test
+## Real Compression Example
 
 <div align="center">
 
@@ -186,7 +173,7 @@ This type of result is most realistic for low-motion content such as recorded le
 
 <a id="presets"></a>
 
-## 🎛️ Ready Presets
+## Ready Presets
 
 VideoX includes ready-made modes for different video types. Presets apply suggested values automatically, but the output format and parameters remain editable.
 
@@ -269,7 +256,7 @@ Audio Channels: 1
 
 <a id="parameter-ranges"></a>
 
-## 📏 Parameter Ranges
+## Parameter Ranges
 
 | Parameter | Allowed / Recommended Range | Meaning |
 |---|---|---|
@@ -282,43 +269,9 @@ Audio Channels: 1
 | Audio Bitrate | 24k, 32k, 64k, 96k, etc. | Higher value gives better audio quality and larger size. |
 | Audio Channels | 1 or 2 | `1` = mono, `2` = stereo. |
 
-### Quick Guide
-
-```text
-GPU Quality:
-26 = High Quality
-28 = Balanced
-30 = Compressed
-32 = Heavy Compression
-35 = Ultra Small Size
-
-CPU CRF:
-22-24 = High Quality
-25-28 = Balanced
-30+ = Heavy Compression
-
-FPS:
-0 = Keep original FPS
-24 = Classes / tutorials / low-motion videos
-30 = General videos
-60 = Gaming / fast motion
-
-Height:
-1080 = High Quality
-720 = Balanced
-480 = Ultra Small Size
-
-Audio:
-32k mono = Smallest Size
-64k stereo = Better Quality
-96k stereo = Movies / Music
-```
-
 ---
 
-<a id="technical"></a>
-
-## ⚙️ Technical Overview
+## Technical Overview
 
 VideoX is built as a Windows GUI application around FFmpeg and FFprobe.
 
@@ -347,7 +300,7 @@ For general use, **MP4** is recommended.
 
 <a id="download"></a>
 
-## 📦 Download & Installation
+## Download & Installation
 
 Go to the **Releases** section and download the latest ZIP package.
 
@@ -379,11 +332,9 @@ ffmpeg/bin/ffprobe.exe
 
 <a id="license-activation"></a>
 
-## 🔐 How to Get a License
+## How to Get a License
 
 VideoX uses a **Device ID based license system**.
-
-### Steps
 
 1. Open `VideoX.exe`.
 2. Copy the Device ID shown on the activation page.
@@ -402,9 +353,7 @@ The license is device-specific and works only on the registered device.
 
 ---
 
-<a id="usage"></a>
-
-## 🚀 How to Use
+## How to Use
 
 1. Download and extract the ZIP file.
 2. Run `VideoX.exe`.
@@ -419,9 +368,7 @@ The license is device-specific and works only on the registered device.
 
 ---
 
-<a id="beta-status"></a>
-
-## 🧪 Beta Status
+## Beta Status
 
 VideoX Compressor is currently in **Beta**. It is not yet a fully polished commercial product, but it is actively moving in that direction.
 
@@ -438,43 +385,36 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 ---
 
-<a id="فارسی"></a>
+<a id="persian"></a>
+
+<div dir="rtl" align="right">
 
 # 🇮🇷 فارسی
 
-## VideoX Compressor چیست؟
+## معرفی برنامه
 
-**VideoX Compressor** یک نرم‌افزار ویندوزی برای فشرده‌سازی ویدیو است که بدون نیاز به نوشتن دستورهای پیچیده FFmpeg، حجم فایل‌های ویدیویی را کاهش می‌دهد.
+**ویدیو ایکس کامپرسور** یک نرم‌افزار ویندوزی برای فشرده‌سازی ویدیو است. هدف برنامه این است که کاربر بدون نوشتن دستورهای پیچیده، بتواند فایل‌های ویدیویی سنگین را به خروجی کم‌حجم‌تر تبدیل کند.
 
-تمرکز اصلی VideoX روی **فشرده‌سازی شتاب‌داده‌شده با سخت‌افزار** است. اگر سیستم کارت گرافیک NVIDIA مناسب داشته باشد، برنامه از **NVIDIA NVENC** استفاده می‌کند تا پردازش ویدیو از CPU به GPU منتقل شود. این کار می‌تواند فشرده‌سازی را نسبت به حالت CPU-only بسیار سریع‌تر کند.
+تمرکز اصلی برنامه روی فشرده‌سازی شتاب‌داده‌شده با سخت‌افزار است. اگر سیستم کارت گرافیک انویدیا داشته باشد و شتاب‌دهنده مناسب در دسترس باشد، بخش سنگین پردازش ویدیو از پردازنده مرکزی به کارت گرافیک منتقل می‌شود. این موضوع می‌تواند سرعت فشرده‌سازی را نسبت به حالت پردازنده‌محور به شکل قابل توجهی بهتر کند.
 
-بهترین کاربرد فعلی VideoX برای ویدیوهای کم‌تحرک است، مثل:
+بهترین کاربرد فعلی برنامه برای ویدیوهای کم‌تحرک است؛ مثل کلاس ضبط‌شده، آموزش، جلسه آنلاین، اسکرین‌ریکورد و ویدیوهای پاورپوینتی. در این نوع ویدیوها، برنامه می‌تواند کاهش حجم بسیار چشمگیر ایجاد کند و خروجی همچنان برای مشاهده، ارسال و آرشیو مناسب باقی بماند.
 
-- کلاس ضبط‌شده
-- اسکرین‌ریکورد
-- آموزش
-- جلسه آنلاین
-- ویدیوهای پاورپوینتی
-- ضبط‌های درسی دانشگاهی
-
-در این نوع ویدیوها، VideoX می‌تواند **کاهش حجم چشمگیر** ایجاد کند و خروجی همچنان برای مشاهده، ارسال و آرشیو قابل استفاده باقی بماند.
-
-> VideoX در حال حاضر یک **محصول بتا** است. قابل استفاده و در حال تست است، اما هنوز در مسیر تبدیل شدن به یک محصول تجاری کامل‌تر قرار دارد.
+> این برنامه فعلاً در وضعیت بتا قرار دارد. برنامه قابل استفاده و در حال تست است، اما هنوز مسیر توسعه آن برای رسیدن به یک محصول تجاری کامل‌تر ادامه دارد.
 
 ---
 
-## چرا VideoX؟
+## چرا این برنامه؟
 
 | مزیت | توضیح |
 |---|---|
-| شتاب‌دهی GPU | در صورت وجود کارت NVIDIA مناسب، از NVENC استفاده می‌کند. |
-| سرعت بالا روی GPU | فشرده‌سازی می‌تواند بسیار سریع‌تر از حالت CPU-only باشد. |
-| کاهش حجم شدید روی ویدیوهای کم‌تحرک | مخصوصاً برای کلاس، آموزش و اسکرین‌ریکورد بسیار مناسب است. |
-| کاربری ساده | انتخاب ویدیو، انتخاب Preset، انتخاب خروجی و شروع فشرده‌سازی. |
-| حالت‌های آماده | حالت آماده برای کلاس، متعادل، گیمینگ، فیلم و شبکه اجتماعی دارد. |
-| تنظیمات قابل تغییر | Preset فقط مقدار پیشنهادی می‌دهد و کاربر همچنان می‌تواند تنظیمات را تغییر دهد. |
-| گزارش و پیشرفت | درصد پیشرفت، حجم خروجی، درصد کاهش حجم و زمان واقعی نمایش داده می‌شود. |
-| فعال‌سازی دستگاهی | لایسنس بر اساس Device ID همان دستگاه فعال می‌شود. |
+| شتاب‌دهی سخت‌افزاری | در صورت وجود کارت گرافیک مناسب، پردازش ویدیو با شتاب‌دهنده گرافیکی انجام می‌شود. |
+| سرعت بالا | روی سیستم‌های دارای کارت گرافیک مناسب، سرعت پردازش می‌تواند بسیار بهتر از حالت پردازنده‌محور باشد. |
+| کاهش حجم چشمگیر | برای کلاس، آموزش و اسکرین‌ریکورد بسیار مناسب است. |
+| کاربری ساده | کاربر فقط ویدیو را انتخاب می‌کند، حالت آماده را می‌زند، مسیر خروجی را انتخاب می‌کند و فشرده‌سازی را شروع می‌کند. |
+| حالت‌های آماده | برای کلاس، حالت متعادل، گیمینگ، فیلم و شبکه اجتماعی تنظیمات آماده وجود دارد. |
+| تنظیمات قابل تغییر | حالت‌های آماده فقط مقدار پیشنهادی می‌دهند و کاربر همچنان می‌تواند تنظیمات را تغییر دهد. |
+| گزارش نهایی | حجم قبل و بعد، درصد کاهش حجم، زمان واقعی پردازش و وضعیت فایل‌ها نمایش داده می‌شود. |
+| فعال‌سازی دستگاهی | لایسنس بر اساس کد دستگاه فعال می‌شود. |
 
 ---
 
@@ -484,40 +424,46 @@ As the developer, I stay in direct contact with testers and users to collect fee
 |---|---|
 | پایداری رابط کاربری | پنجره قابل تغییر اندازه، بخش تنظیمات اسکرول‌دار، لاگ قابل تغییر اندازه و اسکرول با موس. |
 | امنیت صف پردازش | هنگام فشرده‌سازی، فایل‌ها و تنظیمات قفل می‌شوند تا صف پردازش خراب نشود. |
-| حذف پنجره CMD | FFmpeg و FFprobe دیگر پنجره CMD جدا باز نمی‌کنند. |
-| نمایش پیشرفت | Progress Bar برای فایل جاری، کل عملیات و لاگ کنترل‌شده پیشرفت اضافه شد. |
-| گزارش نهایی | گزارش انگلیسی شامل حجم ورودی، حجم خروجی، درصد کاهش، موفق/ناموفق و مسیر خروجی اضافه شد. |
-| خطاهای بهتر | خطاهای FFmpeg واضح‌تر شدند و پیشنهاد رفع مشکل نمایش داده می‌شود. |
-| Presetهای آماده | کلاس، متعادل، گیمینگ، فیلم و شبکه اجتماعی اضافه شدند. |
-| ذخیره تنظیمات | زبان، Preset، مسیر خروجی، اندازه پنجره و تنظیمات سفارشی ذخیره می‌شوند. |
-| توقف پردازش | فشرده‌سازی از داخل UI قابل توقف است. |
-| خواندن اطلاعات ویدیو | FPS، رزولوشن، کدک و مدت ویدیو با ffprobe خوانده می‌شود. |
-| بررسی فضای دیسک | اگر فضای خروجی کم باشد، برنامه هشدار می‌دهد. |
-| ابزار لاگ | پاک کردن لاگ، ذخیره لاگ و ذخیره خودکار لاگ اضافه شد. |
+| حذف پنجره مزاحم | ابزارهای پردازش ویدیو دیگر پنجره جداگانه و مزاحم باز نمی‌کنند. |
+| نمایش پیشرفت | نوار پیشرفت برای فایل جاری، کل عملیات و گزارش کنترل‌شده پیشرفت اضافه شد. |
+| گزارش نهایی | گزارش شامل حجم ورودی، حجم خروجی، درصد کاهش، تعداد موفق و ناموفق و مسیر خروجی است. |
+| خطاهای بهتر | خطاها واضح‌تر شده‌اند و برای رفع مشکل پیشنهاد نمایش داده می‌شود. |
+| حالت‌های آماده | حالت کلاس، متعادل، گیمینگ، فیلم و شبکه اجتماعی اضافه شده است. |
+| ذخیره تنظیمات | زبان، حالت آماده، مسیر خروجی، اندازه پنجره و تنظیمات سفارشی ذخیره می‌شوند. |
+| توقف پردازش | فشرده‌سازی از داخل خود برنامه قابل توقف است. |
+| خواندن اطلاعات ویدیو | نرخ فریم، رزولوشن، کدک و مدت ویدیو خوانده می‌شود. |
+| بررسی فضای دیسک | اگر فضای مسیر خروجی کم باشد، برنامه هشدار می‌دهد. |
+| ابزار لاگ | پاک کردن لاگ، ذخیره لاگ و ذخیره خودکار لاگ اضافه شده است. |
 
 ---
 
 ## اسکرین‌شات‌ها
 
-عکس‌ها را داخل پوشه `screenshots/` با این نام‌ها آپلود کنید:
+عکس‌ها را داخل پوشه زیر آپلود کنید:
+
+```text
+screenshots/
+```
+
+نام فایل‌ها باید این‌طور باشد:
 
 | عکس | نام فایل |
 |---|---|
-| صفحه لایسنس و Device ID | `screenshots/videox-license-activation.png` |
-| صفحه اصلی تنظیمات | `screenshots/videox-main-settings.png` |
-| منوی Presetها | `screenshots/videox-presets.png` |
-| صفحه پیشرفت و گزارش نهایی | `screenshots/videox-progress-report.png` |
-| نمونه واقعی فشرده‌سازی کلاس | `screenshots/class_compression_example.jpg` |
-| تست استفاده از GPU | `screenshots/gpu_usage.png` |
+| صفحه لایسنس و کد دستگاه | `videox-license-activation.png` |
+| صفحه اصلی تنظیمات | `videox-main-settings.png` |
+| منوی حالت‌های آماده | `videox-presets.png` |
+| صفحه پیشرفت و گزارش نهایی | `videox-progress-report.png` |
+| نمونه واقعی فشرده‌سازی کلاس | `class_compression_example.jpg` |
+| تست استفاده از کارت گرافیک | `gpu_usage.png` |
 
 ---
 
 ## نمونه واقعی فشرده‌سازی کلاس
 
 ```text
-حجم فایل اصلی: 1.96 GB
-حجم فایل خروجی: 25 MB
-کاهش حجم تقریبی: 98.7%
+Original file size: 1.96 GB
+Compressed file size: 25 MB
+Approximate reduction: 98.7%
 ```
 
 این نتیجه بیشتر برای ویدیوهای کم‌تحرک مثل کلاس، آموزش، جلسه، اسکرین‌ریکورد و ویدیوهای پاورپوینتی قابل دستیابی است.
@@ -526,15 +472,15 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 ## حالت‌های آماده
 
-VideoX چند حالت آماده دارد. هر حالت مقدارهای پیشنهادی را اعمال می‌کند، اما کاربر همچنان می‌تواند فرمت خروجی و پارامترها را تغییر دهد.
+برنامه چند حالت آماده دارد. هر حالت مقدارهای پیشنهادی را اعمال می‌کند، اما کاربر همچنان می‌تواند فرمت خروجی و پارامترها را تغییر دهد.
 
-### 1. کلاس / اسکرین‌ریکورد
+### ۱. کلاس و اسکرین‌ریکورد
 
 مناسب کلاس ضبط‌شده، آموزش، جلسه و ویدیوهای کم‌تحرک.
 
 ```text
 Workers: 1
-Height: 720 یا 1080
+Height: 720 or 1080
 FPS: 24
 Output Format: mp4
 GPU Quality: 32
@@ -543,7 +489,7 @@ Audio Bitrate: 32k
 Audio Channels: 1
 ```
 
-### 2. متعادل
+### ۲. حالت متعادل
 
 مناسب استفاده عمومی وقتی نمی‌دانید کدام حالت بهتر است.
 
@@ -558,14 +504,14 @@ Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### 3. گیمینگ / ویدیو پرتحرک
+### ۳. گیمینگ و ویدیوهای پرتحرک
 
-مناسب گیم‌پلی، حرکت سریع دوربین و ویدیوهای motion بالا.
+مناسب گیم‌پلی، حرکت سریع دوربین و ویدیوهای پرتحرک.
 
 ```text
 Workers: 1
 Height: 1080
-FPS: 0 یا 60
+FPS: 0 or 60
 Output Format: mp4
 GPU Quality: 28
 CPU CRF: 25
@@ -573,14 +519,14 @@ Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### 4. فیلم / سینمایی
+### ۴. فیلم و ویدیوهای سینمایی
 
-مناسب وقتی حفظ جزئیات تصویر مهم‌تر از کوچک‌ترین حجم ممکن است.
+مناسب زمانی که حفظ جزئیات تصویر مهم‌تر از رسیدن به کمترین حجم ممکن است.
 
 ```text
 Workers: 1
 Height: 1080
-FPS: 0 یا 24
+FPS: 0 or 24
 Output Format: mp4
 GPU Quality: 27
 CPU CRF: 24
@@ -588,9 +534,9 @@ Audio Bitrate: 96k
 Audio Channels: 2
 ```
 
-### 5. شبکه اجتماعی / حجم خیلی کم
+### ۵. شبکه اجتماعی و حجم خیلی کم
 
-مناسب وقتی کمترین حجم خروجی اولویت اصلی است.
+مناسب زمانی که کمترین حجم خروجی اولویت اصلی است.
 
 ```text
 Workers: 1
@@ -607,55 +553,55 @@ Audio Channels: 1
 
 ## بازه پارامترها
 
-| پارامتر | بازه مجاز / پیشنهادی | توضیح |
+| پارامتر | بازه مجاز یا پیشنهادی | توضیح |
 |---|---|---|
-| Workers | 1 تا 4 | تعداد پردازش همزمان. در حالت GPU ممکن است برای پایداری روی 1 تنظیم شود. |
-| Height | 144 به بالا | ارتفاع خروجی. مقدارهای رایج: 480، 720، 1080. |
-| FPS | 0 به بالا | مقدار 0 یعنی حفظ FPS اصلی. برای کلاس 24 مناسب است؛ برای ویدیو پرتحرک 30 یا 60 بهتر است. |
-| Output Format | mp4, mkv, mov, webm, avi | برای استفاده عمومی mp4 پیشنهاد می‌شود. |
-| GPU Quality | 18 تا 45 | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بیشتر یعنی حجم کمتر و کیفیت پایین‌تر. |
-| CPU CRF | 18 تا 45 | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بیشتر یعنی حجم کمتر و کیفیت پایین‌تر. |
-| Audio Bitrate | 24k، 32k، 64k، 96k و مشابه | عدد بیشتر یعنی کیفیت صدای بهتر و حجم بیشتر. |
-| Audio Channels | 1 یا 2 | مقدار 1 یعنی مونو، مقدار 2 یعنی استریو. |
+| تعداد پردازش همزمان | ۱ تا ۴ | در حالت شتاب‌دهی گرافیکی، برنامه ممکن است برای پایداری مقدار را روی ۱ نگه دارد. |
+| ارتفاع خروجی | ۱۴۴ به بالا | مقدارهای رایج شامل ۴۸۰، ۷۲۰ و ۱۰۸۰ هستند. |
+| نرخ فریم | ۰ به بالا | مقدار ۰ یعنی حفظ نرخ فریم اصلی. برای کلاس مقدار ۲۴ مناسب است و برای ویدیوهای پرتحرک مقدار ۳۰ یا ۶۰ بهتر است. |
+| فرمت خروجی | `mp4`, `mkv`, `mov`, `webm`, `avi` | برای استفاده عمومی، فرمت `mp4` پیشنهاد می‌شود. |
+| کیفیت حالت گرافیکی | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
+| کیفیت حالت پردازنده | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
+| کیفیت صدا | مثل `24k`, `32k`, `64k`, `96k` | عدد بیشتر یعنی کیفیت صدای بهتر و حجم بیشتر. |
+| کانال صدا | ۱ یا ۲ | مقدار ۱ یعنی مونو و مقدار ۲ یعنی استریو. |
 
 ---
 
 ## توضیح فنی
 
-VideoX یک برنامه گرافیکی ویندوزی بر پایه FFmpeg و FFprobe است.
+این برنامه یک رابط گرافیکی ویندوزی برای فشرده‌سازی ویدیو است و از موتور پردازش ویدیویی شناخته‌شده استفاده می‌کند. برنامه اطلاعات ویدیو را می‌خواند، حالت مناسب را انتخاب می‌کند و سپس فایل خروجی را با تنظیمات انتخاب‌شده می‌سازد.
 
 | بخش | نقش |
 |---|---|
-| FFmpeg | موتور اصلی فشرده‌سازی. |
-| FFprobe | خواندن اطلاعات ویدیو مثل FPS، رزولوشن، کدک و مدت. |
-| NVIDIA NVENC | encoder سخت‌افزاری GPU برای سرعت بیشتر در خروجی‌های MP4/MKV/MOV. |
-| CPU fallback | اگر GPU مناسب وجود نداشته باشد، برنامه با CPU کار می‌کند. |
-| H.265 / HEVC | کدک اصلی برای کاهش حجم قوی در خروجی‌های MP4/MKV/MOV. |
-| VP9 / Opus | برای خروجی WEBM استفاده می‌شود. |
+| موتور فشرده‌سازی | اجرای پردازش اصلی ویدیو و تولید فایل خروجی. |
+| ابزار خواندن اطلاعات ویدیو | خواندن نرخ فریم، رزولوشن، کدک و مدت ویدیو. |
+| شتاب‌دهنده گرافیکی | استفاده از کارت گرافیک برای سرعت بیشتر در خروجی‌های رایج. |
+| حالت پردازنده | استفاده خودکار وقتی شتاب‌دهنده گرافیکی در دسترس نیست. |
+| کدک فشرده‌سازی اصلی | کاهش حجم قوی برای خروجی‌های رایج مثل `mp4`, `mkv`, `mov`. |
+| خروجی وب | استفاده از روش مناسب برای خروجی `webm`. |
 
-### رفتار GPU و CPU
+### رفتار حالت گرافیکی و پردازنده
 
 | فرمت خروجی | حالت پردازش |
 |---|---|
-| MP4 | در صورت وجود NVIDIA NVENC با GPU، در غیر این صورت CPU |
-| MKV | در صورت وجود NVIDIA NVENC با GPU، در غیر این صورت CPU |
-| MOV | در صورت وجود NVIDIA NVENC با GPU، در غیر این صورت CPU |
-| WEBM | حالت CPU |
-| AVI | بسته به encoder، GPU یا CPU |
+| `mp4` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
+| `mkv` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
+| `mov` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
+| `webm` | معمولاً با پردازنده. |
+| `avi` | بسته به روش خروجی، با کارت گرافیک یا پردازنده. |
 
-برای استفاده عمومی، **MP4** پیشنهاد می‌شود.
+برای استفاده عمومی، فرمت `mp4` پیشنهاد می‌شود.
 
 ---
 
 ## نصب و اجرا
 
-از بخش **Releases** آخرین فایل ZIP را دانلود کنید.
+از بخش انتشارها، آخرین فایل فشرده برنامه را دانلود کنید.
 
 ```text
 VideoX_Compressor_v1.x_Beta.zip
 ```
 
-فایل ZIP را Extract کنید و اجرا کنید:
+فایل را از حالت فشرده خارج کنید و این فایل را اجرا کنید:
 
 ```text
 VideoX.exe
@@ -668,7 +614,7 @@ ffmpeg/
 _internal/
 ```
 
-پوشه FFmpeg باید شامل این فایل‌ها باشد:
+پوشه موتور پردازش باید شامل این فایل‌ها باشد:
 
 ```text
 ffmpeg/bin/ffmpeg.exe
@@ -679,21 +625,21 @@ ffmpeg/bin/ffprobe.exe
 
 ## نحوه دریافت لایسنس
 
-VideoX از سیستم لایسنس بر اساس **Device ID** استفاده می‌کند.
+برنامه از سیستم لایسنس بر اساس کد دستگاه استفاده می‌کند.
 
-### مراحل
+مراحل فعال‌سازی:
 
-1. فایل `VideoX.exe` را اجرا کنید.
-2. در صفحه فعال‌سازی، Device ID را کپی کنید.
-3. این کد را در تلگرام به آیدی زیر ارسال کنید:
+1. فایل برنامه را اجرا کنید.
+2. در صفحه فعال‌سازی، کد دستگاه را کپی کنید.
+3. کد دستگاه را در تلگرام به آیدی زیر ارسال کنید.
 
 ```text
 @thelouis_mahdi
 ```
 
-4. بعد از بررسی، فایل `license.key` را دریافت می‌کنید.
-5. فایل `license.key` را کنار `VideoX.exe` قرار دهید یا از داخل برنامه انتخاب کنید.
-6. روی **Recheck** بزنید.
+4. بعد از بررسی، فایل لایسنس را دریافت می‌کنید.
+5. فایل لایسنس را کنار فایل اجرایی برنامه قرار دهید یا از داخل برنامه انتخاب کنید.
+6. روی دکمه بررسی دوباره بزنید.
 7. وارد برنامه شوید.
 
 لایسنس مخصوص همان دستگاه است و روی دستگاه دیگر فعال نمی‌شود.
@@ -702,33 +648,35 @@ VideoX از سیستم لایسنس بر اساس **Device ID** استفاده �
 
 ## نحوه استفاده
 
-1. فایل ZIP را دانلود و Extract کنید.
-2. `VideoX.exe` را اجرا کنید.
-3. برنامه را با فایل `license.key` فعال کنید.
-4. ویدیوها را انتخاب کنید یا داخل برنامه Drag & Drop کنید.
+1. فایل فشرده برنامه را دانلود و خارج کنید.
+2. فایل اجرایی برنامه را اجرا کنید.
+3. برنامه را با فایل لایسنس فعال کنید.
+4. ویدیوها را انتخاب کنید یا داخل برنامه بکشید و رها کنید.
 5. پوشه خروجی را انتخاب کنید.
-6. یک Preset آماده انتخاب کنید یا تنظیمات را دستی تغییر دهید.
+6. یک حالت آماده انتخاب کنید یا تنظیمات را دستی تغییر دهید.
 7. فرمت خروجی را انتخاب کنید.
-8. روی **Start Compress** بزنید.
-9. پیشرفت پردازش را داخل UI ببینید.
-10. گزارش نهایی را در Log بررسی کنید.
+8. دکمه شروع فشرده‌سازی را بزنید.
+9. پیشرفت پردازش را داخل برنامه ببینید.
+10. گزارش نهایی را در بخش لاگ بررسی کنید.
 
 ---
 
 ## وضعیت بتا
 
-VideoX Compressor در حال حاضر در وضعیت **Beta** قرار دارد. هنوز یک محصول تجاری کاملاً نهایی‌شده نیست، اما به‌صورت فعال در همین مسیر توسعه پیدا می‌کند.
+برنامه در حال حاضر در وضعیت بتا قرار دارد. هنوز یک محصول تجاری کاملاً نهایی‌شده نیست، اما به‌صورت فعال در همین مسیر توسعه پیدا می‌کند.
 
-تمرکز فعلی:
+تمرکز فعلی توسعه:
 
 - بهترین نتیجه روی کلاس‌های ضبط‌شده و ویدیوهای کم‌تحرک
 - پایداری بهتر برای پردازش چند فایل
-- Presetهای بهتر برای ویدیوهای پرتحرک
-- بهبود UI/UX
-- دقیق‌تر شدن ETA
+- حالت‌های آماده بهتر برای ویدیوهای پرتحرک
+- بهبود رابط کاربری و تجربه کاربر
+- دقیق‌تر شدن تخمین زمان
 - دریافت بازخورد مداوم از تسترها و کاربران واقعی
 
 به‌عنوان توسعه‌دهنده، من به‌صورت مستقیم با تسترها و کاربران در ارتباط هستم تا بازخوردها، باگ‌ها و پیشنهادها را جمع‌آوری کنم و برنامه را مرحله‌به‌مرحله بهتر کنم.
+
+</div>
 
 ---
 
