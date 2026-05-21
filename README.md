@@ -6,6 +6,7 @@
 
 <p>
   <a href="#english">English</a> •
+  <a href="#comparison">Comparison</a> •
   <a href="#screenshots">Screenshots</a> •
   <a href="#real-compression-example">Real Compression Test</a> •
   <a href="#presets">Presets</a> •
@@ -58,6 +59,23 @@ For this type of content, VideoX can produce a **dramatic file-size reduction** 
 | Editable settings | Presets apply recommended values, but users can still adjust parameters manually. |
 | Progress and final report | Shows progress, output size, reduction percentage and real processing time. |
 | Device-based activation | License is connected to the user device by Device ID. |
+
+---
+
+<a id="comparison"></a>
+
+## Small Comparison with Similar Tools
+
+VideoX does not try to replace every professional encoder or video editor. Its goal is more focused: **fast and simple compression for recorded classes, tutorials, screen recordings and other low-motion videos**.
+
+| Tool Type | Typical Experience | VideoX Position |
+|---|---|---|
+| General video converters | Useful for many formats, but often designed as broad conversion tools. | More focused on fast compression and very small outputs for educational and low-motion videos. |
+| Professional encoders | Powerful and flexible, but may feel complex for normal users. | Simpler workflow with ready presets and fewer decisions for everyday compression. |
+| CPU-based compression tools | Can produce good quality, but may take longer on large files. | Prioritizes GPU acceleration when supported hardware is available. |
+| Full video editors | Great for editing and production, but heavy for simple compression tasks. | Lightweight workflow for users who only want to reduce file size quickly. |
+
+In short, VideoX is designed for users who do not want to spend time tuning advanced encoder settings. It provides a practical, product-style workflow: choose files, select a preset, compress, and read the final size report.
 
 ---
 
@@ -402,6 +420,21 @@ As the developer, I stay in direct contact with testers and users to collect fee
 | تنظیمات قابل تغییر | حالت‌های آماده فقط مقدار پیشنهادی می‌دهند و کاربر همچنان می‌تواند تنظیمات را تغییر دهد. |
 | گزارش نهایی | حجم قبل و بعد، درصد کاهش حجم، زمان واقعی پردازش و وضعیت فایل‌ها نمایش داده می‌شود. |
 | فعال‌سازی دستگاهی | لایسنس بر اساس کد دستگاه فعال می‌شود. |
+
+---
+
+## مقایسه کوتاه با ابزارهای مشابه
+
+این برنامه قرار نیست جایگزین همه ابزارهای حرفه‌ای ویرایش یا کدگذاری ویدیو باشد. تمرکز اصلی آن روی یک نیاز مشخص است: فشرده‌سازی سریع و ساده برای کلاس‌های ضبط‌شده، آموزش‌ها، اسکرین‌ریکوردها و ویدیوهای کم‌تحرک.
+
+| نوع ابزار | تجربه معمول | جایگاه این برنامه |
+|---|---|---|
+| مبدل‌های عمومی ویدیو | برای فرمت‌های زیاد کاربرد دارند، اما معمولاً عمومی و گسترده طراحی شده‌اند. | تمرکز بیشتری روی کاهش حجم سریع برای ویدیوهای آموزشی و کم‌تحرک دارد. |
+| ابزارهای حرفه‌ای کدگذاری | قدرت و انعطاف زیادی دارند، اما برای کاربر عادی ممکن است پیچیده باشند. | مسیر ساده‌تری ارائه می‌دهد و تنظیمات آماده دارد. |
+| ابزارهای پردازنده‌محور | کیفیت خوبی می‌دهند، اما روی فایل‌های بزرگ ممکن است زمان‌بر باشند. | در صورت وجود سخت‌افزار مناسب، اولویت را روی شتاب‌دهی گرافیکی می‌گذارد. |
+| نرم‌افزارهای کامل تدوین | برای تولید و ویرایش حرفه‌ای عالی هستند، اما برای فشرده‌سازی ساده سنگین‌اند. | برای کاربری سبک‌تر و سریع‌تر طراحی شده است. |
+
+خلاصه اینکه این برنامه برای کاربری ساخته شده که نمی‌خواهد زمان زیادی صرف تنظیمات پیچیده کند. کاربر فایل را انتخاب می‌کند، یک حالت آماده می‌زند، فشرده‌سازی را شروع می‌کند و در پایان گزارش حجم خروجی را می‌بیند.
 
 ---
 
