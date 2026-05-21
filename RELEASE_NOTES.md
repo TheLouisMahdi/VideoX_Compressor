@@ -1,37 +1,83 @@
 # VideoX Compressor - Release Notes
 
-## v1.2.0 Beta
+## v1.2.5 Beta - General Safe Diagnostics
 
 ### English
 
-VideoX Compressor v1.2.0 Beta is a Windows video compression release focused on fast, simple and GPU-accelerated compression for recorded classes, screen recordings, tutorials and low-motion educational videos.
+VideoX Compressor v1.2.5 Beta - General Safe Diagnostics is the recommended public beta build for testing and limited distribution.
 
-This release improves the product experience compared with the earlier beta builds by adding a more stable interface, better progress reporting, safer queue handling, clearer logs, device-based activation and a more practical compression workflow for everyday users.
+This version keeps the main focus of VideoX: fast and simple video compression for recorded classes, tutorials, screen recordings and low-motion educational videos, while improving diagnostics, user support and hardware compatibility.
 
-### Maintenance Update
+### What is new in v1.2.5
 
-This release package was updated with a small hotfix after testing on another laptop and desktop system.
+- Added General Safe Mode for public testing.
+- Added automatic diagnostic report generation when errors happen.
+- Added manual Export Bug Report button.
+- Added Open Logs button.
+- Added GPU Diagnostics with saved report output.
+- Improved hardware encoder selection.
+- Added better fallback behavior when hardware acceleration fails.
+- Added more detailed logs with timestamp, system info, encoder info and FFmpeg error details.
+- Added support-oriented log files that users can send for debugging.
 
-Fixed issue:
+### Diagnostic Reports
 
-- Fixed a file selection and drag-and-drop bug where selected videos were not added to the input queue on some systems.
-- Fixed a drag-and-drop error related to the internal queue state.
-- The input queue now correctly updates after selecting or dropping videos.
-- The log now confirms when files are added to the queue.
+If the app fails during compression, it can automatically save a diagnostic report containing:
 
-If you downloaded an older build of this same beta release and the app does not add selected videos, download the latest ZIP package from this release again.
+- app version
+- local and UTC timestamp
+- Windows and system information
+- FFmpeg and FFprobe paths
+- available video encoders
+- runtime encoder test results
+- selected settings
+- selected encoder
+- current input file
+- FFmpeg error output
+- current UI log
+
+Default log location:
+
+```text
+C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
+```
+
+### Recommended Public Settings
+
+For most users and public release testing:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Output Format: mp4
+```
+
+### Advanced Speed Test Settings
+
+For systems with stronger GPU hardware:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+```
+
+If errors happen with the advanced mode, use the recommended public settings above.
 
 ### Highlights
 
-- GPU-accelerated compression with NVIDIA NVENC when available.
-- CPU fallback when a compatible NVIDIA GPU is not available.
+- GPU-accelerated compression when compatible hardware is available.
+- Support for NVIDIA NVENC, Intel Quick Sync / QSV, AMD AMF and CPU fallback.
 - Ready presets for Recorded Class, Balanced, Gaming / High Motion, Movie / Cinematic and Social Media / Ultra Small.
 - Editable compression settings including workers, height, FPS, output format, GPU quality, CPU CRF, audio bitrate and audio channels.
 - Current-file and total batch progress bars.
 - English final report with input size, output size, reduction percentage, success/fail count and real processing time.
 - Hidden FFmpeg / FFprobe execution without visible CMD windows.
 - Cancel button for stopping active compression from inside the UI.
-- Safer queue handling: files and settings are locked while compression is running.
+- Safer queue handling while compression is running.
 - Save Settings, Save Log, Clear Log and Open Output Folder options.
 - Device ID based license activation.
 - Improved FFmpeg error messages with possible fixes.
@@ -73,7 +119,8 @@ Each license is device-specific and works only on the registered device.
 - This is a Beta release.
 - Best results are currently expected on low-motion videos.
 - High-motion videos may need different settings than recorded classes.
-- GPU mode is currently most stable with Workers set to 1.
+- Hardware acceleration depends on GPU model, driver, FFmpeg support and selected output format.
+- If hardware acceleration is not available, the app falls back to CPU mode.
 - Time estimation is approximate and may be less accurate in GPU mode.
 - Do not delete the `ffmpeg` or `_internal` folders from the release package.
 
@@ -83,35 +130,82 @@ Each license is device-specific and works only on the registered device.
 
 <div dir="rtl" align="right">
 
-نسخه v1.2.0 Beta برنامه VideoX Compressor یک نسخه آزمایشی برای فشرده‌سازی ویدیو در ویندوز است. تمرکز این نسخه روی فشرده‌سازی سریع، ساده و شتاب‌داده‌شده برای کلاس‌های ضبط‌شده، اسکرین‌ریکورد، آموزش‌ها و ویدیوهای کم‌تحرک است.
+## نسخه v1.2.5 Beta - General Safe Diagnostics
 
-این نسخه نسبت به نسخه‌های بتای قبلی، تجربه کاربری، پایداری رابط کاربری، گزارش پیشرفت، مدیریت صف پردازش، لاگ‌ها، فعال‌سازی و روند کلی فشرده‌سازی را بهتر می‌کند.
+نسخه v1.2.5 Beta - General Safe Diagnostics نسخه پیشنهادی برای انتشار عمومی آزمایشی و تست محدود است.
 
-### به‌روزرسانی اصلاحی
+تمرکز اصلی برنامه همچنان فشرده‌سازی سریع و ساده ویدیوهای کلاس ضبط‌شده، آموزش، اسکرین‌ریکورد و ویدیوهای کم‌تحرک است. در این نسخه، قابلیت‌های عیب‌یابی، گزارش خطا، سازگاری سخت‌افزاری و پشتیبانی از کاربران بهتر شده است.
 
-بعد از تست روی یک لپتاپ و یک سیستم دیگر، همین بسته انتشار با یک اصلاح کوچک به‌روزرسانی شد.
+### تغییرات جدید در نسخه v1.2.5
 
-مشکل رفع‌شده:
+- حالت General Safe Mode برای تست عمومی اضافه شد.
+- اگر خطا رخ دهد، برنامه می‌تواند گزارش عیب‌یابی خودکار بسازد.
+- دکمه Export Bug Report اضافه شد.
+- دکمه Open Logs اضافه شد.
+- دکمه GPU Diagnostics علاوه بر نمایش داخل برنامه، فایل گزارش هم ذخیره می‌کند.
+- انتخاب شتاب‌دهنده سخت‌افزاری بهتر شد.
+- اگر شتاب‌دهنده سخت‌افزاری خطا بدهد، برنامه بهتر به مسیر جایگزین برمی‌گردد.
+- لاگ‌ها شامل تاریخ، مشخصات سیستم، اطلاعات شتاب‌دهنده، تنظیمات و خطای موتور پردازش می‌شوند.
+- فایل‌های گزارش برای ارسال کاربر و بررسی خطا آماده‌تر شدند.
 
-- باگ انتخاب فایل و کشیدن و رها کردن فایل‌ها رفع شد.
-- در بعضی سیستم‌ها، فایل انتخاب می‌شد اما به صف ورودی اضافه نمی‌شد.
-- خطای مربوط به وضعیت داخلی صف هنگام کشیدن و رها کردن فایل‌ها رفع شد.
-- بعد از اضافه شدن فایل، صف ورودی درست به‌روزرسانی می‌شود.
-- داخل لاگ برنامه، اضافه شدن فایل‌ها به صف نمایش داده می‌شود.
+### گزارش‌های عیب‌یابی
 
-اگر نسخه قبلی همین انتشار را دانلود کرده بودید و برنامه فایل‌های انتخاب‌شده را اضافه نمی‌کرد، فایل فشرده جدید همین Release را دوباره دانلود کنید.
+اگر هنگام فشرده‌سازی خطا رخ دهد، برنامه می‌تواند یک گزارش کامل ذخیره کند که شامل این موارد است:
+
+- نسخه برنامه
+- تاریخ و ساعت محلی و جهانی
+- اطلاعات ویندوز و سیستم
+- مسیر ابزارهای پردازش ویدیو
+- فهرست شتاب‌دهنده‌های ویدیویی موجود
+- نتیجه تست شتاب‌دهنده‌ها
+- تنظیمات انتخاب‌شده
+- شتاب‌دهنده انتخاب‌شده
+- فایل ورودی فعلی
+- خطای موتور پردازش
+- لاگ فعلی برنامه
+
+محل پیش‌فرض ذخیره لاگ‌ها:
+
+```text
+C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
+```
+
+### تنظیمات پیشنهادی برای انتشار عمومی
+
+برای بیشتر کاربران و تست عمومی:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Output Format: mp4
+```
+
+### تنظیمات تست سرعت برای سیستم‌های قوی‌تر
+
+برای سیستم‌هایی که سخت‌افزار گرافیکی قوی‌تری دارند:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+```
+
+اگر در حالت سریع خطا رخ داد، از تنظیمات پیشنهادی عمومی استفاده کنید.
 
 ### نکات مهم نسخه
 
-- فشرده‌سازی شتاب‌داده‌شده با کارت گرافیک در صورت وجود سخت‌افزار مناسب.
-- استفاده از پردازنده در صورت نبود کارت گرافیک مناسب.
+- فشرده‌سازی شتاب‌داده‌شده در صورت وجود سخت‌افزار سازگار.
+- پشتیبانی از مسیرهای سخت‌افزاری انویدیا، اینتل، ای‌ام‌دی و حالت پردازنده.
 - حالت‌های آماده برای کلاس، حالت متعادل، گیمینگ، فیلم و شبکه اجتماعی.
 - تنظیمات قابل تغییر شامل تعداد پردازش همزمان، ارتفاع خروجی، نرخ فریم، فرمت خروجی، کیفیت حالت گرافیکی، کیفیت حالت پردازنده، کیفیت صدا و کانال صدا.
 - نوار پیشرفت برای فایل جاری و کل عملیات.
 - گزارش نهایی انگلیسی شامل حجم ورودی، حجم خروجی، درصد کاهش، تعداد موفق و ناموفق و زمان واقعی پردازش.
 - اجرای ابزارهای پردازش ویدیو بدون باز شدن پنجره مزاحم.
 - دکمه توقف برای قطع پردازش از داخل برنامه.
-- قفل شدن فایل‌ها و تنظیمات هنگام پردازش برای جلوگیری از خراب شدن صف.
+- مدیریت امن‌تر صف پردازش.
 - ذخیره تنظیمات، ذخیره لاگ، پاک کردن لاگ و باز کردن پوشه خروجی.
 - فعال‌سازی بر اساس کد دستگاه.
 - پیام‌های خطای بهتر و قابل فهم‌تر.
@@ -153,7 +247,8 @@ Each license is device-specific and works only on the registered device.
 - این نسخه در مرحله بتا قرار دارد.
 - بهترین نتیجه فعلی روی ویدیوهای کم‌تحرک انتظار می‌رود.
 - ویدیوهای پرتحرک ممکن است به تنظیمات متفاوتی نسبت به کلاس ضبط‌شده نیاز داشته باشند.
-- حالت گرافیکی در نسخه فعلی با مقدار یک برای پردازش همزمان پایدارتر است.
+- فعال شدن شتاب‌دهنده سخت‌افزاری به مدل کارت، درایور، پشتیبانی موتور پردازش و فرمت خروجی بستگی دارد.
+- اگر شتاب‌دهنده سخت‌افزاری در دسترس نباشد، برنامه با پردازنده ادامه می‌دهد.
 - تخمین زمان تقریبی است و در حالت گرافیکی ممکن است دقیق نباشد.
 - پوشه‌های `ffmpeg` و `_internal` را از بسته برنامه حذف نکنید.
 
