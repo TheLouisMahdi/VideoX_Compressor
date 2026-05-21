@@ -2,23 +2,22 @@
 
 # 🎬 VideoX Compressor
 
-### GPU-accelerated Windows video compression for recorded classes, tutorials, screen recordings and everyday videos.
+### Hardware-accelerated Windows video compression for recorded classes, tutorials, screen recordings and everyday videos.
 
 <p>
   <a href="#english">English</a> •
-  <a href="#comparison">Comparison</a> •
-  <a href="#screenshots">Screenshots</a> •
-  <a href="#real-compression-example">Real Compression Test</a> •
-  <a href="#presets">Presets</a> •
-  <a href="#parameter-ranges">Parameter Ranges</a> •
-  <a href="#license-activation">License</a> •
+  <a href="#quick-start-en">Quick Start</a> •
+  <a href="#activation-en">Activation</a> •
+  <a href="#simple-settings-en">Simple Settings</a> •
+  <a href="#hardware-guide-en">Hardware Guide</a> •
+  <a href="#parameter-guide-en">Parameters</a> •
   <a href="#persian">فارسی</a>
 </p>
 
 ![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![FFmpeg](https://img.shields.io/badge/Engine-FFmpeg-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)
-![GPU](https://img.shields.io/badge/Acceleration-NVIDIA%20NVENC-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
-![HEVC](https://img.shields.io/badge/Codec-H.265%20%2F%20HEVC-orange?style=for-the-badge)
+![GPU](https://img.shields.io/badge/Hardware%20Acceleration-NVIDIA%20%7C%20Intel%20%7C%20AMD-76B900?style=for-the-badge)
+![Codec](https://img.shields.io/badge/Codec-H.265%20%2F%20H.264%20%2F%20VP9-orange?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Beta-blue?style=for-the-badge)
 ![Activation](https://img.shields.io/badge/License-Device%20ID-blueviolet?style=for-the-badge)
 
@@ -31,19 +30,71 @@
 
 <a id="english"></a>
 
-## 🇬🇧 English
+# 🇬🇧 English
 
 ## What is VideoX Compressor?
 
-**VideoX Compressor** is a Windows video compression application built to make heavy video files much smaller through a simple graphical interface.
+**VideoX Compressor** is a Windows video compression application designed to make heavy video files much smaller through a simple graphical interface.
 
-The project focuses on **hardware-accelerated compression**. When a supported NVIDIA GPU is available, VideoX uses **NVIDIA NVENC** to move video encoding work from the CPU to the GPU. This can make compression much faster than CPU-only workflows, especially on laptops and PCs with NVIDIA graphics cards.
+The project focuses on **hardware-accelerated compression**. VideoX tries to use the best available video acceleration path on the system. Depending on the hardware and driver support, it can use **NVIDIA NVENC**, **Intel Quick Sync / QSV**, **AMD AMF**, or fall back to CPU mode.
 
 The strongest current use case is **low-motion video**, including recorded classes, screen recordings, tutorials, online meetings, slide-based educational videos and university lecture recordings.
 
 For this type of content, VideoX can produce a **dramatic file-size reduction** while keeping the output practical for watching, sharing and archiving.
 
-> VideoX is currently a **Beta product**. It is usable and actively tested, but it is still being improved toward a more polished commercial-level release.
+> VideoX is currently a **Beta product**. Version `v1.2.5 Beta - General Safe Diagnostics` is the recommended public beta build for testing and limited distribution.
+
+---
+
+<a id="quick-start-en"></a>
+
+## Quick Start for Normal Users
+
+Most users do **not** need to understand every parameter. Start with this safe setup:
+
+```text
+Preset: Recorded Class / Screen Recording
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+```
+
+Then click **Start Compress**.
+
+This setup is recommended because it is stable on most systems and still allows VideoX to use hardware encoding when the system supports it.
+
+---
+
+<a id="activation-en"></a>
+
+## License Activation Guide
+
+VideoX uses a **Device ID based license system**.
+
+### Steps
+
+1. Run `VideoX.exe`.
+2. Copy the Device ID from the activation page.
+3. Send the Device ID on Telegram to:
+
+```text
+@thelouis_mahdi
+```
+
+4. After verification, you will receive a device-specific `license.key` file.
+5. Put `license.key` next to `VideoX.exe`, or select it inside the app.
+6. Click **Recheck**.
+7. Enter the program.
+
+### Important Notes
+
+- Each `license.key` is generated for one specific device.
+- A license generated for one device will not work on another device.
+- Do not share your `license.key` publicly.
+- If activation fails, use **Export Bug Report** or send a screenshot of the activation page.
 
 ---
 
@@ -51,18 +102,17 @@ For this type of content, VideoX can produce a **dramatic file-size reduction** 
 
 | Advantage | Explanation |
 |---|---|
-| GPU acceleration | Uses NVIDIA NVENC hardware encoding when available. |
-| Fast processing | On supported GPUs, encoding can be much faster than CPU-only compression. |
-| Huge reduction on low-motion videos | Especially strong for classes, tutorials and screen recordings. |
+| Hardware acceleration | Tries to use NVIDIA, Intel or AMD video acceleration when available. |
+| Fast processing | On supported systems, hardware encoding can be much faster than CPU-only compression. |
+| Huge reduction on low-motion videos | Especially strong for classes, tutorials, meetings and screen recordings. |
 | Simple workflow | Select videos, choose a preset, choose output folder and start compression. |
 | Ready presets | Includes modes for classes, balanced use, gaming, movies and social media. |
 | Editable settings | Presets apply recommended values, but users can still adjust parameters manually. |
+| Safe public mode | General Safe Mode creates useful logs if something goes wrong. |
 | Progress and final report | Shows progress, output size, reduction percentage and real processing time. |
 | Device-based activation | License is connected to the user device by Device ID. |
 
 ---
-
-<a id="comparison"></a>
 
 ## Small Comparison with Similar Tools
 
@@ -72,33 +122,30 @@ VideoX does not try to replace every professional encoder or video editor. Its g
 |---|---|---|
 | General video converters | Useful for many formats, but often designed as broad conversion tools. | More focused on fast compression and very small outputs for educational and low-motion videos. |
 | Professional encoders | Powerful and flexible, but may feel complex for normal users. | Simpler workflow with ready presets and fewer decisions for everyday compression. |
-| CPU-based compression tools | Can produce good quality, but may take longer on large files. | Prioritizes GPU acceleration when supported hardware is available. |
+| CPU-based compression tools | Can produce good quality, but may take longer on large files. | Prioritizes hardware acceleration when supported hardware is available. |
 | Full video editors | Great for editing and production, but heavy for simple compression tasks. | Lightweight workflow for users who only want to reduce file size quickly. |
-
-In short, VideoX is designed for users who do not want to spend time tuning advanced encoder settings. It provides a practical, product-style workflow: choose files, select a preset, compress, and read the final size report.
 
 ---
 
-## Important Changes in the Latest Beta
+## Important Changes in v1.2.5 Beta
 
 | Area | Added / Improved |
 |---|---|
-| UI stability | Resizable window, scrollable settings panel, resizable log area and mouse-wheel scrolling. |
+| General Safe Mode | Recommended for public testing; saves useful logs if errors happen. |
+| Export Bug Report | Creates a diagnostic report users can send for support. |
+| Open Logs | Opens the folder where session logs and bug reports are stored. |
+| GPU Diagnostics | Tests important encoders and saves a diagnostic report. |
+| Hardware paths | Better selection between NVIDIA NVENC, Intel QSV, AMD AMF and CPU fallback. |
+| Processing Strategy | Lets users choose Auto Balanced, Maximum Hardware Acceleration, Stable Mode or CPU Only. |
+| Hardware Decode | Adds Off, Auto and Aggressive modes for decode-side acceleration testing. |
+| Pipeline logging | Logs Decode Mode, Scale Mode, Encode Mode and the reason for selection. |
 | Queue safety | Files and settings are locked while compression is running to prevent queue bugs. |
-| Hidden FFmpeg window | FFmpeg and FFprobe run without opening a visible CMD window. |
+| Hidden FFmpeg window | FFmpeg and FFprobe run without visible CMD windows. |
 | Progress tracking | Current-file progress bar, total progress bar and controlled progress logs. |
 | Final report | English report with input size, output size, reduction percentage, success/fail count and output folder. |
-| Better errors | Clearer English FFmpeg error messages with possible fixes. |
-| Ready presets | Class Recording, Balanced, Gaming / High Motion, Movie / Cinematic, Social Media / Ultra Small. |
 | Save settings | Saves language, preset, output folder, window size and custom settings. |
-| Cancel support | Compression can be stopped from inside the UI. |
-| Metadata reading | Reads FPS, resolution, codec and duration for better reporting and warnings. |
-| Disk check | Warns if the output drive may not have enough free space. |
-| Log tools | Clear Log, Save Log and automatic log saving. |
 
 ---
-
-<a id="screenshots"></a>
 
 ## Screenshots
 
@@ -150,11 +197,9 @@ VideoX shows progress, real processing time, total input size, total output size
 
 </div>
 
-In testing, VideoX used an **NVIDIA GeForce GTX 1650 Ti** and pushed the GPU video encode engine close to full usage. This demonstrates the accelerator-based design of the app.
+This demonstrates the accelerator-based design of the app. In Task Manager, video encoding usually appears under **Video Encode**, not necessarily under 3D or CUDA.
 
 ---
-
-<a id="real-compression-example"></a>
 
 ## Real Compression Example
 
@@ -176,103 +221,269 @@ This type of result is most realistic for low-motion content such as recorded le
 
 ---
 
-<a id="presets"></a>
+<a id="simple-settings-en"></a>
 
-## Ready Presets
+## Simple Settings Guide
 
-VideoX includes ready-made modes for different video types. Presets apply suggested values automatically, but the output format and parameters remain editable.
+### For recorded classes, screen recordings and online meetings
 
-### 1. Recorded Class / Screen Recording
-
-Best for recorded classes, tutorials, meetings and low-motion videos.
+Recommended for most users:
 
 ```text
+Preset: Recorded Class / Screen Recording
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 720 or 1080
 FPS: 24
-Output Format: mp4
 GPU Quality: 32
 CPU CRF: 30
 Audio Bitrate: 32k
 Audio Channels: 1
 ```
 
-### 2. Balanced
-
-General-purpose mode when you are not sure which preset to choose.
+### For general videos
 
 ```text
+Preset: Balanced
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 1080
 FPS: 0
-Output Format: mp4
 GPU Quality: 30
 CPU CRF: 28
 Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### 3. Gaming / High Motion
-
-Designed for gameplay, fast camera movement and motion-heavy videos.
+### For gaming and high-motion videos
 
 ```text
+Preset: Gaming / High Motion
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 1080
 FPS: 0 or 60
-Output Format: mp4
 GPU Quality: 28
 CPU CRF: 25
 Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### 4. Movie / Cinematic
+### For maximum speed testing on strong systems
 
-Better for videos where visual detail preservation matters more than extreme compression.
+Use only if the safe settings already work correctly:
 
 ```text
-Workers: 1
-Height: 1080
-FPS: 0 or 24
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 1 or 2
 Output Format: mp4
-GPU Quality: 27
-CPU CRF: 24
-Audio Bitrate: 96k
-Audio Channels: 2
 ```
 
-### 5. Social Media / Ultra Small
-
-Best when the smallest possible output size is the priority.
+If errors happen, return to:
 
 ```text
-Workers: 1
-Height: 480
-FPS: 24
-Output Format: mp4
-GPU Quality: 35
-CPU CRF: 33
-Audio Bitrate: 24k
-Audio Channels: 1
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+Hardware Decode: Off
 ```
 
 ---
 
-<a id="parameter-ranges"></a>
+<a id="hardware-guide-en"></a>
 
-## Parameter Ranges
+## Best Settings for Different Systems
 
-| Parameter | Allowed / Recommended Range | Meaning |
+### 1. Old laptop or weak CPU / no dedicated GPU
+
+Use CPU-safe settings:
+
+```text
+Preset: Recorded Class / Screen Recording
+Performance Mode: Stable
+Processing Strategy: Auto Balanced or CPU Only
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Height: 720
+FPS: 24
+Output Format: mp4
+```
+
+Expected behavior: VideoX may use CPU fallback. Processing can be slower, but this is the safest setup.
+
+### 2. Intel laptop with integrated graphics
+
+Many Intel CPUs include Quick Sync support, but this depends on driver and generation.
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+If GPU Diagnostics shows QSV working, VideoX may use Intel hardware encoding.
+
+### 3. NVIDIA GTX / RTX system
+
+Recommended first test:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+Speed test after the safe mode works:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 1 or 2
+```
+
+Notes:
+
+- If HEVC NVENC fails, VideoX may try H.264 NVENC.
+- Video Encode usage in Task Manager is more important than 3D usage.
+- Driver version can affect hardware acceleration.
+
+### 4. AMD Radeon system
+
+Use safe hardware detection first:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+If AMF works, VideoX may use AMD hardware encoding. If not, it falls back to CPU mode.
+
+### 5. Powerful desktop workstation
+
+Start stable, then test throughput:
+
+```text
+First test:
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+```
+
+```text
+Speed test:
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 2
+```
+
+If the system becomes unstable or files fail, reduce Workers to 1 and turn Hardware Decode Off.
+
+---
+
+## Ready Presets
+
+VideoX includes ready-made modes for different video types. Presets apply suggested values automatically, but the output format and parameters remain editable.
+
+| Preset | Best for |
+|---|---|
+| Recorded Class / Screen Recording | Recorded classes, tutorials, meetings, slides and low-motion videos. |
+| Balanced | General videos when you are not sure which mode to choose. |
+| Gaming / High Motion | Gameplay, fast camera movement and motion-heavy videos. |
+| Movie / Cinematic | Videos where detail preservation matters more than extreme compression. |
+| Social Media / Ultra Small | When the smallest possible output size is the priority. |
+
+---
+
+<a id="parameter-guide-en"></a>
+
+## Parameter Guide
+
+| Parameter | Recommended / Allowed Values | Simple Explanation |
 |---|---|---|
-| Workers | 1 to 4 | Number of simultaneous jobs. In GPU mode, VideoX may force Workers to 1 for stability. |
+| Workers | 1 to 4 | Number of files processed at the same time. Use 1 for stability. Use 2 only for strong systems. |
 | Height | 144 or higher | Output video height. Common values: 480, 720, 1080. |
-| FPS | 0 or higher | `0` keeps the original FPS. 24 is good for classes; 30/60 is better for high-motion videos. |
-| Output Format | mp4, mkv, mov, webm, avi | MP4 is recommended for general use. |
+| FPS | 0 or higher | `0` keeps original FPS. Use 24 for classes; 30 or 60 for high-motion videos. |
+| Output Format | mp4, mkv, mov, webm, avi | MP4 is recommended for most users. |
+| Performance Mode | Stable, High Throughput | Stable is safer. High Throughput may process more than one file with hardware acceleration. |
+| Processing Strategy | Auto Balanced, Maximum Hardware Acceleration, Stable Mode, CPU Only | Auto Balanced is recommended. Maximum Hardware Acceleration is for speed testing. CPU Only disables hardware encoding. |
+| General Safe Mode | On, Off | Keep On for public use. It saves diagnostic reports if errors happen. |
+| Hardware Decode | Off, Auto, Aggressive | Off is safest. Auto tries hardware decoding. Aggressive tries more GPU-side processing on supported systems. |
 | GPU Quality | 18 to 45 | Lower number = better quality and larger file. Higher number = smaller file and lower quality. |
 | CPU CRF | 18 to 45 | Lower number = better quality and larger file. Higher number = smaller file and lower quality. |
 | Audio Bitrate | 24k, 32k, 64k, 96k, etc. | Higher value gives better audio quality and larger size. |
 | Audio Channels | 1 or 2 | `1` = mono, `2` = stereo. |
+
+### Recommended values to avoid confusion
+
+If you are not sure what to choose, use:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+---
+
+## Diagnostic Logs and Bug Reports
+
+Version `v1.2.5` adds support-oriented logs.
+
+If an error happens, VideoX can save a diagnostic report containing:
+
+- app version
+- local and UTC timestamp
+- Windows and system information
+- FFmpeg and FFprobe paths
+- available video encoders
+- runtime encoder test results
+- selected settings
+- selected encoder
+- current input file
+- FFmpeg error output
+- current UI log
+
+Default log folder:
+
+```text
+C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
+```
+
+Use **Open Logs** to open this folder, or use **Export Bug Report** to create a report manually.
 
 ---
 
@@ -284,33 +495,33 @@ VideoX is built as a Windows GUI application around FFmpeg and FFprobe.
 |---|---|
 | FFmpeg | Main compression engine. |
 | FFprobe | Reads video metadata such as FPS, resolution, codec and duration. |
-| NVIDIA NVENC | GPU hardware encoder used for faster MP4/MKV/MOV compression when available. |
-| CPU fallback | Used automatically when NVENC is not available or when the selected format requires CPU mode. |
+| NVIDIA NVENC | NVIDIA hardware encoder used when available. |
+| Intel QSV | Intel Quick Sync hardware path used when available. |
+| AMD AMF | AMD hardware encoder path used when available. |
+| CPU fallback | Used automatically when hardware acceleration is unavailable or unstable. |
 | H.265 / HEVC | Main compression codec for strong size reduction in MP4/MKV/MOV outputs. |
 | VP9 / Opus | Used for WEBM output. |
 
-### GPU / CPU Behavior
+### GPU / CPU behavior
 
-| Output Format | Processing Mode |
+| Output Format | Expected Processing Mode |
 |---|---|
-| MP4 | GPU if NVIDIA NVENC is available, otherwise CPU |
-| MKV | GPU if NVIDIA NVENC is available, otherwise CPU |
-| MOV | GPU if NVIDIA NVENC is available, otherwise CPU |
-| WEBM | CPU mode |
-| AVI | GPU/CPU depending on available encoder |
+| MP4 | Hardware acceleration if available, otherwise CPU |
+| MKV | Hardware acceleration if available, otherwise CPU |
+| MOV | Hardware acceleration if available, otherwise CPU |
+| WEBM | Usually CPU mode |
+| AVI | Depends on available encoder |
 
 For general use, **MP4** is recommended.
 
 ---
-
-<a id="download"></a>
 
 ## Download & Installation
 
 Go to the **Releases** section and download the latest ZIP package.
 
 ```text
-VideoX_Compressor_v1.x_Beta.zip
+VideoX_Compressor_v1.2.5_Beta_General_Safe_Diagnostics.zip
 ```
 
 Extract the ZIP file and run:
@@ -335,44 +546,6 @@ ffmpeg/bin/ffprobe.exe
 
 ---
 
-<a id="license-activation"></a>
-
-## How to Get a License
-
-VideoX uses a **Device ID based license system**.
-
-1. Open `VideoX.exe`.
-2. Copy the Device ID shown on the activation page.
-3. Send the Device ID on Telegram to:
-
-```text
-@thelouis_mahdi
-```
-
-4. After verification, you will receive a `license.key` file.
-5. Place `license.key` next to `VideoX.exe`, or select it from inside the app.
-6. Click **Recheck**.
-7. Enter the program.
-
-The license is device-specific and works only on the registered device.
-
----
-
-## How to Use
-
-1. Download and extract the ZIP file.
-2. Run `VideoX.exe`.
-3. Activate the software using `license.key`.
-4. Select videos or drag and drop them into the app.
-5. Choose an output folder.
-6. Select a ready preset or edit settings manually.
-7. Choose the output format.
-8. Click **Start Compress**.
-9. Watch progress in the UI.
-10. Read the final report in the log.
-
----
-
 ## Beta Status
 
 VideoX Compressor is currently in **Beta**. It is not yet a fully polished commercial product, but it is actively moving in that direction.
@@ -380,13 +553,13 @@ VideoX Compressor is currently in **Beta**. It is not yet a fully polished comme
 Current focus:
 
 - best results on recorded classes and low-motion educational videos
-- better stability for batch processing
+- better hardware compatibility
+- safer public testing
+- better diagnostic reports
 - better high-motion presets
 - improved UI and user experience
 - more accurate time estimation
 - continuous feedback from testers and real users
-
-As the developer, I stay in direct contact with testers and users to collect feedback, fix bugs and improve the application over time.
 
 ---
 
@@ -400,11 +573,59 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 **ویدیو ایکس کامپرسور** یک نرم‌افزار ویندوزی برای فشرده‌سازی ویدیو است. هدف برنامه این است که کاربر بدون نوشتن دستورهای پیچیده، بتواند فایل‌های ویدیویی سنگین را به خروجی کم‌حجم‌تر تبدیل کند.
 
-تمرکز اصلی برنامه روی فشرده‌سازی شتاب‌داده‌شده با سخت‌افزار است. اگر سیستم کارت گرافیک انویدیا داشته باشد و شتاب‌دهنده مناسب در دسترس باشد، بخش سنگین پردازش ویدیو از پردازنده مرکزی به کارت گرافیک منتقل می‌شود. این موضوع می‌تواند سرعت فشرده‌سازی را نسبت به حالت پردازنده‌محور به شکل قابل توجهی بهتر کند.
+تمرکز اصلی برنامه روی فشرده‌سازی شتاب‌داده‌شده با سخت‌افزار است. برنامه تلاش می‌کند بهترین مسیر پردازش موجود روی همان سیستم را انتخاب کند. بسته به سخت‌افزار و درایور، ممکن است از مسیرهای انویدیا، اینتل، ای‌ام‌دی یا حالت پردازنده استفاده شود.
 
 بهترین کاربرد فعلی برنامه برای ویدیوهای کم‌تحرک است؛ مثل کلاس ضبط‌شده، آموزش، جلسه آنلاین، اسکرین‌ریکورد و ویدیوهای پاورپوینتی. در این نوع ویدیوها، برنامه می‌تواند کاهش حجم بسیار چشمگیر ایجاد کند و خروجی همچنان برای مشاهده، ارسال و آرشیو مناسب باقی بماند.
 
-> این برنامه فعلاً در وضعیت بتا قرار دارد. برنامه قابل استفاده و در حال تست است، اما هنوز مسیر توسعه آن برای رسیدن به یک محصول تجاری کامل‌تر ادامه دارد.
+> نسخه `v1.2.5 Beta - General Safe Diagnostics` نسخه پیشنهادی برای انتشار عمومی آزمایشی و تست محدود است.
+
+---
+
+## شروع سریع برای کاربر عادی
+
+لازم نیست همه پارامترها را بلد باشید. برای شروع از این تنظیمات استفاده کنید:
+
+```text
+Preset: Recorded Class / Screen Recording
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+```
+
+بعد روی دکمه شروع فشرده‌سازی بزنید.
+
+این تنظیمات برای بیشتر سیستم‌ها امن‌تر است و اگر شتاب‌دهنده سخت‌افزاری قابل استفاده باشد، برنامه خودش تلاش می‌کند از آن استفاده کند.
+
+---
+
+## آموزش فعال‌سازی
+
+برنامه از سیستم لایسنس بر اساس کد دستگاه استفاده می‌کند.
+
+### مراحل
+
+1. فایل `VideoX.exe` را اجرا کنید.
+2. در صفحه فعال‌سازی، کد دستگاه را کپی کنید.
+3. کد دستگاه را در تلگرام به آیدی زیر ارسال کنید.
+
+```text
+@thelouis_mahdi
+```
+
+4. بعد از بررسی، فایل مخصوص همان دستگاه را دریافت می‌کنید.
+5. فایل لایسنس را کنار فایل اجرایی برنامه قرار دهید یا از داخل برنامه انتخاب کنید.
+6. روی دکمه بررسی دوباره بزنید.
+7. وارد برنامه شوید.
+
+### نکات مهم
+
+- هر فایل لایسنس فقط برای یک دستگاه ساخته می‌شود.
+- لایسنس یک دستگاه روی دستگاه دیگر فعال نمی‌شود.
+- فایل لایسنس خود را عمومی منتشر نکنید.
+- اگر فعال‌سازی مشکل داشت، از صفحه فعال‌سازی عکس بفرستید یا گزینه ساخت گزارش خطا را بزنید.
 
 ---
 
@@ -412,12 +633,12 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 | مزیت | توضیح |
 |---|---|
-| شتاب‌دهی سخت‌افزاری | در صورت وجود کارت گرافیک مناسب، پردازش ویدیو با شتاب‌دهنده گرافیکی انجام می‌شود. |
-| سرعت بالا | روی سیستم‌های دارای کارت گرافیک مناسب، سرعت پردازش می‌تواند بسیار بهتر از حالت پردازنده‌محور باشد. |
-| کاهش حجم چشمگیر | برای کلاس، آموزش و اسکرین‌ریکورد بسیار مناسب است. |
-| کاربری ساده | کاربر فقط ویدیو را انتخاب می‌کند، حالت آماده را می‌زند، مسیر خروجی را انتخاب می‌کند و فشرده‌سازی را شروع می‌کند. |
+| شتاب‌دهی سخت‌افزاری | در صورت وجود سخت‌افزار مناسب، پردازش ویدیو با مسیر گرافیکی انجام می‌شود. |
+| سرعت بالا | روی سیستم‌های سازگار، پردازش می‌تواند بسیار سریع‌تر از حالت پردازنده‌محور باشد. |
+| کاهش حجم چشمگیر | برای کلاس، آموزش، جلسه و اسکرین‌ریکورد بسیار مناسب است. |
+| کاربری ساده | کاربر ویدیو را انتخاب می‌کند، حالت آماده را می‌زند، مسیر خروجی را انتخاب می‌کند و فشرده‌سازی را شروع می‌کند. |
 | حالت‌های آماده | برای کلاس، حالت متعادل، گیمینگ، فیلم و شبکه اجتماعی تنظیمات آماده وجود دارد. |
-| تنظیمات قابل تغییر | حالت‌های آماده فقط مقدار پیشنهادی می‌دهند و کاربر همچنان می‌تواند تنظیمات را تغییر دهد. |
+| حالت امن عمومی | اگر خطا رخ دهد، گزارش عیب‌یابی ذخیره می‌شود. |
 | گزارش نهایی | حجم قبل و بعد، درصد کاهش حجم، زمان واقعی پردازش و وضعیت فایل‌ها نمایش داده می‌شود. |
 | فعال‌سازی دستگاهی | لایسنس بر اساس کد دستگاه فعال می‌شود. |
 
@@ -431,10 +652,8 @@ As the developer, I stay in direct contact with testers and users to collect fee
 |---|---|---|
 | مبدل‌های عمومی ویدیو | برای فرمت‌های زیاد کاربرد دارند، اما معمولاً عمومی و گسترده طراحی شده‌اند. | تمرکز بیشتری روی کاهش حجم سریع برای ویدیوهای آموزشی و کم‌تحرک دارد. |
 | ابزارهای حرفه‌ای کدگذاری | قدرت و انعطاف زیادی دارند، اما برای کاربر عادی ممکن است پیچیده باشند. | مسیر ساده‌تری ارائه می‌دهد و تنظیمات آماده دارد. |
-| ابزارهای پردازنده‌محور | کیفیت خوبی می‌دهند، اما روی فایل‌های بزرگ ممکن است زمان‌بر باشند. | در صورت وجود سخت‌افزار مناسب، اولویت را روی شتاب‌دهی گرافیکی می‌گذارد. |
+| ابزارهای پردازنده‌محور | کیفیت خوبی می‌دهند، اما روی فایل‌های بزرگ ممکن است زمان‌بر باشند. | در صورت وجود سخت‌افزار مناسب، اولویت را روی شتاب‌دهی سخت‌افزاری می‌گذارد. |
 | نرم‌افزارهای کامل تدوین | برای تولید و ویرایش حرفه‌ای عالی هستند، اما برای فشرده‌سازی ساده سنگین‌اند. | برای کاربری سبک‌تر و سریع‌تر طراحی شده است. |
-
-خلاصه اینکه این برنامه برای کاربری ساخته شده که نمی‌خواهد زمان زیادی صرف تنظیمات پیچیده کند. کاربر فایل را انتخاب می‌کند، یک حالت آماده می‌زند، فشرده‌سازی را شروع می‌کند و در پایان گزارش حجم خروجی را می‌بیند.
 
 ---
 
@@ -442,18 +661,17 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 | بخش | تغییرات اضافه‌شده یا بهبودیافته |
 |---|---|
-| پایداری رابط کاربری | پنجره قابل تغییر اندازه، بخش تنظیمات اسکرول‌دار، لاگ قابل تغییر اندازه و اسکرول با موس. |
+| حالت امن عمومی | برای تست عمومی مناسب‌تر است و اگر خطا رخ دهد، گزارش عیب‌یابی ذخیره می‌کند. |
+| ساخت گزارش خطا | کاربر می‌تواند گزارش کامل برای ارسال و بررسی بسازد. |
+| باز کردن لاگ‌ها | کاربر می‌تواند پوشه لاگ‌ها را مستقیم از داخل برنامه باز کند. |
+| عیب‌یابی گرافیکی | تست شتاب‌دهنده‌ها انجام می‌شود و گزارش ذخیره می‌شود. |
+| مسیرهای سخت‌افزاری | انتخاب بین مسیرهای انویدیا، اینتل، ای‌ام‌دی و پردازنده بهتر شده است. |
+| استراتژی پردازش | حالت‌های Auto Balanced، Maximum Hardware Acceleration، Stable Mode و CPU Only اضافه شده‌اند. |
+| دیکد سخت‌افزاری | حالت‌های Off، Auto و Aggressive اضافه شده‌اند. |
+| لاگ مسیر پردازش | Decode Mode، Scale Mode، Encode Mode و علت انتخاب مسیر نوشته می‌شود. |
 | امنیت صف پردازش | هنگام فشرده‌سازی، فایل‌ها و تنظیمات قفل می‌شوند تا صف پردازش خراب نشود. |
 | حذف پنجره مزاحم | ابزارهای پردازش ویدیو دیگر پنجره جداگانه و مزاحم باز نمی‌کنند. |
-| نمایش پیشرفت | نوار پیشرفت برای فایل جاری، کل عملیات و گزارش کنترل‌شده پیشرفت اضافه شد. |
-| گزارش نهایی | گزارش شامل حجم ورودی، حجم خروجی، درصد کاهش، تعداد موفق و ناموفق و مسیر خروجی است. |
-| خطاهای بهتر | خطاها واضح‌تر شده‌اند و برای رفع مشکل پیشنهاد نمایش داده می‌شود. |
-| حالت‌های آماده | حالت کلاس، متعادل، گیمینگ، فیلم و شبکه اجتماعی اضافه شده است. |
-| ذخیره تنظیمات | زبان، حالت آماده، مسیر خروجی، اندازه پنجره و تنظیمات سفارشی ذخیره می‌شوند. |
-| توقف پردازش | فشرده‌سازی از داخل خود برنامه قابل توقف است. |
-| خواندن اطلاعات ویدیو | نرخ فریم، رزولوشن، کدک و مدت ویدیو خوانده می‌شود. |
-| بررسی فضای دیسک | اگر فضای مسیر خروجی کم باشد، برنامه هشدار می‌دهد. |
-| ابزار لاگ | پاک کردن لاگ، ذخیره لاگ و ذخیره خودکار لاگ اضافه شده است. |
+| نمایش پیشرفت | نوار پیشرفت برای فایل جاری، کل عملیات و گزارش کنترل‌شده پیشرفت اضافه شده است. |
 
 ---
 
@@ -478,16 +696,6 @@ As the developer, I stay in direct contact with testers and users to collect fee
 </div>
 
 در صفحه اصلی، کاربر می‌تواند ویدیوها، مسیر خروجی، حالت آماده، فرمت خروجی و پارامترهای فشرده‌سازی را انتخاب کند.
-
-### منوی حالت‌های آماده
-
-<div align="center">
-
-![منوی حالت‌های آماده](screenshots/videox-presets.png)
-
-</div>
-
-حالت‌های آماده باعث می‌شوند کاربر بدون درگیر شدن با جزئیات فنی، تنظیمات مناسب را سریع انتخاب کند.
 
 ### صفحه پیشرفت و گزارش نهایی
 
@@ -519,124 +727,250 @@ Approximate reduction: 98.7%
 
 ---
 
-## حالت‌های آماده
+## راهنمای ساده تنظیمات
 
-برنامه چند حالت آماده دارد. هر حالت مقدارهای پیشنهادی را اعمال می‌کند، اما کاربر همچنان می‌تواند فرمت خروجی و پارامترها را تغییر دهد.
-
-### ۱. کلاس و اسکرین‌ریکورد
-
-مناسب کلاس ضبط‌شده، آموزش، جلسه و ویدیوهای کم‌تحرک.
+### برای کلاس، اسکرین‌ریکورد و جلسه آنلاین
 
 ```text
+Preset: Recorded Class / Screen Recording
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 720 or 1080
 FPS: 24
-Output Format: mp4
 GPU Quality: 32
 CPU CRF: 30
 Audio Bitrate: 32k
 Audio Channels: 1
 ```
 
-### ۲. حالت متعادل
-
-مناسب استفاده عمومی وقتی نمی‌دانید کدام حالت بهتر است.
+### برای ویدیوهای عمومی
 
 ```text
+Preset: Balanced
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 1080
 FPS: 0
-Output Format: mp4
 GPU Quality: 30
 CPU CRF: 28
 Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### ۳. گیمینگ و ویدیوهای پرتحرک
-
-مناسب گیم‌پلی، حرکت سریع دوربین و ویدیوهای پرتحرک.
+### برای گیمینگ و ویدیوهای پرتحرک
 
 ```text
+Preset: Gaming / High Motion
+Output Format: mp4
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
 Workers: 1
 Height: 1080
 FPS: 0 or 60
-Output Format: mp4
 GPU Quality: 28
 CPU CRF: 25
 Audio Bitrate: 64k
 Audio Channels: 2
 ```
 
-### ۴. فیلم و ویدیوهای سینمایی
+### برای تست سرعت روی سیستم‌های قوی
 
-مناسب زمانی که حفظ جزئیات تصویر مهم‌تر از رسیدن به کمترین حجم ممکن است.
+فقط وقتی تنظیمات امن درست کار کرد از این حالت استفاده کنید:
 
 ```text
-Workers: 1
-Height: 1080
-FPS: 0 or 24
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 1 or 2
 Output Format: mp4
-GPU Quality: 27
-CPU CRF: 24
-Audio Bitrate: 96k
-Audio Channels: 2
 ```
 
-### ۵. شبکه اجتماعی و حجم خیلی کم
-
-مناسب زمانی که کمترین حجم خروجی اولویت اصلی است.
+اگر خطا رخ داد، به این حالت برگردید:
 
 ```text
-Workers: 1
-Height: 480
-FPS: 24
-Output Format: mp4
-GPU Quality: 35
-CPU CRF: 33
-Audio Bitrate: 24k
-Audio Channels: 1
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+Hardware Decode: Off
 ```
 
 ---
 
-## بازه پارامترها
+## بهترین تنظیمات برای سیستم‌های مختلف
 
-| پارامتر | بازه مجاز یا پیشنهادی | توضیح |
+### ۱. لپتاپ قدیمی یا سیستم بدون کارت گرافیک مجزا
+
+```text
+Preset: Recorded Class / Screen Recording
+Performance Mode: Stable
+Processing Strategy: Auto Balanced or CPU Only
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Height: 720
+FPS: 24
+Output Format: mp4
+```
+
+در این حالت ممکن است برنامه با پردازنده کار کند. سرعت کمتر است، اما پایداری بیشتر است.
+
+### ۲. لپتاپ دارای گرافیک داخلی اینتل
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+اگر عیب‌یابی گرافیکی نشان دهد مسیر اینتل فعال است، برنامه ممکن است از شتاب‌دهنده اینتل استفاده کند.
+
+### ۳. سیستم دارای کارت گرافیک انویدیا
+
+تست اول:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+تست سرعت بعد از موفق بودن حالت امن:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 1 or 2
+```
+
+نکته: در ویندوز، مصرف شتاب‌دهنده ویدیو معمولاً در بخش Video Encode دیده می‌شود، نه لزوماً بخش 3D.
+
+### ۴. سیستم دارای کارت گرافیک ای‌ام‌دی
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+اگر مسیر سخت‌افزاری ای‌ام‌دی فعال باشد، برنامه از آن استفاده می‌کند. در غیر این صورت به حالت پردازنده برمی‌گردد.
+
+### ۵. سیستم دسکتاپ قوی
+
+ابتدا پایدار تست کنید:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+```
+
+سپس تست سرعت:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+General Safe Mode: On
+Hardware Decode: Aggressive
+Workers: 2
+```
+
+اگر خطا رخ داد، تعداد پردازش همزمان را روی ۱ بگذارید و Hardware Decode را خاموش کنید.
+
+---
+
+## راهنمای پارامترها
+
+| پارامتر | مقدار مجاز یا پیشنهادی | توضیح ساده |
 |---|---|---|
-| تعداد پردازش همزمان | ۱ تا ۴ | در حالت شتاب‌دهی گرافیکی، برنامه ممکن است برای پایداری مقدار را روی ۱ نگه دارد. |
+| تعداد پردازش همزمان | ۱ تا ۴ | تعداد فایل‌هایی که همزمان پردازش می‌شوند. برای پایداری، مقدار ۱ بهتر است. |
 | ارتفاع خروجی | ۱۴۴ به بالا | مقدارهای رایج شامل ۴۸۰، ۷۲۰ و ۱۰۸۰ هستند. |
-| نرخ فریم | ۰ به بالا | مقدار ۰ یعنی حفظ نرخ فریم اصلی. برای کلاس مقدار ۲۴ مناسب است و برای ویدیوهای پرتحرک مقدار ۳۰ یا ۶۰ بهتر است. |
-| فرمت خروجی | `mp4`, `mkv`, `mov`, `webm`, `avi` | برای استفاده عمومی، فرمت `mp4` پیشنهاد می‌شود. |
-| کیفیت حالت گرافیکی | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
-| کیفیت حالت پردازنده | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
+| نرخ فریم | ۰ به بالا | مقدار ۰ یعنی حفظ نرخ فریم اصلی. برای کلاس مقدار ۲۴ و برای ویدیوهای پرتحرک مقدار ۳۰ یا ۶۰ بهتر است. |
+| فرمت خروجی | `mp4`, `mkv`, `mov`, `webm`, `avi` | برای استفاده عمومی، `mp4` پیشنهاد می‌شود. |
+| حالت عملکرد | Stable یا High Throughput | حالت Stable پایدارتر است. حالت High Throughput برای تست سرعت روی سیستم‌های قوی‌تر است. |
+| استراتژی پردازش | Auto Balanced، Maximum Hardware Acceleration، Stable Mode، CPU Only | حالت Auto Balanced برای بیشتر کاربران پیشنهاد می‌شود. |
+| حالت امن عمومی | On یا Off | برای انتشار عمومی و گزارش خطا بهتر است روشن باشد. |
+| دیکد سخت‌افزاری | Off، Auto، Aggressive | حالت Off پایدارتر است. حالت Aggressive فقط برای تست سرعت روی سیستم‌های سازگار است. |
+| کیفیت گرافیکی | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
+| کیفیت پردازنده | ۱۸ تا ۴۵ | عدد کمتر یعنی کیفیت بهتر و حجم بیشتر. عدد بالاتر یعنی حجم کمتر و کیفیت پایین‌تر. |
 | کیفیت صدا | مثل `24k`, `32k`, `64k`, `96k` | عدد بیشتر یعنی کیفیت صدای بهتر و حجم بیشتر. |
 | کانال صدا | ۱ یا ۲ | مقدار ۱ یعنی مونو و مقدار ۲ یعنی استریو. |
+
+اگر نمی‌دانید چه چیزی انتخاب کنید، از این‌ها استفاده کنید:
+
+```text
+Performance Mode: Stable
+Processing Strategy: Auto Balanced
+General Safe Mode: On
+Hardware Decode: Off
+Workers: 1
+Output Format: mp4
+```
+
+---
+
+## لاگ‌ها و گزارش خطا
+
+در نسخه `v1.2.5` اگر خطا رخ دهد، برنامه می‌تواند گزارش عیب‌یابی بسازد.
+
+گزارش شامل این موارد است:
+
+- نسخه برنامه
+- تاریخ و ساعت
+- اطلاعات ویندوز و سیستم
+- مسیر ابزارهای پردازش ویدیو
+- شتاب‌دهنده‌های موجود
+- نتیجه تست شتاب‌دهنده‌ها
+- تنظیمات انتخاب‌شده
+- شتاب‌دهنده انتخاب‌شده
+- فایل ورودی فعلی
+- خطای پردازش
+- لاگ فعلی برنامه
+
+محل پیش‌فرض لاگ‌ها:
+
+```text
+C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
+```
+
+از دکمه Open Logs برای باز کردن پوشه لاگ‌ها و از دکمه Export Bug Report برای ساخت گزارش دستی استفاده کنید.
 
 ---
 
 ## توضیح فنی
 
-این برنامه یک رابط گرافیکی ویندوزی برای فشرده‌سازی ویدیو است و از موتور پردازش ویدیویی شناخته‌شده استفاده می‌کند. برنامه اطلاعات ویدیو را می‌خواند، حالت مناسب را انتخاب می‌کند و سپس فایل خروجی را با تنظیمات انتخاب‌شده می‌سازد.
+این برنامه یک رابط گرافیکی ویندوزی برای فشرده‌سازی ویدیو است و از موتور پردازش ویدیویی شناخته‌شده استفاده می‌کند. برنامه اطلاعات ویدیو را می‌خواند، مسیر مناسب را انتخاب می‌کند و سپس فایل خروجی را با تنظیمات انتخاب‌شده می‌سازد.
 
 | بخش | نقش |
 |---|---|
 | موتور فشرده‌سازی | اجرای پردازش اصلی ویدیو و تولید فایل خروجی. |
 | ابزار خواندن اطلاعات ویدیو | خواندن نرخ فریم، رزولوشن، کدک و مدت ویدیو. |
-| شتاب‌دهنده گرافیکی | استفاده از کارت گرافیک برای سرعت بیشتر در خروجی‌های رایج. |
-| حالت پردازنده | استفاده خودکار وقتی شتاب‌دهنده گرافیکی در دسترس نیست. |
-| کدک فشرده‌سازی اصلی | کاهش حجم قوی برای خروجی‌های رایج مثل `mp4`, `mkv`, `mov`. |
-| خروجی وب | استفاده از روش مناسب برای خروجی `webm`. |
-
-### رفتار حالت گرافیکی و پردازنده
-
-| فرمت خروجی | حالت پردازش |
-|---|---|
-| `mp4` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
-| `mkv` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
-| `mov` | در صورت وجود شتاب‌دهنده مناسب، با کارت گرافیک؛ در غیر این صورت با پردازنده. |
-| `webm` | معمولاً با پردازنده. |
-| `avi` | بسته به روش خروجی، با کارت گرافیک یا پردازنده. |
+| مسیر انویدیا | استفاده از شتاب‌دهنده ویدیویی انویدیا در صورت امکان. |
+| مسیر اینتل | استفاده از شتاب‌دهنده ویدیویی اینتل در صورت امکان. |
+| مسیر ای‌ام‌دی | استفاده از شتاب‌دهنده ویدیویی ای‌ام‌دی در صورت امکان. |
+| حالت پردازنده | استفاده خودکار وقتی شتاب‌دهنده سخت‌افزاری در دسترس نیست. |
 
 برای استفاده عمومی، فرمت `mp4` پیشنهاد می‌شود.
 
@@ -647,7 +981,7 @@ Audio Channels: 1
 از بخش انتشارها، آخرین فایل فشرده برنامه را دانلود کنید.
 
 ```text
-VideoX_Compressor_v1.x_Beta.zip
+VideoX_Compressor_v1.2.5_Beta_General_Safe_Diagnostics.zip
 ```
 
 فایل را از حالت فشرده خارج کنید و این فایل را اجرا کنید:
@@ -672,44 +1006,6 @@ ffmpeg/bin/ffprobe.exe
 
 ---
 
-## نحوه دریافت لایسنس
-
-برنامه از سیستم لایسنس بر اساس کد دستگاه استفاده می‌کند.
-
-مراحل فعال‌سازی:
-
-1. فایل برنامه را اجرا کنید.
-2. در صفحه فعال‌سازی، کد دستگاه را کپی کنید.
-3. کد دستگاه را در تلگرام به آیدی زیر ارسال کنید.
-
-```text
-@thelouis_mahdi
-```
-
-4. بعد از بررسی، فایل لایسنس را دریافت می‌کنید.
-5. فایل لایسنس را کنار فایل اجرایی برنامه قرار دهید یا از داخل برنامه انتخاب کنید.
-6. روی دکمه بررسی دوباره بزنید.
-7. وارد برنامه شوید.
-
-لایسنس مخصوص همان دستگاه است و روی دستگاه دیگر فعال نمی‌شود.
-
----
-
-## نحوه استفاده
-
-1. فایل فشرده برنامه را دانلود و خارج کنید.
-2. فایل اجرایی برنامه را اجرا کنید.
-3. برنامه را با فایل لایسنس فعال کنید.
-4. ویدیوها را انتخاب کنید یا داخل برنامه بکشید و رها کنید.
-5. پوشه خروجی را انتخاب کنید.
-6. یک حالت آماده انتخاب کنید یا تنظیمات را دستی تغییر دهید.
-7. فرمت خروجی را انتخاب کنید.
-8. دکمه شروع فشرده‌سازی را بزنید.
-9. پیشرفت پردازش را داخل برنامه ببینید.
-10. گزارش نهایی را در بخش لاگ بررسی کنید.
-
----
-
 ## وضعیت بتا
 
 برنامه در حال حاضر در وضعیت بتا قرار دارد. هنوز یک محصول تجاری کاملاً نهایی‌شده نیست، اما به‌صورت فعال در همین مسیر توسعه پیدا می‌کند.
@@ -717,7 +1013,9 @@ ffmpeg/bin/ffprobe.exe
 تمرکز فعلی توسعه:
 
 - بهترین نتیجه روی کلاس‌های ضبط‌شده و ویدیوهای کم‌تحرک
-- پایداری بهتر برای پردازش چند فایل
+- سازگاری بهتر با سخت‌افزارهای مختلف
+- تست عمومی امن‌تر
+- گزارش خطای بهتر
 - حالت‌های آماده بهتر برای ویدیوهای پرتحرک
 - بهبود رابط کاربری و تجربه کاربر
 - دقیق‌تر شدن تخمین زمان
