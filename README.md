@@ -36,13 +36,13 @@
 
 **VideoX Compressor** is a Windows video compression application built to make heavy video files much smaller through a simple graphical interface.
 
-The main focus of the project is **hardware-accelerated compression**. When a supported NVIDIA GPU is available, VideoX uses **NVIDIA NVENC** to offload video encoding work from the CPU to the GPU. This makes compression much faster than typical CPU-only workflows and is especially useful on laptops and PCs with NVIDIA graphics cards.
+The project focuses on **hardware-accelerated compression**. When a supported NVIDIA GPU is available, VideoX uses **NVIDIA NVENC** to move video encoding work from the CPU to the GPU. This can make compression much faster than CPU-only workflows, especially on laptops and PCs with NVIDIA graphics cards.
 
-The strongest current use case is **low-motion video**, such as recorded classes, screen recordings, tutorials, online meetings, slide-based educational videos and university lecture recordings.
+The strongest current use case is **low-motion video**, including recorded classes, screen recordings, tutorials, online meetings, slide-based educational videos and university lecture recordings.
 
-For this type of content, VideoX can produce a **dramatic file-size reduction** while keeping the output highly usable for watching, sharing and archiving.
+For this type of content, VideoX can produce a **dramatic file-size reduction** while keeping the output practical for watching, sharing and archiving.
 
-> VideoX is currently a **Beta product**. It is usable and actively tested, but it is still improving toward a more polished commercial-level release.
+> VideoX is currently a **Beta product**. It is usable and actively tested, but it is still being improved toward a more polished commercial-level release.
 
 ---
 
@@ -63,8 +63,6 @@ For this type of content, VideoX can produce a **dramatic file-size reduction** 
 
 ## Important Changes in the Latest Beta
 
-Compared with earlier builds, the latest beta adds important product-level improvements:
-
 | Area | Added / Improved |
 |---|---|
 | UI stability | Resizable window, scrollable settings panel, resizable log area and mouse-wheel scrolling. |
@@ -76,7 +74,7 @@ Compared with earlier builds, the latest beta adds important product-level impro
 | Ready presets | Class Recording, Balanced, Gaming / High Motion, Movie / Cinematic, Social Media / Ultra Small. |
 | Save settings | Saves language, preset, output folder, window size and custom settings. |
 | Cancel support | Compression can be stopped from inside the UI. |
-| ffprobe metadata | Reads FPS, resolution, codec and duration for better reporting and warnings. |
+| Metadata reading | Reads FPS, resolution, codec and duration for better reporting and warnings. |
 | Disk check | Warns if the output drive may not have enough free space. |
 | Log tools | Clear Log, Save Log and automatic log saving. |
 
@@ -85,17 +83,6 @@ Compared with earlier builds, the latest beta adds important product-level impro
 <a id="screenshots"></a>
 
 ## Screenshots
-
-Upload the screenshots inside the `screenshots/` folder with these exact names:
-
-| Screenshot | File name |
-|---|---|
-| License / Device ID page | `screenshots/videox-license-activation.png` |
-| Main settings page | `screenshots/videox-main-settings.png` |
-| Preset dropdown page | `screenshots/videox-presets.png` |
-| Progress and final report page | `screenshots/videox-progress-report.png` |
-| Real class compression comparison | `screenshots/class_compression_example.jpg` |
-| GPU usage benchmark | `screenshots/gpu_usage.png` |
 
 ### License / Device ID Activation
 
@@ -377,8 +364,8 @@ Current focus:
 - best results on recorded classes and low-motion educational videos
 - better stability for batch processing
 - better high-motion presets
-- improved UI/UX
-- more accurate ETA calculation
+- improved UI and user experience
+- more accurate time estimation
 - continuous feedback from testers and real users
 
 As the developer, I stay in direct contact with testers and users to collect feedback, fix bugs and improve the application over time.
@@ -439,26 +426,55 @@ As the developer, I stay in direct contact with testers and users to collect fee
 
 ## اسکرین‌شات‌ها
 
-عکس‌ها را داخل پوشه زیر آپلود کنید:
+### صفحه فعال‌سازی و کد دستگاه
 
-```text
-screenshots/
-```
+<div align="center">
 
-نام فایل‌ها باید این‌طور باشد:
+![صفحه فعال‌سازی و کد دستگاه](screenshots/videox-license-activation.png)
 
-| عکس | نام فایل |
-|---|---|
-| صفحه لایسنس و کد دستگاه | `videox-license-activation.png` |
-| صفحه اصلی تنظیمات | `videox-main-settings.png` |
-| منوی حالت‌های آماده | `videox-presets.png` |
-| صفحه پیشرفت و گزارش نهایی | `videox-progress-report.png` |
-| نمونه واقعی فشرده‌سازی کلاس | `class_compression_example.jpg` |
-| تست استفاده از کارت گرافیک | `gpu_usage.png` |
+</div>
+
+در این صفحه، کد دستگاه نمایش داده می‌شود و کاربر می‌تواند آن را برای دریافت لایسنس ارسال کند.
+
+### صفحه اصلی تنظیمات
+
+<div align="center">
+
+![صفحه اصلی تنظیمات](screenshots/videox-main-settings.png)
+
+</div>
+
+در صفحه اصلی، کاربر می‌تواند ویدیوها، مسیر خروجی، حالت آماده، فرمت خروجی و پارامترهای فشرده‌سازی را انتخاب کند.
+
+### منوی حالت‌های آماده
+
+<div align="center">
+
+![منوی حالت‌های آماده](screenshots/videox-presets.png)
+
+</div>
+
+حالت‌های آماده باعث می‌شوند کاربر بدون درگیر شدن با جزئیات فنی، تنظیمات مناسب را سریع انتخاب کند.
+
+### صفحه پیشرفت و گزارش نهایی
+
+<div align="center">
+
+![صفحه پیشرفت و گزارش نهایی](screenshots/videox-progress-report.png)
+
+</div>
+
+در این بخش، پیشرفت پردازش، زمان واقعی، حجم خروجی و درصد کاهش حجم نمایش داده می‌شود.
 
 ---
 
 ## نمونه واقعی فشرده‌سازی کلاس
+
+<div align="center">
+
+![نمونه واقعی فشرده‌سازی کلاس](screenshots/class_compression_example.jpg)
+
+</div>
 
 ```text
 Original file size: 1.96 GB
