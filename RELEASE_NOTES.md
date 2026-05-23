@@ -3,7 +3,7 @@
 ## Current Public Beta
 
 ```text
-VideoX Compressor v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+VideoX Compressor v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 ```
 
 VideoX Compressor is a Windows video compression application focused on simple, practical and hardware-accelerated compression for recorded classes, tutorials, screen recordings, online meetings, low-motion lecture videos and everyday videos that need smaller file size.
@@ -14,54 +14,93 @@ The project is still in **Beta**. The strongest current results are usually on l
 
 ## Version Timeline
 
-| Version | Release Focus |
-|---|---|
-| v1.2.5 Beta | General Safe Diagnostics, bug reports, safer public testing. |
-| v1.2.6 Beta | Already-compressed video warning and bitrate analysis. |
-| v1.2.7 Beta | Cleanup of failed, cancelled or corrupted output files. |
-| v1.2.8 Beta | Smart Recompression for already-compressed sources. |
-| v1.2.9 Beta | Smart Size Target for better real size reduction. |
-| v1.3.0 Beta | GPU Quality slider. |
-| v1.3.1 Beta | Help buttons for GPU Quality and CPU CRF. |
-| v1.3.2 Beta | CPU CRF slider. |
-| v1.3.3 Beta | RTL Persian help popup fix. |
-| v1.3.4 Beta | File queue panel and safe retry behavior. |
-| v1.3.5 Beta | Legacy NVIDIA FFmpeg fallback for older NVIDIA drivers. |
+| Version | Release Focus | Status |
+|---|---|---|
+| v1.2.5 Beta | General Safe Diagnostics, bug reports, safer public testing. | Supported history |
+| v1.2.6 Beta | Already-compressed video warning and bitrate analysis. | Supported history |
+| v1.2.7 Beta | Cleanup of failed, cancelled or corrupted output files. | Supported history |
+| v1.2.8 Beta | Smart Recompression for already-compressed sources. | Supported history |
+| v1.2.9 Beta | Smart Size Target for better real size reduction. | Supported history |
+| v1.3.0 Beta | GPU Quality slider. | Supported history |
+| v1.3.1 Beta | Help buttons for GPU Quality and CPU CRF. | Supported history |
+| v1.3.2 Beta | CPU CRF slider. | Supported history |
+| v1.3.3 Beta | RTL Persian help popup fix. | Supported history |
+| v1.3.4 Beta | File queue panel and safe retry behavior. | Stable base |
+| v1.3.5 Beta | Legacy NVIDIA FFmpeg fallback attempt. | Deprecated / removed because it was not stable |
+| v1.3.6 Beta | Stable Legacy FFmpeg Fallback rebuilt on v1.3.4. | Current recommended beta |
 
 ---
 
 # English Release Notes
 
-## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 
 ### Main Goal
 
-This version improves hardware compatibility, especially on laptops and systems with older NVIDIA drivers where the NVIDIA GPU is detected but NVENC fails at runtime.
+Version `v1.3.6` replaces the unstable `v1.3.5` build.
 
-### New Features
+The goal of this release is to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
 
-- Added support for two FFmpeg profiles:
+### Important Notice About v1.3.5
+
+Version `v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback` was removed / deprecated because it was not stable enough for public use.
+
+Known problems in the v1.3.5 build included:
+
+- Some UI buttons and controls were missing compared to v1.3.4.
+- Log behavior was not consistent with the stable v1.3.4 version.
+- Compression behavior was not reliable enough.
+- The implementation changed more than intended instead of only adding Legacy FFmpeg fallback.
+
+For this reason, `v1.3.6` should be used instead of `v1.3.5`.
+
+### Base Version
+
+```text
+Base: v1.3.4 Beta - File Queue & Safe Retry
+Added: Stable Legacy NVIDIA FFmpeg Fallback
+Recommended build: v1.3.6 Beta
+```
+
+### What Was Preserved From v1.3.4
+
+- Stable v1.3.4 UI layout.
+- File queue panel.
+- Removable input files with `X` button before compression.
+- Compression workflow from v1.3.4.
+- GPU Quality slider.
+- CPU CRF slider.
+- `!` help buttons for quality settings.
+- RTL Persian help popup fix.
+- Smart Size Target.
+- Already-compressed video warning.
+- Output validation.
+- Failed / invalid / cancelled output cleanup.
+- Safe retry behavior.
+- Final report behavior.
+- General Safe Mode and diagnostic reports.
+
+### New / Improved in v1.3.6
+
+- Added stable support for two FFmpeg profiles:
   - `ffmpeg/modern`
   - `ffmpeg/legacy-nvidia`
-- Added Legacy NVIDIA FFmpeg fallback.
+- Modern FFmpeg is tested first.
+- If NVIDIA GPU is detected but modern NVENC fails, VideoX tests the Legacy NVIDIA FFmpeg build.
+- If Legacy NVIDIA FFmpeg passes the runtime test, it can be used only for NVIDIA NVENC encoding.
+- If both modern and legacy NVENC fail, VideoX falls back to Intel QSV, AMD AMF or CPU mode.
+- Added clearer GPU Diagnostics output for FFmpeg profiles.
 - Added NVIDIA driver version diagnostics.
-- Added warnings for old NVIDIA drivers.
+- Added warning for old NVIDIA drivers.
 - Added stronger warning for very old NVIDIA drivers.
-- Improved GPU Diagnostics output.
-- Improved encoder selection logic.
-- Improved fallback order:
-  - Modern NVIDIA NVENC
-  - Legacy NVIDIA NVENC
-  - Intel QSV
-  - AMD AMF
-  - CPU fallback
 - Logs which FFmpeg profile is selected.
-- Keeps Intel, AMD and CPU paths on the modern FFmpeg build when possible.
+- Keeps the stable v1.3.4 compression pipeline intact.
+- Avoids removing useful recent logs too aggressively; recent logs are kept for troubleshooting.
 
 ### Required Package Structure
 
 ```text
-VideoX_Compressor_v1.3.5_Beta_Legacy_NVIDIA_Fallback/
+VideoX_Compressor_v1.3.6_Beta_Stable_Legacy_FFmpeg_Fallback/
 ├── VideoX.exe
 ├── ffmpeg/
 │   ├── modern/
@@ -79,11 +118,50 @@ VideoX_Compressor_v1.3.5_Beta_Legacy_NVIDIA_Fallback/
 
 ### Notes
 
+- `v1.3.6` is the recommended replacement for `v1.3.5`.
 - Legacy FFmpeg is used only when modern NVIDIA NVENC fails and legacy NVENC passes the runtime test.
-- If both modern and legacy NVENC fail, VideoX falls back to Intel QSV, AMD AMF or CPU mode.
-- For very old NVIDIA drivers, updating the driver is still recommended.
+- Intel, AMD and CPU paths should remain on the modern FFmpeg build when possible.
+- Updating very old NVIDIA drivers is still recommended.
 - Do not delete the `ffmpeg` folder.
 - Do not delete the `_internal` folder.
+- Do not include `license.key` inside the public ZIP package.
+
+---
+
+## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+
+### Status
+
+```text
+Deprecated / Removed
+```
+
+### Reason
+
+Version `v1.3.5` was an attempt to add Legacy NVIDIA FFmpeg fallback, but it was not stable enough. It introduced regressions compared to the stable `v1.3.4` build.
+
+The version is documented here for transparency, but it is not recommended for release or public distribution.
+
+### Intended Features
+
+- Dual FFmpeg support:
+  - `ffmpeg/modern`
+  - `ffmpeg/legacy-nvidia`
+- Legacy NVIDIA FFmpeg fallback.
+- NVIDIA driver version diagnostics.
+- Warning for old NVIDIA drivers.
+- Fallback order from NVIDIA to Intel / AMD / CPU.
+
+### Problems Found
+
+- Some UI buttons were missing compared to v1.3.4.
+- Log handling was changed in a way that made troubleshooting harder.
+- Compression was not working reliably enough.
+- The implementation was not a clean patch on top of v1.3.4.
+
+### Resolution
+
+The feature was rebuilt on top of the stable `v1.3.4` codebase and released as `v1.3.6 Beta - Stable Legacy FFmpeg Fallback`.
 
 ---
 
@@ -413,7 +491,7 @@ Each license is device-specific and works only on the registered device.
 ## نسخه فعلی عمومی
 
 ```text
-VideoX Compressor v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+VideoX Compressor v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 ```
 
 ویدیو ایکس کامپرسور یک برنامه ویندوزی برای فشرده‌سازی ویدیو است. تمرکز برنامه روی فشرده‌سازی ساده، کاربردی و در صورت امکان شتاب‌داده‌شده با سخت‌افزار است.
@@ -424,45 +502,91 @@ VideoX Compressor v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
 
 ## جدول نسخه‌ها
 
-| نسخه | تمرکز اصلی |
-|---|---|
-| v1.2.5 Beta | عیب‌یابی امن، گزارش خطا و آماده‌سازی برای تست عمومی. |
-| v1.2.6 Beta | هشدار برای ویدیوهای از قبل فشرده‌شده و تحلیل بیت‌ریت. |
-| v1.2.7 Beta | پاک‌سازی خروجی خراب، ناقص یا کنسل‌شده. |
-| v1.2.8 Beta | فشرده‌سازی هوشمندتر برای فایل‌های از قبل فشرده‌شده. |
-| v1.2.9 Beta | هدف‌گذاری حجمی هوشمند برای کاهش واقعی‌تر حجم. |
-| v1.3.0 Beta | اسلایدر کیفیت گرافیکی. |
-| v1.3.1 Beta | دکمه راهنما برای کیفیت GPU و CPU. |
-| v1.3.2 Beta | اسلایدر کیفیت CPU. |
-| v1.3.3 Beta | اصلاح راست‌به‌چپ پنجره راهنمای فارسی. |
-| v1.3.4 Beta | لیست فایل‌های ورودی و تلاش دوباره امن. |
-| v1.3.5 Beta | پشتیبانی از FFmpeg لگسی برای درایورهای قدیمی‌تر انویدیا. |
+| نسخه | تمرکز اصلی | وضعیت |
+|---|---|---|
+| v1.2.5 Beta | عیب‌یابی امن، گزارش خطا و آماده‌سازی برای تست عمومی. | تاریخچه پشتیبانی‌شده |
+| v1.2.6 Beta | هشدار برای ویدیوهای از قبل فشرده‌شده و تحلیل بیت‌ریت. | تاریخچه پشتیبانی‌شده |
+| v1.2.7 Beta | پاک‌سازی خروجی خراب، ناقص یا کنسل‌شده. | تاریخچه پشتیبانی‌شده |
+| v1.2.8 Beta | فشرده‌سازی هوشمندتر برای فایل‌های از قبل فشرده‌شده. | تاریخچه پشتیبانی‌شده |
+| v1.2.9 Beta | هدف‌گذاری حجمی هوشمند برای کاهش واقعی‌تر حجم. | تاریخچه پشتیبانی‌شده |
+| v1.3.0 Beta | اسلایدر کیفیت گرافیکی. | تاریخچه پشتیبانی‌شده |
+| v1.3.1 Beta | دکمه راهنما برای کیفیت GPU و CPU. | تاریخچه پشتیبانی‌شده |
+| v1.3.2 Beta | اسلایدر کیفیت CPU. | تاریخچه پشتیبانی‌شده |
+| v1.3.3 Beta | اصلاح راست‌به‌چپ پنجره راهنمای فارسی. | تاریخچه پشتیبانی‌شده |
+| v1.3.4 Beta | لیست فایل‌های ورودی و تلاش دوباره امن. | پایه پایدار |
+| v1.3.5 Beta | تلاش اولیه برای FFmpeg لگسی انویدیا. | حذف‌شده / ناپایدار |
+| v1.3.6 Beta | نسخه پایدار قابلیت FFmpeg لگسی بر پایه v1.3.4. | نسخه پیشنهادی فعلی |
 
 ---
 
-## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 
 ### هدف نسخه
 
-این نسخه برای سازگاری بهتر با سیستم‌هایی ساخته شده که کارت گرافیک انویدیا دارند، اما به دلیل قدیمی بودن درایور یا ناسازگاری زمان اجرا، مسیر NVENC با FFmpeg جدید باز نمی‌شود.
+نسخه `v1.3.6` جایگزین نسخه ناپایدار `v1.3.5` شد.
 
-### تغییرات
+هدف این نسخه این است که رفتار پایدار نسخه `v1.3.4 File Queue & Safe Retry` حفظ شود و قابلیت استفاده از FFmpeg لگسی انویدیا برای درایورهای قدیمی‌تر بدون خراب شدن رابط کاربری، لاگ‌ها، دکمه‌ها و فرآیند فشرده‌سازی اضافه شود.
 
-- پشتیبانی از دو پروفایل FFmpeg اضافه شد:
+### اطلاعیه مهم درباره v1.3.5
+
+نسخه `v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback` به دلیل ناپایداری از مسیر انتشار حذف/منسوخ شد.
+
+مشکلات دیده‌شده در نسخه v1.3.5:
+
+- بعضی دکمه‌ها و کنترل‌های رابط کاربری نسبت به v1.3.4 کم شده بودند.
+- رفتار لاگ‌ها با نسخه پایدار v1.3.4 هماهنگ نبود.
+- فشرده‌سازی به اندازه کافی قابل اعتماد نبود.
+- تغییرات بیشتر از حد لازم بودند و قابلیت لگسی به شکل تمیز روی v1.3.4 اضافه نشده بود.
+
+به همین دلیل، به جای `v1.3.5` باید از `v1.3.6` استفاده شود.
+
+### پایه نسخه
+
+```text
+Base: v1.3.4 Beta - File Queue & Safe Retry
+Added: Stable Legacy NVIDIA FFmpeg Fallback
+Recommended build: v1.3.6 Beta
+```
+
+### موارد حفظ‌شده از v1.3.4
+
+- رابط کاربری پایدار نسخه v1.3.4.
+- پنل لیست فایل‌های انتخاب‌شده.
+- حذف فایل‌های ورودی با دکمه `X` قبل از شروع.
+- مسیر فشرده‌سازی نسخه v1.3.4.
+- اسلایدر کیفیت GPU.
+- اسلایدر کیفیت CPU.
+- دکمه‌های راهنمای `!`.
+- اصلاح راست‌به‌چپ راهنمای فارسی.
+- Smart Size Target.
+- هشدار ویدیوهای از قبل فشرده‌شده.
+- بررسی اعتبار خروجی.
+- پاک‌سازی خروجی خراب، نامعتبر یا کنسل‌شده.
+- تلاش دوباره امن.
+- گزارش نهایی.
+- حالت General Safe Mode و گزارش عیب‌یابی.
+
+### تغییرات اضافه‌شده در v1.3.6
+
+- پشتیبانی پایدار از دو پروفایل FFmpeg:
   - `ffmpeg/modern`
   - `ffmpeg/legacy-nvidia`
-- اگر انویدیا وجود داشته باشد ولی NVENC با نسخه مدرن خطا بدهد، برنامه نسخه لگسی را تست می‌کند.
-- اگر نسخه لگسی موفق باشد، فقط برای NVIDIA NVENC از همان استفاده می‌شود.
-- نسخه درایور انویدیا در عیب‌یابی بررسی می‌شود.
-- اگر درایور قدیمی باشد، برنامه هشدار می‌دهد.
-- اگر درایور خیلی قدیمی باشد، برنامه هشدار جدی می‌دهد که آپدیت درایور لازم است.
-- ترتیب fallback بهتر شد: انویدیا مدرن، انویدیا لگسی، اینتل، ای‌ام‌دی، پردازنده.
+- ابتدا FFmpeg مدرن تست می‌شود.
+- اگر کارت انویدیا وجود داشته باشد ولی NVENC با نسخه مدرن خطا بدهد، برنامه نسخه لگسی را تست می‌کند.
+- اگر نسخه لگسی تست زمان اجرا را پاس کند، فقط برای NVIDIA NVENC از همان استفاده می‌شود.
+- اگر هر دو مسیر مدرن و لگسی انویدیا خطا بدهند، برنامه به Intel QSV، AMD AMF یا CPU برمی‌گردد.
+- خروجی GPU Diagnostics واضح‌تر شد.
+- نسخه درایور انویدیا بررسی می‌شود.
+- اگر درایور انویدیا قدیمی باشد، هشدار نمایش داده می‌شود.
+- اگر درایور خیلی قدیمی باشد، هشدار جدی‌تری برای نیاز به آپدیت نمایش داده می‌شود.
 - در لاگ نوشته می‌شود کدام پروفایل FFmpeg انتخاب شده است.
+- مسیر فشرده‌سازی پایدار v1.3.4 حفظ شد.
+- لاگ‌های جدید و اخیر به‌صورت شدید پاک نمی‌شوند تا امکان عیب‌یابی باقی بماند.
 
 ### ساختار لازم پوشه‌ها
 
 ```text
-VideoX_Compressor_v1.3.5_Beta_Legacy_NVIDIA_Fallback/
+VideoX_Compressor_v1.3.6_Beta_Stable_Legacy_FFmpeg_Fallback/
 ├── VideoX.exe
 ├── ffmpeg/
 │   ├── modern/
@@ -477,6 +601,33 @@ VideoX_Compressor_v1.3.5_Beta_Legacy_NVIDIA_Fallback/
 ├── README.txt
 └── LICENSE_NOTICE.txt
 ```
+
+---
+
+## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
+
+### وضعیت
+
+```text
+حذف‌شده / منسوخ‌شده
+```
+
+### دلیل
+
+نسخه `v1.3.5` تلاشی برای اضافه کردن FFmpeg لگسی انویدیا بود، اما به اندازه کافی پایدار نبود و نسبت به نسخه پایدار `v1.3.4` چند regression ایجاد کرد.
+
+این نسخه فقط برای شفافیت در تاریخچه ذکر شده و برای انتشار عمومی یا استفاده پیشنهاد نمی‌شود.
+
+### مشکلات دیده‌شده
+
+- بعضی دکمه‌های رابط کاربری نسبت به v1.3.4 حذف یا کم شده بودند.
+- مدیریت لاگ‌ها به شکلی تغییر کرده بود که عیب‌یابی را سخت‌تر می‌کرد.
+- فشرده‌سازی قابل اعتماد نبود.
+- قابلیت جدید به شکل تمیز و محدود روی v1.3.4 اضافه نشده بود.
+
+### راه‌حل
+
+قابلیت FFmpeg لگسی دوباره بر پایه نسخه پایدار `v1.3.4` ساخته شد و با عنوان `v1.3.6 Beta - Stable Legacy FFmpeg Fallback` منتشر شد.
 
 ---
 
