@@ -3,7 +3,7 @@
 ## Current Public Beta
 
 ```text
-VideoX Compressor v1.3.6 Beta - Stable Legacy FFmpeg Fallback
+VideoX Compressor v1.3.9 Beta - NVENC Runtime Test Fix
 ```
 
 VideoX Compressor is a Windows video compression application focused on simple, practical and hardware-accelerated compression for recorded classes, tutorials, screen recordings, online meetings, low-motion lecture videos and everyday videos that need smaller file size.
@@ -27,19 +27,135 @@ The project is still in **Beta**. The strongest current results are usually on l
 | v1.3.3 Beta | RTL Persian help popup fix. | Supported history |
 | v1.3.4 Beta | File queue panel and safe retry behavior. | Stable base |
 | v1.3.5 Beta | Legacy NVIDIA FFmpeg fallback attempt. | Deprecated / removed because it was not stable |
-| v1.3.6 Beta | Stable Legacy FFmpeg Fallback rebuilt on v1.3.4. | Current recommended beta |
+| v1.3.6 Beta | Stable Legacy FFmpeg Fallback rebuilt on v1.3.4. | Stable base with legacy fallback |
+| v1.3.7 Beta | Manual GPU Preference selection. | Superseded by v1.3.8 |
+| v1.3.8 Beta | Dynamic GPU Preference filtering. | Superseded by v1.3.9 |
+| v1.3.9 Beta | NVENC runtime test fix for hybrid laptops. | Current recommended beta |
 
 ---
 
 # English Release Notes
 
+## v1.3.9 Beta - NVENC Runtime Test Fix
+
+### Main Goal
+
+Version `v1.3.9` fixes an important hardware-detection issue found after testing `v1.3.8` on a hybrid laptop with **AMD + NVIDIA RTX 4060 Laptop GPU**.
+
+The NVIDIA GPU was detected correctly, the NVIDIA driver was current, and FFmpeg listed `hevc_nvenc` and `h264_nvenc`, but the runtime test failed. As a result, VideoX did not show NVIDIA in GPU Preference and selected AMD AMF instead.
+
+### Root Cause
+
+The internal NVENC runtime test used a very small synthetic test frame.
+
+Some NVIDIA NVENC paths, especially on hybrid laptops or with certain FFmpeg/NVIDIA runtime combinations, reject very small frame dimensions during encoder initialization.
+
+This made VideoX think that NVIDIA NVENC was unusable even when the NVIDIA GPU and driver were valid.
+
+### Fixed in v1.3.9
+
+- Updated NVENC runtime test dimensions.
+- Runtime test now uses a safer HD-sized test input.
+- Runtime test uses `1280x720` instead of a very small frame.
+- Runtime test uses a more compatible pixel format for NVENC.
+- NVIDIA NVENC should now appear in GPU Preference when it actually works.
+- The app should no longer incorrectly hide NVIDIA only because the test frame was too small.
+- Dynamic GPU Preference filtering from v1.3.8 is preserved.
+- Manual GPU Preference selection from v1.3.7 is preserved.
+- Stable Legacy NVIDIA FFmpeg fallback from v1.3.6 is preserved.
+- v1.3.4 UI, file queue, logs and compression workflow are preserved.
+
+### Expected Behavior After the Fix
+
+On a valid NVIDIA system, VideoX should be able to show:
+
+```text
+Auto Best Available
+NVIDIA NVENC
+AMD AMF
+CPU Only
+```
+
+or, depending on the system:
+
+```text
+Auto Best Available
+NVIDIA NVENC
+Intel QSV
+CPU Only
+```
+
+The exact list depends on runtime tests. VideoX should only show hardware options that pass a real encoder test.
+
+### Notes for Hybrid GPU Laptops
+
+On laptops with two GPUs, Windows may still route processes differently depending on system settings.
+
+For best results, set these files to **High Performance** in Windows Graphics Settings:
+
+```text
+VideoX.exe
+ffmpeg/modern/bin/ffmpeg.exe
+ffmpeg/legacy-nvidia/bin/ffmpeg.exe
+```
+
+NVIDIA Control Panel alone may not be enough because the actual encoding process is performed by `ffmpeg.exe`.
+
+---
+
+## v1.3.8 Beta - Dynamic GPU Preference & Runtime Filtering
+
+### Main Goal
+
+Version `v1.3.8` improved GPU selection on systems with multiple graphics devices.
+
+### New Features
+
+- Added dynamic GPU Preference filtering.
+- GPU Preference list shows only hardware paths that pass runtime tests.
+- Always keeps:
+  - `Auto Best Available`
+  - `CPU Only`
+- Shows `NVIDIA NVENC` only if NVENC passes runtime tests.
+- Shows `Intel QSV` only if QSV passes runtime tests.
+- Shows `AMD AMF` only if AMF passes runtime tests.
+- The hardware status text above the progress bar updates when GPU Preference changes.
+- The status text shows selected encoder, vendor and FFmpeg profile.
+- Saved GPU Preference automatically falls back to Auto if that hardware is not available on the current system.
+
+---
+
+## v1.3.7 Beta - GPU Preference Selection
+
+### Main Goal
+
+Version `v1.3.7` added manual GPU Preference selection for systems where Auto mode did not pick the desired hardware path.
+
+### New Features
+
+- Added GPU Preference option to the UI.
+- User can choose between available processing preferences:
+  - Auto Best Available
+  - NVIDIA NVENC
+  - Intel QSV
+  - AMD AMF
+  - CPU Only
+- Auto mode keeps the previous automatic hardware selection behavior.
+- NVIDIA preference tests modern NVENC first, then Legacy NVIDIA FFmpeg if needed.
+- Intel preference tests Intel QSV directly.
+- AMD preference tests AMD AMF directly.
+- CPU Only disables hardware encoding.
+- Logs selected preference, selected encoder, vendor, FFmpeg profile and whether Legacy NVIDIA was used.
+
+---
+
 ## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 
 ### Main Goal
 
-Version `v1.3.6` replaces the unstable `v1.3.5` build.
+Version `v1.3.6` replaced the unstable `v1.3.5` build.
 
-The goal of this release is to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
+The goal of this release was to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
 
 ### Important Notice About v1.3.5
 
@@ -52,15 +168,7 @@ Known problems in the v1.3.5 build included:
 - Compression behavior was not reliable enough.
 - The implementation changed more than intended instead of only adding Legacy FFmpeg fallback.
 
-For this reason, `v1.3.6` should be used instead of `v1.3.5`.
-
-### Base Version
-
-```text
-Base: v1.3.4 Beta - File Queue & Safe Retry
-Added: Stable Legacy NVIDIA FFmpeg Fallback
-Recommended build: v1.3.6 Beta
-```
+For this reason, `v1.3.6` and later builds should be used instead of `v1.3.5`.
 
 ### What Was Preserved From v1.3.4
 
@@ -97,35 +205,6 @@ Recommended build: v1.3.6 Beta
 - Keeps the stable v1.3.4 compression pipeline intact.
 - Avoids removing useful recent logs too aggressively; recent logs are kept for troubleshooting.
 
-### Required Package Structure
-
-```text
-VideoX_Compressor_v1.3.6_Beta_Stable_Legacy_FFmpeg_Fallback/
-├── VideoX.exe
-├── ffmpeg/
-│   ├── modern/
-│   │   └── bin/
-│   │       ├── ffmpeg.exe
-│   │       └── ffprobe.exe
-│   └── legacy-nvidia/
-│       └── bin/
-│           ├── ffmpeg.exe
-│           └── ffprobe.exe
-├── _internal/
-├── README.txt
-└── LICENSE_NOTICE.txt
-```
-
-### Notes
-
-- `v1.3.6` is the recommended replacement for `v1.3.5`.
-- Legacy FFmpeg is used only when modern NVIDIA NVENC fails and legacy NVENC passes the runtime test.
-- Intel, AMD and CPU paths should remain on the modern FFmpeg build when possible.
-- Updating very old NVIDIA drivers is still recommended.
-- Do not delete the `ffmpeg` folder.
-- Do not delete the `_internal` folder.
-- Do not include `license.key` inside the public ZIP package.
-
 ---
 
 ## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
@@ -142,34 +221,13 @@ Version `v1.3.5` was an attempt to add Legacy NVIDIA FFmpeg fallback, but it was
 
 The version is documented here for transparency, but it is not recommended for release or public distribution.
 
-### Intended Features
-
-- Dual FFmpeg support:
-  - `ffmpeg/modern`
-  - `ffmpeg/legacy-nvidia`
-- Legacy NVIDIA FFmpeg fallback.
-- NVIDIA driver version diagnostics.
-- Warning for old NVIDIA drivers.
-- Fallback order from NVIDIA to Intel / AMD / CPU.
-
-### Problems Found
-
-- Some UI buttons were missing compared to v1.3.4.
-- Log handling was changed in a way that made troubleshooting harder.
-- Compression was not working reliably enough.
-- The implementation was not a clean patch on top of v1.3.4.
-
-### Resolution
-
-The feature was rebuilt on top of the stable `v1.3.4` codebase and released as `v1.3.6 Beta - Stable Legacy FFmpeg Fallback`.
-
 ---
 
 ## v1.3.4 Beta - File Queue & Safe Retry
 
 ### Main Goal
 
-This version improves file handling, makes the selected input files visible to users and improves behavior when hardware encoding fails during compression.
+This version improved file handling, made selected input files visible to users and improved behavior when hardware encoding failed during compression.
 
 ### New Features
 
@@ -180,227 +238,6 @@ This version improves file handling, makes the selected input files visible to u
 - Added safe retry behavior for hardware encoder failures.
 - If hardware output fails or becomes invalid, VideoX can retry the same file once with CPU fallback.
 - If one or more files fail, the final status is shown as `Finished with errors` instead of simply `Finished`.
-- Improved final warning messages when compression finishes with failed files.
-
-### Fixed / Improved
-
-- Better handling of long videos on sensitive hardware paths such as Intel QSV.
-- Better user control before starting compression.
-- Better distinction between successful and partially failed sessions.
-
----
-
-## v1.3.3 Beta - RTL Help Hotfix
-
-### Main Goal
-
-This version fixes Persian help popup direction and readability.
-
-### New Features / Fixes
-
-- Persian GPU Quality help text is rendered right-to-left.
-- Persian CPU CRF help text is rendered right-to-left.
-- Persian popup title is right-aligned.
-- Tahoma font is used for Persian help text.
-- RTL markers are used internally to reduce mixed Persian/English text problems.
-
----
-
-## v1.3.2 Beta - CPU CRF Slider
-
-### Main Goal
-
-This version makes CPU compression quality easier to understand and control.
-
-### New Features
-
-- CPU CRF changed from a free numeric entry to a slider.
-- Allowed CPU CRF range: `18` to `45`.
-- Current CPU CRF value is shown next to the slider.
-- CPU CRF slider updates automatically when a preset changes.
-- Stored CPU CRF values outside the allowed range are clamped automatically.
-- The CPU CRF help button remains available.
-
-### CPU CRF Guide
-
-| Range | Meaning |
-|---|---|
-| 18 to 24 | High quality, larger file. |
-| 25 to 30 | Balanced mode. |
-| 31 to 34 | Smaller file, good for classes and tutorials. |
-| 35 to 45 | Strong compression, higher quality-loss risk. |
-
----
-
-## v1.3.1 Beta - Quality Help Buttons
-
-### Main Goal
-
-This version improves usability for non-technical users.
-
-### New Features
-
-- Added `!` help button next to GPU Quality.
-- Added `!` help button next to CPU CRF.
-- Each button opens a separate help popup.
-- Help popup includes an `OK` button.
-- Help popup includes a close `X` button.
-- Help text explains quality and file size trade-offs.
-- Separate English and Persian help texts are included.
-
----
-
-## v1.3.0 Beta - GPU Quality Slider
-
-### Main Goal
-
-This version makes GPU quality easier to control from the UI.
-
-### New Features
-
-- GPU Quality changed from a free numeric entry to a slider.
-- Allowed GPU Quality range: `18` to `45`.
-- Current GPU Quality value is shown next to the slider.
-- GPU Quality slider updates automatically when a preset changes.
-- Stored GPU Quality values outside the allowed range are clamped automatically.
-
-### GPU Quality Guide
-
-| Range | Meaning |
-|---|---|
-| 18 to 25 | Very high quality, larger file. |
-| 26 to 32 | Balanced quality and size. |
-| 33 to 36 | Smaller file, good for classes and low-motion videos. |
-| 37 to 45 | Strong compression, higher quality-loss risk. |
-
----
-
-## v1.2.9 Beta - Smart Size Target
-
-### Main Goal
-
-This version improves real size reduction on videos that are already compressed or already low-bitrate.
-
-### New Features
-
-- Smart Recompression was improved into Smart Size Target.
-- For already-compressed videos, VideoX can target a smaller total bitrate instead of relying only on free CQ/CRF behavior.
-- Default goal is around half-size output when possible.
-- More aggressive settings can move toward smaller outputs, but quality risk increases.
-- Original height is kept by default.
-- FPS can be kept original when FPS is set to `0`.
-- Audio can be reduced to smaller settings such as `32k mono` when appropriate.
-- Uses bitrate controls such as video bitrate target, maxrate and buffer size when Smart Size Target is active.
-
-### Notes
-
-- Half-size output is more realistic for already-compressed sources.
-- Quarter-size output may be possible only with stronger compression and higher quality-loss risk.
-- VideoX avoids automatic heavy downscaling such as forcing 480p unless the user chooses lower height manually.
-
----
-
-## v1.2.8 Beta - Smart Recompression
-
-### Main Goal
-
-This version improves behavior when quality-based encoding creates an output close to or larger than the original file.
-
-### New Features
-
-- Added Smart Recompression for already-compressed sources.
-- Detects already-compressed videos using bitrate and bits-per-pixel-frame analysis.
-- Applies a safer bitrate cap for video when suitable.
-- Reduces audio size when possible.
-- Keeps height by default to avoid obvious visual loss.
-- Logs Smart Recompression status, source bitrate, target bitrate and audio target.
-
----
-
-## v1.2.7 Beta - Cleanup Hotfix
-
-### Main Goal
-
-This version prevents broken or useless files from staying in the output folder and keeps the log folder cleaner.
-
-### New Features / Fixes
-
-- Deletes failed or incomplete output files.
-- Deletes cancelled partial outputs.
-- Deletes invalid or corrupted output files after validation failure.
-- Deletes incomplete output before retrying a safer path.
-- Uses ffprobe-based validation after FFmpeg finishes.
-- Checks whether output has readable duration and video stream.
-- Clears old VideoX logs before each new compression session.
-
-### Notes
-
-This version reduces confusion for users because failed jobs no longer leave broken output files behind.
-
----
-
-## v1.2.6 Beta - Already-Compressed Warning
-
-### Main Goal
-
-This version adds warnings and analysis for videos that are already heavily compressed.
-
-### New Features
-
-- Detects already-compressed or low-bitrate source videos.
-- Warns users before compression when large size reduction may not be possible.
-- Shows source video bitrate, total bitrate and audio bitrate.
-- Calculates bits per pixel per frame as a compression-density signal.
-- Suggests quality-safe settings without forcing 480p downscaling.
-- Logs output bitrate after compression.
-- Logs whether video bitrate was reduced or increased.
-- Warns when output size is close to the input size.
-
-### Notes
-
-For already-compressed videos, further compression may require lower bitrate or stronger quality settings. A very large reduction is not always possible without visible quality loss.
-
----
-
-## v1.2.5 Beta - General Safe Diagnostics
-
-### Main Goal
-
-This version introduced the first public-oriented safe diagnostics workflow.
-
-### New Features
-
-- Added General Safe Mode for public testing.
-- Added automatic diagnostic report generation when errors happen.
-- Added manual Export Bug Report button.
-- Added Open Logs button.
-- Added GPU Diagnostics with saved report output.
-- Improved hardware encoder selection.
-- Added better fallback behavior when hardware acceleration fails.
-- Added detailed logs with timestamp, system info, encoder info and FFmpeg error details.
-- Added support-oriented log files that users can send for debugging.
-
-### Diagnostic Reports
-
-If the app fails during compression, it can automatically save a diagnostic report containing:
-
-- app version
-- local and UTC timestamp
-- Windows and system information
-- FFmpeg and FFprobe paths
-- available video encoders
-- runtime encoder test results
-- selected settings
-- selected encoder
-- current input file
-- FFmpeg error output
-- current UI log
-
-Default log location:
-
-```text
-C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
-```
 
 ---
 
@@ -416,9 +253,29 @@ Processing Strategy: Auto Balanced
 General Safe Mode: On
 Hardware Decode: Off
 Workers: 1
+GPU Preference: Auto Best Available
 GPU Quality: 32 to 36
 CPU CRF: 30 to 34
 ```
+
+## Hybrid GPU Laptops
+
+For laptops with integrated graphics plus NVIDIA, Intel or AMD dedicated GPU:
+
+```text
+GPU Preference: Auto Best Available
+```
+
+If Auto does not choose the desired path, select the detected hardware manually:
+
+```text
+GPU Preference: NVIDIA NVENC
+GPU Preference: Intel QSV
+GPU Preference: AMD AMF
+GPU Preference: CPU Only
+```
+
+Only hardware options that pass runtime tests should appear in the list.
 
 ## Older NVIDIA Laptops
 
@@ -429,6 +286,7 @@ General Safe Mode: On
 Hardware Decode: Off
 Workers: 1
 Output Format: mp4
+GPU Preference: Auto Best Available or NVIDIA NVENC
 ```
 
 Then run GPU Diagnostics. If modern NVENC fails and legacy NVIDIA FFmpeg works, VideoX can use the legacy NVIDIA path.
@@ -445,6 +303,27 @@ Audio Channels: 1
 Performance Mode: Stable
 Processing Strategy: Auto Balanced
 Hardware Decode: Off
+```
+
+---
+
+# Required Package Structure
+
+```text
+VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix/
+├── VideoX.exe
+├── ffmpeg/
+│   ├── modern/
+│   │   └── bin/
+│   │       ├── ffmpeg.exe
+│   │       └── ffprobe.exe
+│   └── legacy-nvidia/
+│       └── bin/
+│           ├── ffmpeg.exe
+│           └── ffprobe.exe
+├── _internal/
+├── README.txt
+└── LICENSE_NOTICE.txt
 ```
 
 ---
@@ -491,7 +370,7 @@ Each license is device-specific and works only on the registered device.
 ## نسخه فعلی عمومی
 
 ```text
-VideoX Compressor v1.3.6 Beta - Stable Legacy FFmpeg Fallback
+VideoX Compressor v1.3.9 Beta - NVENC Runtime Test Fix
 ```
 
 ویدیو ایکس کامپرسور یک برنامه ویندوزی برای فشرده‌سازی ویدیو است. تمرکز برنامه روی فشرده‌سازی ساده، کاربردی و در صورت امکان شتاب‌داده‌شده با سخت‌افزار است.
@@ -515,228 +394,133 @@ VideoX Compressor v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 | v1.3.3 Beta | اصلاح راست‌به‌چپ پنجره راهنمای فارسی. | تاریخچه پشتیبانی‌شده |
 | v1.3.4 Beta | لیست فایل‌های ورودی و تلاش دوباره امن. | پایه پایدار |
 | v1.3.5 Beta | تلاش اولیه برای FFmpeg لگسی انویدیا. | حذف‌شده / ناپایدار |
-| v1.3.6 Beta | نسخه پایدار قابلیت FFmpeg لگسی بر پایه v1.3.4. | نسخه پیشنهادی فعلی |
+| v1.3.6 Beta | نسخه پایدار قابلیت FFmpeg لگسی بر پایه v1.3.4. | پایه پایدار با قابلیت لگسی |
+| v1.3.7 Beta | انتخاب دستی GPU Preference. | جایگزین‌شده با v1.3.8 |
+| v1.3.8 Beta | فیلتر پویا برای GPU Preference. | جایگزین‌شده با v1.3.9 |
+| v1.3.9 Beta | اصلاح تست Runtime برای NVENC. | نسخه پیشنهادی فعلی |
+
+---
+
+## v1.3.9 Beta - NVENC Runtime Test Fix
+
+### هدف نسخه
+
+نسخه `v1.3.9` یک مشکل مهم در تشخیص کارت گرافیک انویدیا را که بعد از تست نسخه `v1.3.8` روی لپتاپ‌های هیبریدی دیده شد، اصلاح می‌کند.
+
+در یک سیستم دارای AMD و NVIDIA RTX 4060 Laptop GPU، کارت انویدیا، درایور و انکودرهای `hevc_nvenc` و `h264_nvenc` دیده می‌شدند، اما تست زمان اجرای NVENC خطا می‌داد و برنامه به اشتباه NVIDIA را از لیست GPU Preference حذف می‌کرد و AMD AMF را انتخاب می‌کرد.
+
+### علت مشکل
+
+تست داخلی NVENC با ابعاد تصویر بسیار کوچک انجام می‌شد.
+
+بعضی مسیرهای NVIDIA NVENC، مخصوصاً روی لپتاپ‌های دو گرافیکه یا در بعضی ترکیب‌های FFmpeg و درایور NVIDIA، ابعاد خیلی کوچک را برای شروع انکودر قبول نمی‌کنند.
+
+در نتیجه برنامه تصور می‌کرد NVIDIA NVENC قابل استفاده نیست، در حالی که مشکل از طراحی تست بود.
+
+### اصلاحات نسخه v1.3.9
+
+- ابعاد تست Runtime برای NVENC اصلاح شد.
+- تست داخلی حالا از ورودی HD امن‌تر استفاده می‌کند.
+- تست به جای فریم خیلی کوچک، از `1280x720` استفاده می‌کند.
+- فرمت پیکسلی سازگارتر برای NVENC استفاده می‌شود.
+- اگر NVIDIA واقعاً قابل استفاده باشد، باید در GPU Preference نمایش داده شود.
+- برنامه دیگر نباید فقط به خاطر کوچک بودن فریم تست، NVIDIA را پنهان کند.
+- فیلتر پویا GPU Preference از v1.3.8 حفظ شد.
+- انتخاب دستی GPU Preference از v1.3.7 حفظ شد.
+- FFmpeg لگسی انویدیا از v1.3.6 حفظ شد.
+- رابط کاربری، صف فایل، لاگ‌ها و مسیر فشرده‌سازی پایدار v1.3.4 حفظ شد.
+
+### رفتار مورد انتظار بعد از اصلاح
+
+روی سیستم NVIDIA معتبر، برنامه باید بتواند گزینه NVIDIA را در لیست نشان دهد؛ مثلاً:
+
+```text
+Auto Best Available
+NVIDIA NVENC
+AMD AMF
+CPU Only
+```
+
+یا بسته به سخت‌افزار:
+
+```text
+Auto Best Available
+NVIDIA NVENC
+Intel QSV
+CPU Only
+```
+
+لیست دقیق به تست زمان اجرا بستگی دارد و برنامه فقط گزینه‌هایی را نشان می‌دهد که تست واقعی را پاس کنند.
+
+### نکته برای لپتاپ‌های دو گرافیکه
+
+روی لپتاپ‌هایی که دو کارت گرافیک دارند، ویندوز ممکن است پردازش را طبق تنظیمات خودش بین گرافیک‌ها جابه‌جا کند.
+
+برای نتیجه بهتر، این فایل‌ها را در Windows Graphics Settings روی High Performance قرار دهید:
+
+```text
+VideoX.exe
+ffmpeg/modern/bin/ffmpeg.exe
+ffmpeg/legacy-nvidia/bin/ffmpeg.exe
+```
+
+تنظیم NVIDIA Control Panel به تنهایی همیشه کافی نیست؛ چون پردازش اصلی توسط `ffmpeg.exe` انجام می‌شود.
+
+---
+
+## v1.3.8 Beta - Dynamic GPU Preference & Runtime Filtering
+
+- فیلتر پویا برای GPU Preference اضافه شد.
+- در لیست GPU Preference فقط مسیرهایی نمایش داده می‌شوند که تست Runtime را پاس کنند.
+- گزینه‌های `Auto Best Available` و `CPU Only` همیشه باقی می‌مانند.
+- گزینه‌های NVIDIA، Intel یا AMD فقط در صورت موفق بودن تست واقعی نمایش داده می‌شوند.
+- متن وضعیت سخت‌افزار بالای Progress Bar با تغییر GPU Preference به‌روزرسانی می‌شود.
+- اگر تنظیم ذخیره‌شده قبلی روی سیستم جدید در دسترس نباشد، برنامه به Auto برمی‌گردد.
+
+---
+
+## v1.3.7 Beta - GPU Preference Selection
+
+- گزینه GPU Preference به رابط کاربری اضافه شد.
+- کاربر می‌تواند مسیر پردازش را انتخاب کند:
+  - Auto Best Available
+  - NVIDIA NVENC
+  - Intel QSV
+  - AMD AMF
+  - CPU Only
+- حالت Auto مثل قبل بهترین مسیر قابل استفاده را انتخاب می‌کند.
+- اگر NVIDIA انتخاب شود، ابتدا NVENC مدرن و سپس در صورت نیاز مسیر لگسی تست می‌شود.
+- اگر Intel یا AMD انتخاب شود، همان مسیر مستقیم تست می‌شود.
+- حالت CPU Only تمام مسیرهای GPU را غیرفعال می‌کند.
 
 ---
 
 ## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 
-### هدف نسخه
-
 نسخه `v1.3.6` جایگزین نسخه ناپایدار `v1.3.5` شد.
 
-هدف این نسخه این است که رفتار پایدار نسخه `v1.3.4 File Queue & Safe Retry` حفظ شود و قابلیت استفاده از FFmpeg لگسی انویدیا برای درایورهای قدیمی‌تر بدون خراب شدن رابط کاربری، لاگ‌ها، دکمه‌ها و فرآیند فشرده‌سازی اضافه شود.
+این نسخه بر پایه رفتار پایدار `v1.3.4 File Queue & Safe Retry` ساخته شد و قابلیت FFmpeg لگسی انویدیا را بدون خراب شدن رابط کاربری، لاگ‌ها، دکمه‌ها یا مسیر فشرده‌سازی اضافه کرد.
 
-### اطلاعیه مهم درباره v1.3.5
+موارد مهم حفظ‌شده از v1.3.4:
 
-نسخه `v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback` به دلیل ناپایداری از مسیر انتشار حذف/منسوخ شد.
-
-مشکلات دیده‌شده در نسخه v1.3.5:
-
-- بعضی دکمه‌ها و کنترل‌های رابط کاربری نسبت به v1.3.4 کم شده بودند.
-- رفتار لاگ‌ها با نسخه پایدار v1.3.4 هماهنگ نبود.
-- فشرده‌سازی به اندازه کافی قابل اعتماد نبود.
-- تغییرات بیشتر از حد لازم بودند و قابلیت لگسی به شکل تمیز روی v1.3.4 اضافه نشده بود.
-
-به همین دلیل، به جای `v1.3.5` باید از `v1.3.6` استفاده شود.
-
-### پایه نسخه
-
-```text
-Base: v1.3.4 Beta - File Queue & Safe Retry
-Added: Stable Legacy NVIDIA FFmpeg Fallback
-Recommended build: v1.3.6 Beta
-```
-
-### موارد حفظ‌شده از v1.3.4
-
-- رابط کاربری پایدار نسخه v1.3.4.
-- پنل لیست فایل‌های انتخاب‌شده.
-- حذف فایل‌های ورودی با دکمه `X` قبل از شروع.
-- مسیر فشرده‌سازی نسخه v1.3.4.
-- اسلایدر کیفیت GPU.
-- اسلایدر کیفیت CPU.
-- دکمه‌های راهنمای `!`.
-- اصلاح راست‌به‌چپ راهنمای فارسی.
+- رابط کاربری پایدار.
+- لیست فایل‌های ورودی.
+- دکمه حذف فایل با `X`.
+- اسلایدرهای کیفیت GPU و CPU.
+- دکمه‌های راهنما.
+- اصلاح راست‌به‌چپ فارسی.
 - Smart Size Target.
-- هشدار ویدیوهای از قبل فشرده‌شده.
-- بررسی اعتبار خروجی.
-- پاک‌سازی خروجی خراب، نامعتبر یا کنسل‌شده.
+- بررسی خروجی و پاک‌سازی فایل خراب.
 - تلاش دوباره امن.
-- گزارش نهایی.
-- حالت General Safe Mode و گزارش عیب‌یابی.
+- گزارش نهایی و گزارش عیب‌یابی.
 
-### تغییرات اضافه‌شده در v1.3.6
+موارد اضافه‌شده:
 
-- پشتیبانی پایدار از دو پروفایل FFmpeg:
-  - `ffmpeg/modern`
-  - `ffmpeg/legacy-nvidia`
-- ابتدا FFmpeg مدرن تست می‌شود.
-- اگر کارت انویدیا وجود داشته باشد ولی NVENC با نسخه مدرن خطا بدهد، برنامه نسخه لگسی را تست می‌کند.
-- اگر نسخه لگسی تست زمان اجرا را پاس کند، فقط برای NVIDIA NVENC از همان استفاده می‌شود.
-- اگر هر دو مسیر مدرن و لگسی انویدیا خطا بدهند، برنامه به Intel QSV، AMD AMF یا CPU برمی‌گردد.
-- خروجی GPU Diagnostics واضح‌تر شد.
-- نسخه درایور انویدیا بررسی می‌شود.
-- اگر درایور انویدیا قدیمی باشد، هشدار نمایش داده می‌شود.
-- اگر درایور خیلی قدیمی باشد، هشدار جدی‌تری برای نیاز به آپدیت نمایش داده می‌شود.
-- در لاگ نوشته می‌شود کدام پروفایل FFmpeg انتخاب شده است.
-- مسیر فشرده‌سازی پایدار v1.3.4 حفظ شد.
-- لاگ‌های جدید و اخیر به‌صورت شدید پاک نمی‌شوند تا امکان عیب‌یابی باقی بماند.
-
-### ساختار لازم پوشه‌ها
-
-```text
-VideoX_Compressor_v1.3.6_Beta_Stable_Legacy_FFmpeg_Fallback/
-├── VideoX.exe
-├── ffmpeg/
-│   ├── modern/
-│   │   └── bin/
-│   │       ├── ffmpeg.exe
-│   │       └── ffprobe.exe
-│   └── legacy-nvidia/
-│       └── bin/
-│           ├── ffmpeg.exe
-│           └── ffprobe.exe
-├── _internal/
-├── README.txt
-└── LICENSE_NOTICE.txt
-```
-
----
-
-## v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback
-
-### وضعیت
-
-```text
-حذف‌شده / منسوخ‌شده
-```
-
-### دلیل
-
-نسخه `v1.3.5` تلاشی برای اضافه کردن FFmpeg لگسی انویدیا بود، اما به اندازه کافی پایدار نبود و نسبت به نسخه پایدار `v1.3.4` چند regression ایجاد کرد.
-
-این نسخه فقط برای شفافیت در تاریخچه ذکر شده و برای انتشار عمومی یا استفاده پیشنهاد نمی‌شود.
-
-### مشکلات دیده‌شده
-
-- بعضی دکمه‌های رابط کاربری نسبت به v1.3.4 حذف یا کم شده بودند.
-- مدیریت لاگ‌ها به شکلی تغییر کرده بود که عیب‌یابی را سخت‌تر می‌کرد.
-- فشرده‌سازی قابل اعتماد نبود.
-- قابلیت جدید به شکل تمیز و محدود روی v1.3.4 اضافه نشده بود.
-
-### راه‌حل
-
-قابلیت FFmpeg لگسی دوباره بر پایه نسخه پایدار `v1.3.4` ساخته شد و با عنوان `v1.3.6 Beta - Stable Legacy FFmpeg Fallback` منتشر شد.
-
----
-
-## v1.3.4 Beta - File Queue & Safe Retry
-
-### هدف نسخه
-
-این نسخه مدیریت فایل‌های ورودی را واضح‌تر کرد و رفتار برنامه هنگام خطای شتاب‌دهنده سخت‌افزاری را بهتر کرد.
-
-### تغییرات
-
-- پنل لیست فایل‌های انتخاب‌شده اضافه شد.
-- فایل‌های ورودی قبل از شروع فشرده‌سازی قابل مشاهده هستند.
-- کنار هر فایل دکمه `X` برای حذف از لیست ورودی اضافه شد.
-- هنگام فشرده‌سازی، تغییر فایل‌ها قفل می‌شود.
-- اگر خروجی سخت‌افزاری خراب یا نامعتبر شود، برنامه یک بار با پردازنده دوباره تلاش می‌کند.
-- اگر یک یا چند فایل fail شوند، وضعیت نهایی به شکل `Finished with errors` نمایش داده می‌شود.
-
----
-
-## v1.3.3 Beta - RTL Help Hotfix
-
-- متن فارسی راهنمای کیفیت GPU راست‌به‌چپ شد.
-- متن فارسی راهنمای کیفیت CPU راست‌به‌چپ شد.
-- عنوان پنجره فارسی راست‌چین شد.
-- فونت فارسی به Tahoma تغییر کرد.
-- برای جلوگیری از قاطی شدن متن فارسی و انگلیسی از نشانه RTL استفاده شد.
-
----
-
-## v1.3.2 Beta - CPU CRF Slider
-
-- CPU CRF از فیلد عددی آزاد به اسلایدر تبدیل شد.
-- بازه مجاز CPU CRF از 18 تا 45 مشخص شد.
-- مقدار فعلی کنار اسلایدر نمایش داده می‌شود.
-- با تغییر Preset، اسلایدر هم به‌روزرسانی می‌شود.
-- مقدارهای خارج از بازه خودکار اصلاح می‌شوند.
-
----
-
-## v1.3.1 Beta - Quality Help Buttons
-
-- کنار GPU Quality دکمه `!` اضافه شد.
-- کنار CPU CRF دکمه `!` اضافه شد.
-- با کلیک روی هرکدام، پنجره راهنمای جداگانه باز می‌شود.
-- راهنما توضیح می‌دهد عدد کمتر یا بیشتر چه اثری روی کیفیت و حجم دارد.
-- متن راهنما برای فارسی و انگلیسی جداست.
-
----
-
-## v1.3.0 Beta - GPU Quality Slider
-
-- GPU Quality از فیلد عددی آزاد به اسلایدر تبدیل شد.
-- بازه مجاز GPU Quality از 18 تا 45 مشخص شد.
-- مقدار فعلی کنار اسلایدر نمایش داده می‌شود.
-- با تغییر Preset، اسلایدر هم به‌روزرسانی می‌شود.
-- مقدارهای خارج از بازه خودکار اصلاح می‌شوند.
-
----
-
-## v1.2.9 Beta - Smart Size Target
-
-- برای ویدیوهای از قبل فشرده‌شده، هدف‌گذاری حجمی بهتر شد.
-- برنامه فقط با کیفیت آزاد جلو نمی‌رود و می‌تواند بیت‌ریت خروجی را هدف‌گذاری کند.
-- هدف عادی حدود نصف حجم است، اگر از نظر کیفیت ممکن باشد.
-- در تنظیمات تهاجمی‌تر، حجم کمتر ممکن است، اما ریسک افت کیفیت بیشتر می‌شود.
-- رزولوشن به‌صورت خودکار به 480p کاهش داده نمی‌شود.
-- اگر FPS روی 0 باشد، نرخ فریم اصلی حفظ می‌شود.
-- صدا می‌تواند برای کاهش حجم بیشتر، کم‌حجم‌تر شود.
-
----
-
-## v1.2.8 Beta - Smart Recompression
-
-- تشخیص ویدیوهای از قبل فشرده‌شده بهتر شد.
-- بیت‌ریت ویدیو، بیت‌ریت کل، بیت‌ریت صدا و تراکم فشرده‌سازی بررسی می‌شود.
-- در صورت مناسب بودن، برنامه بیت‌ریت ویدیو را با احتیاط پایین‌تر هدف‌گذاری می‌کند.
-- ارتفاع تصویر به‌صورت خودکار پایین آورده نمی‌شود تا افت واضح کیفیت کمتر شود.
-
----
-
-## v1.2.7 Beta - Cleanup Hotfix
-
-- اگر پردازش fail شود، خروجی ناقص پاک می‌شود.
-- اگر کاربر Cancel بزند، خروجی نیمه‌کاره پاک می‌شود.
-- اگر فایل خروجی ساخته شود ولی با ffprobe معتبر نباشد، حذف می‌شود.
-- لاگ‌های قدیمی قبل از شروع پردازش جدید پاک می‌شوند.
-- خروجی با مدت زمان و وجود ویدیو استریم بررسی می‌شود.
-
----
-
-## v1.2.6 Beta - Already-Compressed Warning
-
-- اگر ویدیو از قبل خیلی فشرده باشد، برنامه قبل از شروع هشدار می‌دهد.
-- بیت‌ریت ویدیو، بیت‌ریت کل و بیت‌ریت صدا نمایش داده می‌شود.
-- بعد از پایان، بیت‌ریت خروجی هم گزارش می‌شود.
-- اگر خروجی تقریباً هم‌حجم ورودی باشد، برنامه توضیح می‌دهد که فایل از قبل فشرده بوده یا تنظیمات بیش از حد کیفیت را حفظ کرده‌اند.
-
----
-
-## v1.2.5 Beta - General Safe Diagnostics
-
-- حالت General Safe Mode اضافه شد.
-- گزارش عیب‌یابی خودکار هنگام خطا اضافه شد.
-- دکمه Export Bug Report اضافه شد.
-- دکمه Open Logs اضافه شد.
-- GPU Diagnostics با خروجی ذخیره‌شونده اضافه شد.
-- انتخاب شتاب‌دهنده سخت‌افزاری بهتر شد.
-- لاگ‌ها شامل تاریخ، مشخصات سیستم، اطلاعات شتاب‌دهنده، تنظیمات و خطاهای FFmpeg شدند.
+- پشتیبانی از `ffmpeg/modern` و `ffmpeg/legacy-nvidia`.
+- تست نسخه لگسی اگر NVENC مدرن خطا بدهد.
+- بررسی نسخه درایور انویدیا.
+- هشدار برای درایور قدیمی یا خیلی قدیمی.
+- نمایش پروفایل FFmpeg انتخاب‌شده در لاگ.
 
 ---
 
@@ -752,22 +536,29 @@ Processing Strategy: Auto Balanced
 General Safe Mode: On
 Hardware Decode: Off
 Workers: 1
+GPU Preference: Auto Best Available
 GPU Quality: 32 to 36
 CPU CRF: 30 to 34
 ```
 
-### برای لپتاپ‌های قدیمی‌تر انویدیا
+### برای لپتاپ‌های دو گرافیکه
+
+ابتدا این حالت را تست کنید:
 
 ```text
-Performance Mode: Stable
-Processing Strategy: Auto Balanced
-General Safe Mode: On
-Hardware Decode: Off
-Workers: 1
-Output Format: mp4
+GPU Preference: Auto Best Available
 ```
 
-بعد از آن GPU Diagnostics را اجرا کنید. اگر NVENC مدرن خطا بدهد و مسیر لگسی موفق شود، برنامه می‌تواند از FFmpeg لگسی انویدیا استفاده کند.
+اگر Auto مسیر موردنظر را انتخاب نکرد، یکی از گزینه‌های موجود را دستی انتخاب کنید:
+
+```text
+GPU Preference: NVIDIA NVENC
+GPU Preference: Intel QSV
+GPU Preference: AMD AMF
+GPU Preference: CPU Only
+```
+
+فقط گزینه‌هایی نمایش داده می‌شوند که تست Runtime را پاس کنند.
 
 ### برای ویدیوهای از قبل فشرده‌شده
 
@@ -781,6 +572,27 @@ Audio Channels: 1
 Performance Mode: Stable
 Processing Strategy: Auto Balanced
 Hardware Decode: Off
+```
+
+---
+
+## ساختار لازم پوشه‌ها
+
+```text
+VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix/
+├── VideoX.exe
+├── ffmpeg/
+│   ├── modern/
+│   │   └── bin/
+│   │       ├── ffmpeg.exe
+│   │       └── ffprobe.exe
+│   └── legacy-nvidia/
+│       └── bin/
+│           ├── ffmpeg.exe
+│           └── ffprobe.exe
+├── _internal/
+├── README.txt
+└── LICENSE_NOTICE.txt
 ```
 
 ---
