@@ -8,8 +8,8 @@
   <a href="#english">English</a> •
   <a href="#quick-start-en">Quick Start</a> •
   <a href="#activation-en">Activation</a> •
-  <a href="#screenshots-en">Screenshots</a> •
   <a href="#settings-en">Settings Guide</a> •
+  <a href="#pipeline-en">Pipeline Guide</a> •
   <a href="#hardware-en">Hardware Guide</a> •
   <a href="#persian">فارسی</a>
 </p>
@@ -36,19 +36,11 @@
 
 **VideoX Compressor** is a Windows GUI video compression tool designed to reduce large video files with a simple workflow.
 
-The main goal of VideoX is to make video compression easier for normal users while still using modern hardware acceleration when available. Depending on the system, VideoX can try **NVIDIA NVENC**, **Intel QSV / Quick Sync**, **AMD AMF**, or fall back to CPU mode.
+VideoX focuses on practical compression for recorded classes, tutorials, screen recordings, online meetings, slide-based educational videos, low-motion lecture videos and already-compressed videos that need smaller output size.
 
-VideoX is currently best optimized for:
+Depending on the system, VideoX can try **NVIDIA NVENC**, **Intel QSV / Quick Sync**, **AMD AMF**, or fall back to CPU mode. It uses FFmpeg and FFprobe internally.
 
-- recorded classes
-- tutorials
-- screen recordings
-- online meetings
-- slide-based educational videos
-- low-motion lecture videos
-- already-compressed videos that need smaller output size
-
-> Current public beta: **VideoX Compressor v1.3.9 Beta - NVENC Runtime Test Fix**
+> Current public beta: **VideoX Compressor v1.4.0 Beta - Pipeline Clarity Update**
 
 ---
 
@@ -117,11 +109,11 @@ Important notes:
 | Hardware acceleration | Tries NVIDIA, Intel or AMD hardware encoding when available. |
 | Dynamic GPU Preference | Shows only hardware paths that pass real runtime tests. |
 | Manual GPU selection | User can choose Auto, NVIDIA, Intel, AMD or CPU when available. |
+| Pipeline preview | Explains the real Decode / Scale / Encode path before compression. |
 | Legacy NVIDIA fallback | Can use a legacy NVIDIA FFmpeg build for older NVIDIA driver compatibility. |
 | CPU fallback | Uses CPU mode when hardware acceleration is unavailable or unstable. |
 | Smart Size Target | Improves size reduction on already-compressed videos. |
 | File queue | Shows selected input files before compression. |
-| Remove files before start | Each input file can be removed with an `X` button before processing. |
 | Output validation | Checks output files and deletes invalid/corrupted partial outputs. |
 | Diagnostic reports | Saves useful logs for debugging hardware and FFmpeg issues. |
 
@@ -129,16 +121,14 @@ Important notes:
 
 ## What is new after v1.2.5?
 
-Version `v1.2.5` introduced General Safe Diagnostics. Newer builds up to `v1.3.9` improved UI stability, compression behavior, hardware selection and NVIDIA compatibility.
+Version `v1.2.5` introduced General Safe Diagnostics. Newer builds up to `v1.4.0` improved UI stability, compression behavior, hardware selection, NVIDIA compatibility and pipeline clarity.
 
 | Area | Added / Improved |
 |---|---|
 | Smart Size Target | Better size reduction for already-compressed or low-bitrate videos. |
-| Bitrate analysis | Logs source and output video/audio bitrate. |
 | Output validation | Detects invalid, corrupted or incomplete outputs. |
 | Cleanup | Deletes failed, cancelled or corrupted output files. |
-| GPU Quality slider | GPU quality is controlled with a slider from 18 to 45. |
-| CPU CRF slider | CPU quality is controlled with a slider from 18 to 45. |
+| GPU / CPU sliders | GPU Quality and CPU CRF are controlled with sliders from 18 to 45. |
 | Help buttons | `!` buttons explain GPU Quality and CPU CRF. |
 | RTL Persian help | Persian help popups are right-to-left. |
 | File queue panel | Selected input files are shown clearly before compression. |
@@ -147,6 +137,7 @@ Version `v1.2.5` introduced General Safe Diagnostics. Newer builds up to `v1.3.9
 | GPU Preference | User can choose between detected hardware paths. |
 | Dynamic GPU filtering | Only hardware options that pass runtime tests are shown. |
 | NVENC runtime fix | Fixes NVIDIA being hidden because the internal test frame was too small. |
+| Pipeline Clarity | Explains what Performance Mode, Processing Strategy and Hardware Decode really change. |
 
 ---
 
@@ -162,8 +153,6 @@ Version `v1.2.5` introduced General Safe Diagnostics. Newer builds up to `v1.3.9
 
 </div>
 
-The activation page shows the Device ID. Send this code on Telegram to receive a device-specific `license.key` file.
-
 ### Main Compression Settings
 
 <div align="center">
@@ -171,8 +160,6 @@ The activation page shows the Device ID. Send this code on Telegram to receive a
 ![VideoX Main Settings](screenshots/english-menu.png)
 
 </div>
-
-The main screen includes output folder, presets, output format, hardware strategy, GPU/CPU quality controls, audio settings and logs.
 
 ### File Queue and Removable Input List
 
@@ -182,8 +169,6 @@ The main screen includes output folder, presets, output format, hardware strateg
 
 </div>
 
-Selected input files are shown in a queue list. Each file has an `X` button so users can remove it before starting compression.
-
 ### Progress and Final Report
 
 <div align="center">
@@ -191,8 +176,6 @@ Selected input files are shown in a queue list. Each file has an `X` button so u
 ![VideoX Compression Report](screenshots/example.png)
 
 </div>
-
-VideoX shows compression progress and then prints a final report with input size, output size, reduction percentage, processing time and file summary.
 
 ---
 
@@ -273,9 +256,63 @@ High-motion videos need more bitrate. Very aggressive compression may create vis
 
 ---
 
-## GPU Preference
+<a id="pipeline-en"></a>
 
-VideoX v1.3.9 includes dynamic GPU selection.
+## Pipeline Clarity Guide
+
+VideoX v1.4.0 adds clearer explanations for the main pipeline controls. These settings do **not** all do the same thing.
+
+### Performance Mode
+
+Performance Mode controls **how many files may be processed in parallel**, not the visual quality of a single file.
+
+| Option | What it does | Best use |
+|---|---|---|
+| Stable | Safer mode. Processes one hardware job at a time. | Public release, weak systems, long videos, first test. |
+| High Throughput | May allow up to 2 hardware jobs in parallel when a supported hardware encoder is active. | Multiple files in queue on stronger systems. |
+
+Important notes:
+
+- High Throughput does not directly improve output quality.
+- High Throughput may not make a single file faster.
+- High Throughput can increase GPU/CPU load and may be less stable if the system is busy.
+
+### Processing Strategy
+
+Processing Strategy controls how aggressively VideoX tries to move the pipeline toward hardware.
+
+| Option | What it really means |
+|---|---|
+| Auto Balanced | Recommended default. Uses hardware encoding when available, but keeps safer CPU decode/scale behavior unless needed. |
+| Maximum Hardware Acceleration | Tries to move more of the pipeline to hardware. This is most meaningful for NVIDIA when Hardware Decode is Aggressive. |
+| CPU Only | Disables GPU encoding and forces CPU encoding. |
+
+Important notes:
+
+- Maximum Hardware Acceleration is strongest on NVIDIA with Aggressive Hardware Decode.
+- On AMD AMF or Intel QSV, this usually still means **GPU encode with CPU scaling**, not a fully GPU-based pipeline.
+- CPU Only overrides hardware encoding even if GPU Preference is set to NVIDIA, Intel or AMD.
+
+### Hardware Decode
+
+Hardware Decode controls the **decode side** of the pipeline. It does not automatically disable or enable GPU encoding.
+
+| Option | Decode | Scale | Encode |
+|---|---|---|---|
+| Off | CPU | CPU | GPU or CPU depending on selected encoder |
+| Auto | FFmpeg hardware auto when possible | Usually CPU | GPU or CPU depending on selected encoder |
+| Aggressive | NVIDIA CUDA decode when NVIDIA is selected | NVIDIA CUDA scale only in NVIDIA + Maximum Hardware Acceleration mode | NVIDIA NVENC |
+
+Important notes:
+
+- `Hardware Decode: Off` is the safest mode and still allows GPU encoding.
+- `Hardware Decode: Auto` tries hardware decoding but usually keeps scaling on CPU.
+- `Hardware Decode: Aggressive` is mainly useful for NVIDIA. It may enable CUDA decode and CUDA scaling.
+- If aggressive decode/scale fails, VideoX can retry with safer CPU scaling.
+
+### GPU Preference
+
+VideoX shows only hardware options that pass real runtime tests.
 
 Possible options:
 
@@ -287,9 +324,33 @@ AMD AMF
 CPU Only
 ```
 
-The exact list depends on the system. VideoX shows only hardware options that pass real runtime tests.
+| Option | Meaning |
+|---|---|
+| Auto Best Available | VideoX selects the best runtime-tested hardware path. |
+| NVIDIA NVENC | Prefer NVIDIA hardware encoding when available. Modern FFmpeg is tested first; legacy NVIDIA FFmpeg may be tested if needed. |
+| Intel QSV | Prefer Intel Quick Sync / QSV when available. |
+| AMD AMF | Prefer AMD AMF when available. |
+| CPU Only | Force CPU encoding. |
 
-### Dual-GPU / hybrid laptop note
+### Pipeline Preview
+
+VideoX v1.4.0 shows a pipeline preview in the UI. It explains the expected processing path, for example:
+
+```text
+Decode: CPU | Scale: CPU | Encode: hevc_amf / AMD
+```
+
+or:
+
+```text
+Decode: NVIDIA CUDA | Scale: NVIDIA CUDA | Encode: hevc_nvenc / NVIDIA
+```
+
+This helps users understand whether the selected settings really move the full pipeline to GPU, or only use GPU for encoding.
+
+---
+
+## GPU Preference and Hybrid Laptops
 
 On laptops with integrated graphics plus NVIDIA/AMD dedicated GPU, Windows may route processes differently.
 
@@ -361,8 +422,6 @@ GPU Preference: Auto Best Available or Intel QSV
 Output Format: mp4
 ```
 
-Intel QSV may work well for normal videos, but long already-compressed videos can be more sensitive. If a hardware job fails, VideoX can retry with CPU fallback.
-
 ### NVIDIA GTX / RTX
 
 ```text
@@ -375,7 +434,14 @@ GPU Preference: Auto Best Available or NVIDIA NVENC
 Output Format: mp4
 ```
 
-For old NVIDIA drivers, VideoX can try `ffmpeg/legacy-nvidia` when modern NVENC fails and the legacy runtime test passes.
+For speed testing on stronger NVIDIA systems:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+Hardware Decode: Aggressive
+GPU Preference: NVIDIA NVENC
+```
 
 ### AMD Radeon
 
@@ -389,6 +455,8 @@ GPU Preference: Auto Best Available or AMD AMF
 Output Format: mp4
 ```
 
+For AMD, Maximum Hardware Acceleration currently mainly means hardware encoding with AMD AMF. Scaling usually remains CPU-based.
+
 ---
 
 ## Diagnostic Logs and Bug Reports
@@ -400,7 +468,6 @@ Reports may include:
 - app version
 - local and UTC timestamp
 - Windows and system information
-- FFmpeg and FFprobe paths
 - modern FFmpeg path
 - legacy NVIDIA FFmpeg path
 - available encoders
@@ -409,6 +476,7 @@ Reports may include:
 - selected GPU Preference
 - selected encoder
 - FFmpeg profile used
+- pipeline preview
 - current input file
 - FFmpeg error output
 - UI log
@@ -450,7 +518,7 @@ Download the latest ZIP package from the **Releases** section.
 Recommended package name:
 
 ```text
-VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix.zip
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update.zip
 ```
 
 Extract the ZIP file and run:
@@ -462,7 +530,7 @@ VideoX.exe
 Required folder structure:
 
 ```text
-VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix/
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update/
 ├── VideoX.exe
 ├── ffmpeg/
 │   ├── modern/
@@ -520,7 +588,7 @@ Current development focus:
 
 بهترین کاربرد فعلی برنامه برای ویدیوهای کم‌تحرک است؛ مثل کلاس ضبط‌شده، آموزش، جلسه آنلاین، اسکرین‌ریکورد و ویدیوهای پاورپوینتی.
 
-> نسخه فعلی بتا: **VideoX Compressor v1.3.9 Beta - NVENC Runtime Test Fix**
+> نسخه فعلی بتا: **VideoX Compressor v1.4.0 Beta - Pipeline Clarity Update**
 
 ---
 
@@ -581,8 +649,7 @@ CPU CRF: 30 to 34
 | Smart Size Target | عملکرد بهتر برای ویدیوهایی که از قبل کم‌حجم یا فشرده هستند. |
 | بررسی خروجی | خروجی با اطلاعات ویدیویی بررسی می‌شود تا فایل خراب تشخیص داده شود. |
 | پاک‌سازی خروجی خراب | فایل ناقص، خراب یا کنسل‌شده پاک می‌شود. |
-| اسلایدر کیفیت گرافیکی | مقدار کیفیت GPU با نوار قابل تغییر است. |
-| اسلایدر کیفیت پردازنده | مقدار CPU CRF با نوار قابل تغییر است. |
+| اسلایدر کیفیت GPU و CPU | مقدار کیفیت با نوار قابل تغییر است. |
 | دکمه راهنما | کنار کیفیت GPU و CPU دکمه `!` برای توضیح ساده اضافه شده است. |
 | متن فارسی راست‌به‌چپ | توضیحات فارسی راهنما راست‌چین و راست‌به‌چپ شده‌اند. |
 | لیست فایل‌های ورودی | فایل‌های انتخاب‌شده داخل پنل مشخص نمایش داده می‌شوند. |
@@ -591,6 +658,7 @@ CPU CRF: 30 to 34
 | GPU Preference | کاربر می‌تواند مسیر پردازش را انتخاب کند. |
 | فیلتر پویا GPU | فقط گزینه‌هایی نمایش داده می‌شوند که تست واقعی را پاس کنند. |
 | اصلاح تست NVENC | مشکل پنهان شدن اشتباه NVIDIA به دلیل کوچک بودن فریم تست اصلاح شد. |
+| شفاف‌سازی Pipeline | اثر Performance Mode، Processing Strategy و Hardware Decode واضح‌تر شد. |
 
 ---
 
@@ -668,11 +736,51 @@ Hardware Decode: Off
 
 ---
 
-## راهنمای GPU Preference
+## راهنمای شفاف Pipeline
 
-برنامه در نسخه v1.3.9 فقط گزینه‌هایی را نشان می‌دهد که تست واقعی زمان اجرا را پاس کنند.
+نسخه v1.4.0 توضیح می‌دهد هر گزینه دقیقاً چه بخشی از مسیر پردازش را تغییر می‌دهد.
 
-گزینه‌های ممکن:
+### Performance Mode
+
+این گزینه بیشتر روی **تعداد فایل‌هایی که همزمان پردازش می‌شوند** اثر دارد، نه کیفیت خروجی.
+
+| گزینه | اثر واقعی | کاربرد بهتر |
+|---|---|---|
+| Stable | حالت امن‌تر. معمولاً یک پردازش سخت‌افزاری همزمان انجام می‌دهد. | انتشار عمومی، سیستم ضعیف، ویدیوهای طولانی. |
+| High Throughput | در صورت وجود شتاب‌دهنده مناسب، ممکن است تا دو فایل را همزمان پردازش کند. | چند فایل در صف روی سیستم قوی‌تر. |
+
+نکته: High Throughput الزاماً یک فایل تکی را سریع‌تر نمی‌کند و ممکن است فشار بیشتری به سیستم وارد کند.
+
+### Processing Strategy
+
+این گزینه مشخص می‌کند برنامه چقدر تلاش کند مسیر پردازش را به سخت‌افزار منتقل کند.
+
+| گزینه | معنی واقعی |
+|---|---|
+| Auto Balanced | حالت پیشنهادی. از GPU برای Encode استفاده می‌کند، ولی مسیر امن‌تر را حفظ می‌کند. |
+| Maximum Hardware Acceleration | بیشترین اثر را روی NVIDIA همراه با Hardware Decode Aggressive دارد. برای AMD و Intel معمولاً بیشتر به معنی GPU Encode با Scale روی CPU است. |
+| CPU Only | پردازش گرافیکی را برای Encode غیرفعال می‌کند و برنامه با CPU ادامه می‌دهد. |
+
+### Hardware Decode
+
+این گزینه سمت Decode را کنترل می‌کند. خاموش بودن آن به معنی خاموش شدن GPU Encode نیست.
+
+| گزینه | Decode | Scale | Encode |
+|---|---|---|---|
+| Off | CPU | CPU | GPU یا CPU بسته به Encoder انتخاب‌شده |
+| Auto | تلاش خودکار FFmpeg برای Decode سخت‌افزاری | معمولاً CPU | GPU یا CPU |
+| Aggressive | برای NVIDIA می‌تواند CUDA Decode فعال کند | فقط در NVIDIA + Maximum Hardware Acceleration می‌تواند CUDA Scale شود | NVIDIA NVENC |
+
+نکته‌های مهم:
+
+- `Hardware Decode: Off` امن‌ترین حالت است و همچنان می‌تواند از GPU برای Encode استفاده کند.
+- `Hardware Decode: Auto` تلاش می‌کند Decode را سخت‌افزاری کند، اما معمولاً Scale روی CPU می‌ماند.
+- `Hardware Decode: Aggressive` بیشتر برای NVIDIA معنی‌دار است.
+- اگر مسیر aggressive خطا بدهد، برنامه می‌تواند با مسیر امن‌تر دوباره تلاش کند.
+
+### GPU Preference
+
+برنامه فقط گزینه‌هایی را نشان می‌دهد که تست واقعی زمان اجرا را پاس کنند.
 
 ```text
 Auto Best Available
@@ -682,7 +790,29 @@ AMD AMF
 CPU Only
 ```
 
-روی لپتاپ‌های دو گرافیکه، بهتر است این فایل‌ها را در Windows Graphics Settings روی High Performance قرار دهید:
+### Pipeline Preview
+
+در نسخه v1.4.0 برنامه یک پیش‌نمایش مسیر پردازش نمایش می‌دهد؛ مثلاً:
+
+```text
+Decode: CPU | Scale: CPU | Encode: hevc_amf / AMD
+```
+
+یا:
+
+```text
+Decode: NVIDIA CUDA | Scale: NVIDIA CUDA | Encode: hevc_nvenc / NVIDIA
+```
+
+این بخش کمک می‌کند کاربر بفهمد فقط Encode روی GPU است یا Decode و Scale هم واقعاً به GPU منتقل شده‌اند.
+
+---
+
+## نکته برای لپتاپ‌های دو گرافیکه
+
+روی لپتاپ‌هایی که دو کارت گرافیک دارند، ویندوز ممکن است پردازش را طبق تنظیمات خودش بین گرافیک‌ها جابه‌جا کند.
+
+برای نتیجه بهتر، این فایل‌ها را در Windows Graphics Settings روی High Performance قرار دهید:
 
 ```text
 VideoX.exe
@@ -756,6 +886,15 @@ GPU Preference: Auto Best Available or NVIDIA NVENC
 Output Format: mp4
 ```
 
+برای تست سرعت روی سیستم انویدیا قوی‌تر:
+
+```text
+Performance Mode: High Throughput
+Processing Strategy: Maximum Hardware Acceleration
+Hardware Decode: Aggressive
+GPU Preference: NVIDIA NVENC
+```
+
 ### سیستم دارای کارت گرافیک ای‌ام‌دی
 
 ```text
@@ -767,6 +906,8 @@ Workers: 1
 GPU Preference: Auto Best Available or AMD AMF
 Output Format: mp4
 ```
+
+در AMD، حالت Maximum Hardware Acceleration فعلاً بیشتر به معنی Encode سخت‌افزاری است و Scale معمولاً روی CPU می‌ماند.
 
 ---
 
@@ -787,6 +928,7 @@ Output Format: mp4
 - GPU Preference انتخاب‌شده
 - شتاب‌دهنده انتخاب‌شده
 - پروفایل FFmpeg استفاده‌شده
+- پیش‌نمایش Pipeline
 - فایل ورودی فعلی
 - خطای پردازش
 - لاگ برنامه
@@ -806,7 +948,7 @@ C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
 نام پیشنهادی بسته:
 
 ```text
-VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix.zip
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update.zip
 ```
 
 بعد از خارج کردن از حالت فشرده، این فایل را اجرا کنید:
@@ -818,7 +960,7 @@ VideoX.exe
 ساختار لازم پوشه‌ها:
 
 ```text
-VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix/
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update/
 ├── VideoX.exe
 ├── ffmpeg/
 │   ├── modern/
@@ -848,9 +990,9 @@ VideoX_Compressor_v1.3.9_Beta_NVENC_Runtime_Test_Fix/
 - عملکرد بهتر روی ویدیوهای از قبل فشرده‌شده
 - سازگاری بهتر با سیستم‌های اینتل، انویدیا و ای‌ام‌دی
 - انتخاب دقیق‌تر مسیر GPU در لپتاپ‌های دو گرافیکه
+- شفاف‌تر شدن مسیر واقعی Decode / Scale / Encode
 - تلاش دوباره و بازگشت امن‌تر هنگام خطا
 - رابط کاربری ساده‌تر برای کاربران غیرتخصصی
-- گزارش دقیق‌تر پیشرفت و پایان کار
 - دریافت بازخورد از تسترها و کاربران واقعی
 
 </div>
