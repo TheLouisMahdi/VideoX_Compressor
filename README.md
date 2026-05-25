@@ -5,6 +5,7 @@
 ### Hardware-accelerated Windows video compression for recorded classes, tutorials, screen recordings and low-motion videos.
 
 <p>
+  <a href="#download-en">Download</a> •
   <a href="#english">English</a> •
   <a href="#quick-start-en">Quick Start</a> •
   <a href="#activation-en">Activation</a> •
@@ -25,6 +26,35 @@
 **Telegram:** `@thelouis_mahdi`
 
 </div>
+
+---
+
+<a id="download-en"></a>
+
+## Download for Windows
+
+For normal users, the recommended way is to download the ready-to-run Windows ZIP package from **Releases**. You do **not** need to clone the source code.
+
+<div align="center">
+
+### 👉 [Download latest Windows release](https://github.com/TheLouisMahdi/VideoX_Compressor/releases/latest)
+
+</div>
+
+Recommended package name:
+
+```text
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update.zip
+```
+
+After downloading:
+
+1. Extract the ZIP file.
+2. Run `VideoX.exe`.
+3. Copy your Device ID from the activation page.
+4. Send it to `@thelouis_mahdi` on Telegram to receive your device-specific license file.
+
+> Developers may clone this repository to inspect the source code, but using the software requires authorization and a valid device license.
 
 ---
 
@@ -515,6 +545,12 @@ For general use, **MP4** is recommended.
 
 Download the latest ZIP package from the **Releases** section.
 
+<div align="center">
+
+### 👉 [Open latest release](https://github.com/TheLouisMahdi/VideoX_Compressor/releases/latest)
+
+</div>
+
 Recommended package name:
 
 ```text
@@ -557,6 +593,15 @@ Do not include `license.key` in the public ZIP package.
 
 ---
 
+## Source Code vs Release Download
+
+- Use **Releases** if you want to run the program on Windows.
+- Use **git clone** only if you are a developer and want to inspect the source code.
+- This project is publicly visible for demonstration, documentation and review, but it is **not free open-source software**.
+- Using the software requires authorization and a valid device-specific license.
+
+---
+
 ## Beta Status
 
 VideoX Compressor is currently in **Beta**. It is usable and actively tested, but it is still being improved toward a more polished commercial-level release.
@@ -579,6 +624,33 @@ Current development focus:
 <div dir="rtl" align="right">
 
 # 🇮🇷 فارسی
+
+## دانلود نسخه ویندوز
+
+برای کاربر عادی، روش پیشنهادی این است که فایل آماده ویندوز را از بخش **Releases** دانلود کند. نیازی به clone کردن سورس‌کد نیست.
+
+<div align="center">
+
+### 👉 [دانلود آخرین نسخه ویندوز](https://github.com/TheLouisMahdi/VideoX_Compressor/releases/latest)
+
+</div>
+
+نام پیشنهادی بسته:
+
+```text
+VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update.zip
+```
+
+بعد از دانلود:
+
+1. فایل ZIP را Extract کنید.
+2. فایل `VideoX.exe` را اجرا کنید.
+3. کد دستگاه را از صفحه فعال‌سازی کپی کنید.
+4. کد دستگاه را در تلگرام برای `@thelouis_mahdi` بفرستید تا فایل لایسنس مخصوص همان دستگاه را دریافت کنید.
+
+> clone کردن مخزن بیشتر برای بررسی سورس‌کد توسط توسعه‌دهندگان است. استفاده از نرم‌افزار نیاز به اجازه و لایسنس معتبر دارد.
+
+---
 
 ## معرفی برنامه
 
@@ -945,6 +1017,12 @@ C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
 
 از بخش Releases آخرین نسخه را دانلود کنید.
 
+<div align="center">
+
+### 👉 [باز کردن آخرین Release](https://github.com/TheLouisMahdi/VideoX_Compressor/releases/latest)
+
+</div>
+
 نام پیشنهادی بسته:
 
 ```text
@@ -977,6 +1055,15 @@ VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update/
 ```
 
 پوشه‌های `ffmpeg` و `_internal` را حذف نکنید.
+
+---
+
+## تفاوت دانلود Release و clone کردن
+
+- اگر می‌خواهید برنامه را اجرا کنید، از بخش **Releases** فایل ZIP آماده ویندوز را دانلود کنید.
+- اگر توسعه‌دهنده هستید و می‌خواهید سورس‌کد را بررسی کنید، می‌توانید مخزن را clone کنید.
+- عمومی بودن مخزن به معنی آزاد بودن استفاده تجاری یا انتشار مجدد نیست.
+- استفاده از نرم‌افزار نیاز به اجازه و لایسنس مخصوص دستگاه دارد.
 
 ---
 
