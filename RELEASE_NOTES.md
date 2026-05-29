@@ -3,7 +3,7 @@
 ## Current Public Beta
 
 ```text
-VideoX Compressor v1.4.0 Beta - Pipeline Clarity Update
+VideoX Compressor v1.4.4 Beta - Stable Device ID
 ```
 
 VideoX Compressor is a Windows video compression application focused on simple, practical and hardware-accelerated compression for recorded classes, tutorials, screen recordings, online meetings, low-motion lecture videos and everyday videos that need smaller file size.
@@ -31,115 +31,193 @@ The project is still in **Beta**. The strongest current results are usually on l
 | v1.3.7 Beta | Manual GPU Preference selection. | Supported history |
 | v1.3.8 Beta | Dynamic GPU Preference filtering. | Supported history |
 | v1.3.9 Beta | NVENC runtime test fix for hybrid laptops. | Supported history |
-| v1.4.0 Beta | Pipeline Clarity Update. | Current recommended beta |
+| v1.4.0 Beta | Pipeline Clarity Update. | Supported history |
+| v1.4.1 Beta | Simple and Advanced Mode. | Supported history |
+| v1.4.2 Beta | Simple Safe Mode and no-upscale protection. | Supported history |
+| v1.4.3 Beta | Simple FPS Tuning. | Supported history |
+| v1.4.4 Beta | Stable Device ID. | Current recommended beta |
 
 ---
 
 # English Release Notes
 
+## v1.4.4 Beta - Stable Device ID
+
+### Main Goal
+
+Version `v1.4.4` keeps the latest stable Python beta behavior and fixes the Device ID instability issue.
+
+Older beta builds could sometimes generate a different Device ID after changes in network-related system information. This could cause a valid device license to be rejected on the same laptop or PC.
+
+### Root Cause
+
+The older Device ID algorithm depended on values that may change on real user systems, such as:
+
+- computer name / host name
+- MAC address
+- Wi-Fi adapter state
+- LAN adapter state
+- Bluetooth adapter state
+- VPN adapters
+- virtual adapters
+- Hyper-V / WSL / VMware / VirtualBox adapters
+- Windows random MAC address behavior
+
+Because of this, the same physical device could occasionally appear as a different device.
+
+### Fixed in v1.4.4
+
+- Removed MAC address dependency from Device ID generation.
+- Removed computer-name dependency from Device ID generation.
+- Uses Windows `MachineGuid` as the main stable identity source.
+- Adds a persistent Install ID fallback when Windows `MachineGuid` is not available.
+- Saves the fallback Install ID in stable local locations.
+- Device ID is no longer affected by GPU, GPU driver, NVIDIA / AMD / Intel selection, Wi-Fi, LAN, Bluetooth, VPN or virtual network adapter changes.
+- Keeps the existing license verification workflow.
+- Keeps the stable v1.4.3 compression behavior.
+
+### Important License Note
+
+Because the Device ID algorithm is now more stable, users upgrading from older beta builds may need a new `license.key` once after upgrading.
+
+After that, the Device ID should remain stable across normal system changes such as network changes, VPN changes, GPU driver updates or switching between Wi-Fi and LAN.
+
+---
+
+## v1.4.3 Beta - Simple FPS Tuning
+
+### Main Goal
+
+Version `v1.4.3` refined Simple Mode FPS behavior.
+
+### Changes
+
+| Simple Level | FPS |
+|---|---|
+| High Quality | 30 |
+| Medium | 30 |
+| Compressed | 25 |
+| Very Compressed | 25 |
+| Very Very Compressed | 24 |
+| Maximum Compression | 24 |
+
+The goal was to keep normal simple settings smooth while allowing stronger compression levels to reduce FPS moderately.
+
+---
+
+## v1.4.2 Beta - Simple Safe Mode
+
+### Main Goal
+
+Version `v1.4.2` improved Simple Mode safety and added no-upscale protection.
+
+### Changes
+
+- Added Fast Mode checkbox in Simple Mode.
+- If Fast Mode is enabled, Simple Mode prefers GPU / hardware encoding and faster processing.
+- If Fast Mode is disabled, Simple Mode uses CPU-only compression.
+- Added no-upscale protection.
+- Smaller videos are not enlarged unnecessarily.
+- Example: a 480p video will not be upscaled to 720p only because a preset requests 720p.
+
+---
+
+## v1.4.1 Beta - Simple and Advanced Mode
+
+### Main Goal
+
+Version `v1.4.1` added a two-mode user interface.
+
+### Changes
+
+- Added Simple Mode for normal users.
+- Added Advanced Mode for full control.
+- Simple Mode includes six compression levels:
+  - High Quality
+  - Medium
+  - Compressed
+  - Very Compressed
+  - Very Very Compressed (quality loss)
+  - Maximum Compression
+- Advanced Mode preserves the full v1.4.0 settings interface.
+
+---
+
 ## v1.4.0 Beta - Pipeline Clarity Update
 
 ### Main Goal
 
-Version `v1.4.0` keeps the stable `v1.3.9` compression logic and improves the user interface explanations around the real video-processing pipeline.
+Version `v1.4.0` kept the stable `v1.3.9` compression logic and improved the user interface explanations around the real video-processing pipeline.
 
-This release does **not** redesign the stable compression workflow. It clarifies what the main hardware-related settings actually do so users can better understand whether VideoX is using CPU decode, hardware decode, CPU scaling, CUDA scaling, GPU encoding or CPU encoding.
-
-### What Was Preserved From v1.3.9
-
-- Stable v1.3.9 compression workflow.
-- Dynamic GPU Preference filtering.
-- NVENC runtime test fix for hybrid laptops.
-- Legacy NVIDIA FFmpeg fallback.
-- Modern FFmpeg and legacy NVIDIA FFmpeg profiles.
-- File queue panel and removable input list.
-- Safe retry behavior.
-- Output validation and cleanup.
-- GPU Quality slider.
-- CPU CRF slider.
-- General Safe Mode and diagnostic reports.
-- English-only logs and error messages inside the program.
-
-### New / Improved in v1.4.0
+### New / Improved
 
 - Added clearer UI hints for `Performance Mode`.
 - Added clearer UI hints for `Processing Strategy`.
 - Added clearer UI hints for `Hardware Decode`.
 - Added a `Pipeline Preview` label in the UI.
-- Pipeline Preview explains the expected path:
-  - Decode
-  - Scale
-  - Encode
-- The preview updates when these settings change:
-  - Performance Mode
-  - Processing Strategy
-  - GPU Preference
-  - Hardware Decode
-  - Output Format
-- UI now explains that `Hardware Decode: Off` is the safest mode and can still use GPU encoding.
-- UI now explains that `High Throughput` mainly helps when processing multiple files, not necessarily one single file.
-- UI now explains that `Maximum Hardware Acceleration` is most meaningful for NVIDIA with `Hardware Decode: Aggressive`.
-- UI now explains that AMD AMF and Intel QSV usually mean GPU encoding while scaling may still remain CPU-based.
+- Pipeline Preview explains Decode / Scale / Encode.
+- UI explains that `Hardware Decode: Off` is safest and can still use GPU encoding.
+- UI explains that `High Throughput` mainly helps when processing multiple files.
+- UI explains that `Maximum Hardware Acceleration` is most meaningful for NVIDIA with `Hardware Decode: Aggressive`.
+- UI explains that AMD AMF and Intel QSV usually mean GPU encoding while scaling may remain CPU-based.
 
-### Pipeline Control Details
+---
 
-#### Performance Mode
+## v1.3.9 Beta - NVENC Runtime Test Fix
 
-| Option | Real Effect |
-|---|---|
-| Stable | Safer mode. Usually processes one hardware job at a time. |
-| High Throughput | May allow up to 2 hardware jobs in parallel when hardware acceleration is available. |
+Version `v1.3.9` fixed an important hardware-detection issue found on a hybrid laptop with AMD + NVIDIA RTX GPU.
 
-Important notes:
+- NVIDIA was detected correctly.
+- The NVIDIA driver was current.
+- FFmpeg listed `hevc_nvenc` and `h264_nvenc`.
+- The runtime test failed because the internal test frame was too small.
+- VideoX incorrectly selected AMD AMF instead of NVIDIA NVENC.
 
-- This option does not directly change output quality.
-- It may not make a single file faster.
-- It can increase GPU/CPU load when several files are queued.
+Fixes:
 
-#### Processing Strategy
+- NVENC runtime test now uses a safer `1280x720` test input.
+- NVIDIA NVENC should appear in GPU Preference when it actually works.
+- Dynamic GPU Preference filtering was preserved.
+- Legacy NVIDIA FFmpeg fallback was preserved.
 
-| Option | Real Effect |
-|---|---|
-| Auto Balanced | Recommended default. Uses hardware encoding when available while keeping safer behavior. |
-| Maximum Hardware Acceleration | Tries to move more of the pipeline to hardware. Most meaningful for NVIDIA + Aggressive Hardware Decode. |
-| CPU Only | Disables GPU encoding and forces CPU encoding. |
+---
 
-Important notes:
+## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
 
-- On NVIDIA with Aggressive Hardware Decode, this can use CUDA decode and CUDA scaling.
-- On AMD AMF or Intel QSV, it usually still means GPU encode with CPU scaling.
-- CPU Only overrides GPU Preference.
+Version `v1.3.6` replaced the unstable `v1.3.5` build.
 
-#### Hardware Decode
+The goal was to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
 
-| Option | Decode | Scale | Encode |
-|---|---|---|---|
-| Off | CPU | CPU | GPU or CPU depending on selected encoder |
-| Auto | FFmpeg hardware auto when possible | Usually CPU | GPU or CPU depending on selected encoder |
-| Aggressive | Mainly NVIDIA CUDA when NVIDIA is selected | NVIDIA CUDA only in NVIDIA + Maximum Hardware Acceleration mode | NVIDIA NVENC |
+Version `v1.3.5` was removed / deprecated because it was not stable enough for public use.
 
-Important notes:
+Known problems in v1.3.5 included:
 
-- `Hardware Decode: Off` is the safest mode.
-- `Hardware Decode: Off` does **not** mean GPU encoding is disabled.
-- `Hardware Decode: Aggressive` is mainly useful on NVIDIA systems.
-- If aggressive decode/scale fails, VideoX can retry using a safer path.
+- Some UI buttons and controls were missing compared to v1.3.4.
+- Log behavior was not consistent with v1.3.4.
+- Compression behavior was not reliable enough.
+- The implementation changed more than intended instead of only adding Legacy FFmpeg fallback.
 
-### Example Pipeline Preview
+---
+
+# Recommended Settings
+
+## Normal Users
 
 ```text
-Decode: CPU | Scale: CPU | Encode: hevc_amf / AMD
+Interface Mode: Simple
+Compression Level: Medium or Compressed
+Fast Mode: On
 ```
+
+## CPU-only Compatibility
 
 ```text
-Decode: NVIDIA CUDA | Scale: NVIDIA CUDA | Encode: hevc_nvenc / NVIDIA
+Interface Mode: Simple
+Compression Level: Medium or Compressed
+Fast Mode: Off
 ```
 
-This makes it easier to understand whether the selected settings are using full GPU pipeline or only GPU encoding.
-
-### Recommended Settings
-
-For most users:
+## Advanced Safe Mode
 
 ```text
 Preset: Recorded Class / Screen Recording
@@ -154,27 +232,12 @@ GPU Quality: 32 to 36
 CPU CRF: 30 to 34
 ```
 
-For stronger NVIDIA systems when testing maximum acceleration:
+---
+
+# Required Package Structure
 
 ```text
-Performance Mode: High Throughput
-Processing Strategy: Maximum Hardware Acceleration
-Hardware Decode: Aggressive
-GPU Preference: NVIDIA NVENC
-```
-
-If errors happen, return to:
-
-```text
-Performance Mode: Stable
-Processing Strategy: Auto Balanced
-Hardware Decode: Off
-```
-
-### Required Package Structure
-
-```text
-VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update/
+VideoX_Compressor_v1.4.4_Beta_Stable_Device_ID/
 ├── VideoX.exe
 ├── ffmpeg/
 │   ├── modern/
@@ -190,81 +253,9 @@ VideoX_Compressor_v1.4.0_Beta_Pipeline_Clarity_Update/
 └── LICENSE_NOTICE.txt
 ```
 
----
-
-## v1.3.9 Beta - NVENC Runtime Test Fix
-
-### Main Goal
-
-Version `v1.3.9` fixed an important hardware-detection issue found after testing `v1.3.8` on a hybrid laptop with **AMD + NVIDIA RTX 4060 Laptop GPU**.
-
-The NVIDIA GPU was detected correctly, the NVIDIA driver was current, and FFmpeg listed `hevc_nvenc` and `h264_nvenc`, but the runtime test failed. As a result, VideoX did not show NVIDIA in GPU Preference and selected AMD AMF instead.
-
-### Fixed in v1.3.9
-
-- Updated NVENC runtime test dimensions.
-- Runtime test now uses a safer HD-sized test input.
-- Runtime test uses `1280x720` instead of a very small frame.
-- Runtime test uses a more compatible pixel format for NVENC.
-- NVIDIA NVENC should appear in GPU Preference when it actually works.
-- Dynamic GPU Preference filtering from v1.3.8 was preserved.
-- Manual GPU Preference selection from v1.3.7 was preserved.
-- Stable Legacy NVIDIA FFmpeg fallback from v1.3.6 was preserved.
-
----
-
-## v1.3.8 Beta - Dynamic GPU Preference & Runtime Filtering
-
-- Added dynamic GPU Preference filtering.
-- GPU Preference list shows only hardware paths that pass runtime tests.
-- Always keeps `Auto Best Available` and `CPU Only`.
-- Shows `NVIDIA NVENC`, `Intel QSV` or `AMD AMF` only if the related runtime test passes.
-- Hardware status text above the progress bar updates when GPU Preference changes.
-
----
-
-## v1.3.7 Beta - GPU Preference Selection
-
-- Added GPU Preference option to the UI.
-- User can choose between available processing preferences:
-  - Auto Best Available
-  - NVIDIA NVENC
-  - Intel QSV
-  - AMD AMF
-  - CPU Only
-- NVIDIA preference tests modern NVENC first, then Legacy NVIDIA FFmpeg if needed.
-- CPU Only disables hardware encoding.
-
----
-
-## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
-
-Version `v1.3.6` replaced the unstable `v1.3.5` build.
-
-The goal was to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
-
-### Important Notice About v1.3.5
-
-Version `v1.3.5 Beta - Legacy NVIDIA FFmpeg Fallback` was removed / deprecated because it was not stable enough for public use.
-
-Known problems in v1.3.5 included:
-
-- Some UI buttons and controls were missing compared to v1.3.4.
-- Log behavior was not consistent with v1.3.4.
-- Compression behavior was not reliable enough.
-- The implementation changed more than intended instead of only adding Legacy FFmpeg fallback.
-
----
-
-## v1.3.4 Beta - File Queue & Safe Retry
-
-- Added visible file queue panel.
-- Selected files are shown before compression.
-- Each selected file has an `X` button for removal before starting.
-- Input changes are locked while compression is running.
-- Added safe retry behavior for hardware encoder failures.
-- If hardware output fails or becomes invalid, VideoX can retry the same file once with CPU fallback.
-- If one or more files fail, the final status is shown as `Finished with errors` instead of simply `Finished`.
+Do not delete the `ffmpeg` folder.  
+Do not delete the `_internal` folder.  
+Do not include `license.key` inside the public ZIP package.
 
 ---
 
@@ -283,22 +274,6 @@ After opening the app:
 4. Place `license.key` next to `VideoX.exe`, or select it from inside the app.
 5. Click Recheck and enter the program.
 
-Each license is device-specific and works only on the registered device.
-
----
-
-# Important Notes
-
-- This is a Beta release.
-- Best results are currently expected on low-motion videos.
-- Hardware acceleration depends on GPU model, driver, FFmpeg support and selected output format.
-- If hardware acceleration is not available, the app falls back to CPU mode.
-- Legacy NVIDIA FFmpeg is only used when modern NVIDIA NVENC fails and the legacy path passes runtime tests.
-- Very old NVIDIA drivers should still be updated when possible.
-- Do not delete the `ffmpeg` folder.
-- Do not delete the `_internal` folder.
-- Do not include `license.key` inside the public ZIP package.
-
 ---
 
 # یادداشت‌های انتشار فارسی
@@ -308,12 +283,10 @@ Each license is device-specific and works only on the registered device.
 ## نسخه فعلی عمومی
 
 ```text
-VideoX Compressor v1.4.0 Beta - Pipeline Clarity Update
+VideoX Compressor v1.4.4 Beta - Stable Device ID
 ```
 
 ویدیو ایکس کامپرسور یک برنامه ویندوزی برای فشرده‌سازی ویدیو است. تمرکز برنامه روی فشرده‌سازی ساده، کاربردی و در صورت امکان شتاب‌داده‌شده با سخت‌افزار است.
-
-برنامه هنوز در وضعیت **بتا** قرار دارد. بهترین نتیجه فعلی معمولاً روی کلاس‌های ضبط‌شده، آموزش‌ها، اسکرین‌ریکوردها، جلسات آنلاین و ویدیوهای کم‌تحرک دیده می‌شود.
 
 ---
 
@@ -321,162 +294,131 @@ VideoX Compressor v1.4.0 Beta - Pipeline Clarity Update
 
 | نسخه | تمرکز اصلی | وضعیت |
 |---|---|---|
-| v1.2.5 Beta | عیب‌یابی امن، گزارش خطا و آماده‌سازی برای تست عمومی. | تاریخچه پشتیبانی‌شده |
-| v1.2.6 Beta | هشدار برای ویدیوهای از قبل فشرده‌شده و تحلیل بیت‌ریت. | تاریخچه پشتیبانی‌شده |
-| v1.2.7 Beta | پاک‌سازی خروجی خراب، ناقص یا کنسل‌شده. | تاریخچه پشتیبانی‌شده |
-| v1.2.8 Beta | فشرده‌سازی هوشمندتر برای فایل‌های از قبل فشرده‌شده. | تاریخچه پشتیبانی‌شده |
-| v1.2.9 Beta | هدف‌گذاری حجمی هوشمند برای کاهش واقعی‌تر حجم. | تاریخچه پشتیبانی‌شده |
-| v1.3.0 Beta | اسلایدر کیفیت گرافیکی. | تاریخچه پشتیبانی‌شده |
-| v1.3.1 Beta | دکمه راهنما برای کیفیت GPU و CPU. | تاریخچه پشتیبانی‌شده |
-| v1.3.2 Beta | اسلایدر کیفیت CPU. | تاریخچه پشتیبانی‌شده |
-| v1.3.3 Beta | اصلاح راست‌به‌چپ پنجره راهنمای فارسی. | تاریخچه پشتیبانی‌شده |
-| v1.3.4 Beta | لیست فایل‌های ورودی و تلاش دوباره امن. | پایه پایدار |
-| v1.3.5 Beta | تلاش اولیه برای FFmpeg لگسی انویدیا. | حذف‌شده / ناپایدار |
-| v1.3.6 Beta | نسخه پایدار قابلیت FFmpeg لگسی بر پایه v1.3.4. | پایه پایدار با قابلیت لگسی |
-| v1.3.7 Beta | انتخاب دستی GPU Preference. | تاریخچه پشتیبانی‌شده |
-| v1.3.8 Beta | فیلتر پویا برای GPU Preference. | تاریخچه پشتیبانی‌شده |
-| v1.3.9 Beta | اصلاح تست Runtime برای NVENC. | تاریخچه پشتیبانی‌شده |
-| v1.4.0 Beta | شفاف‌سازی مسیر Decode / Scale / Encode. | نسخه پیشنهادی فعلی |
+| v1.4.0 Beta | شفاف‌سازی مسیر Decode / Scale / Encode. | تاریخچه پشتیبانی‌شده |
+| v1.4.1 Beta | حالت ساده و حرفه‌ای. | تاریخچه پشتیبانی‌شده |
+| v1.4.2 Beta | حالت ساده امن و جلوگیری از Upscale. | تاریخچه پشتیبانی‌شده |
+| v1.4.3 Beta | تنظیم FPS در حالت ساده. | تاریخچه پشتیبانی‌شده |
+| v1.4.4 Beta | پایدارسازی Device ID. | نسخه پیشنهادی فعلی |
 
 ---
 
-## v1.4.0 Beta - Pipeline Clarity Update
+## v1.4.4 Beta - Stable Device ID
 
 ### هدف نسخه
 
-نسخه `v1.4.0` منطق پایدار نسخه `v1.3.9` را حفظ می‌کند و توضیحات رابط کاربری را برای تنظیمات مربوط به مسیر پردازش ویدیو بهتر می‌کند.
+نسخه `v1.4.4` آخرین رفتار پایدار نسخه پایتون را حفظ می‌کند و مشکل تغییر گاه‌به‌گاه Device ID را اصلاح می‌کند.
 
-هدف این نسخه این است که کاربر دقیق‌تر بفهمد گزینه‌های `Performance Mode`، `Processing Strategy` و `Hardware Decode` واقعاً چه چیزی را تغییر می‌دهند.
+در نسخه‌های قبلی، ممکن بود روی بعضی لپتاپ‌ها یا سیستم‌ها Device ID عوض شود و لایسنس معتبر روی همان دستگاه خطا بدهد.
 
-### موارد حفظ‌شده از v1.3.9
+### علت مشکل
 
-- مسیر فشرده‌سازی پایدار v1.3.9.
-- فیلتر پویا GPU Preference.
-- اصلاح تست Runtime برای NVENC روی لپتاپ‌های دو گرافیکه.
-- FFmpeg لگسی انویدیا.
-- صف فایل‌ها و دکمه حذف فایل.
-- تلاش دوباره امن.
-- بررسی و پاک‌سازی خروجی خراب.
-- اسلایدرهای GPU Quality و CPU CRF.
-- گزارش عیب‌یابی.
+الگوریتم قبلی Device ID به مواردی وابسته بود که ممکن است روی سیستم واقعی تغییر کنند؛ مثل:
 
-### تغییرات اضافه‌شده در v1.4.0
+- نام کامپیوتر
+- MAC Address
+- وای‌فای
+- LAN
+- بلوتوث
+- VPN
+- آداپتورهای مجازی
+- Hyper-V / WSL / VMware / VirtualBox
+- Random MAC Address ویندوز
 
-- توضیح دقیق‌تر برای `Performance Mode`.
-- توضیح دقیق‌تر برای `Processing Strategy`.
-- توضیح دقیق‌تر برای `Hardware Decode`.
-- اضافه شدن `Pipeline Preview` در رابط کاربری.
-- نمایش مسیر تقریبی:
-  - Decode
-  - Scale
-  - Encode
-- توضیح اینکه `Hardware Decode: Off` امن‌ترین حالت است و همچنان می‌تواند از GPU برای Encode استفاده کند.
-- توضیح اینکه `High Throughput` بیشتر برای پردازش چند فایل همزمان است.
-- توضیح اینکه `Maximum Hardware Acceleration` بیشترین اثر را روی NVIDIA همراه با `Hardware Decode: Aggressive` دارد.
-- توضیح اینکه در AMD AMF و Intel QSV معمولاً Encode روی GPU است ولی Scale می‌تواند روی CPU باقی بماند.
+### اصلاحات v1.4.4
 
-### توضیح گزینه‌ها
+- وابستگی به MAC Address حذف شد.
+- وابستگی به نام کامپیوتر حذف شد.
+- مبنای اصلی Device ID مقدار Windows MachineGuid شد.
+- اگر MachineGuid در دسترس نباشد، یک Install ID پایدار ساخته و ذخیره می‌شود.
+- تغییر GPU، درایور، وای‌فای، VPN، بلوتوث یا کارت شبکه نباید Device ID را عوض کند.
+- مسیر لایسنس قبلی برنامه حفظ شد.
+- رفتار فشرده‌سازی پایدار v1.4.3 حفظ شد.
 
-#### Performance Mode
+### نکته مهم لایسنس
 
-| گزینه | اثر واقعی |
+به دلیل تغییر الگوریتم Device ID، کاربران نسخه‌های قبلی ممکن است بعد از ارتقا به v1.4.4 یک بار به فایل `license.key` جدید نیاز داشته باشند.
+
+بعد از آن، Device ID باید پایدارتر بماند.
+
+---
+
+## تغییرات اخیر قبل از v1.4.4
+
+### v1.4.3
+
+تنظیم FPS حالت ساده:
+
+| سطح | FPS |
 |---|---|
-| Stable | حالت امن‌تر؛ معمولاً یک پردازش سخت‌افزاری همزمان انجام می‌دهد. |
-| High Throughput | در صورت وجود شتاب‌دهنده مناسب، ممکن است تا دو پردازش همزمان را فعال کند. |
+| کیفیت بالا | 30 |
+| متوسط | 30 |
+| فشرده | 25 |
+| خیلی فشرده | 25 |
+| خیلی خیلی فشرده | 24 |
+| فشرده‌ترین حالت ممکن | 24 |
 
-نکته: این گزینه مستقیماً کیفیت خروجی را تغییر نمی‌دهد و ممکن است یک فایل تکی را سریع‌تر نکند.
+### v1.4.2
 
-#### Processing Strategy
+- اضافه شدن تیک Fast Mode در حالت ساده.
+- اگر Fast Mode روشن باشد، برنامه GPU / پردازش سریع‌تر را ترجیح می‌دهد.
+- اگر Fast Mode خاموش باشد، برنامه با CPU Only اجرا می‌شود.
+- جلوگیری از Upscale اضافه شد.
 
-| گزینه | اثر واقعی |
-|---|---|
-| Auto Balanced | حالت پیشنهادی؛ از سخت‌افزار برای Encode استفاده می‌کند ولی مسیر امن‌تر را حفظ می‌کند. |
-| Maximum Hardware Acceleration | تلاش می‌کند بخش بیشتری از مسیر را سخت‌افزاری کند؛ بیشترین اثر را روی NVIDIA + Aggressive دارد. |
-| CPU Only | پردازش گرافیکی برای Encode را غیرفعال می‌کند و برنامه با CPU ادامه می‌دهد. |
+### v1.4.1
 
-#### Hardware Decode
+- حالت Simple اضافه شد.
+- حالت Advanced حفظ شد.
+- حالت ساده برای کاربر عمومی طراحی شد.
 
-| گزینه | Decode | Scale | Encode |
-|---|---|---|---|
-| Off | CPU | CPU | GPU یا CPU بسته به Encoder انتخاب‌شده |
-| Auto | تلاش خودکار FFmpeg برای Decode سخت‌افزاری | معمولاً CPU | GPU یا CPU |
-| Aggressive | عمدتاً NVIDIA CUDA وقتی NVIDIA انتخاب شده باشد | فقط در NVIDIA + Maximum Hardware Acceleration می‌تواند CUDA Scale شود | NVIDIA NVENC |
+### v1.4.0
 
-نکته: خاموش بودن Hardware Decode به معنی خاموش شدن GPU Encode نیست.
+- توضیح بهتر Performance Mode.
+- توضیح بهتر Processing Strategy.
+- توضیح بهتر Hardware Decode.
+- اضافه شدن Pipeline Preview.
 
-### نمونه Pipeline Preview
+---
+
+## تنظیمات پیشنهادی
+
+### برای بیشتر کاربران
 
 ```text
-Decode: CPU | Scale: CPU | Encode: hevc_amf / AMD
+Interface Mode: Simple
+Compression Level: Medium یا Compressed
+Fast Mode: On
 ```
+
+### برای سازگاری بیشتر و CPU-only
 
 ```text
-Decode: NVIDIA CUDA | Scale: NVIDIA CUDA | Encode: hevc_nvenc / NVIDIA
+Interface Mode: Simple
+Compression Level: Medium یا Compressed
+Fast Mode: Off
 ```
 
 ---
 
-## v1.3.9 Beta - NVENC Runtime Test Fix
-
-نسخه `v1.3.9` مشکل پنهان شدن اشتباه NVIDIA را اصلاح کرد. در بعضی لپتاپ‌های دو گرافیکه، کارت انویدیا و درایور به‌درستی تشخیص داده می‌شدند، اما تست داخلی به دلیل کوچک بودن فریم تست خطا می‌داد و برنامه به اشتباه NVIDIA را از لیست GPU Preference حذف می‌کرد.
-
-اصلاحات:
-
-- تست Runtime برای NVENC با ابعاد امن‌تر انجام شد.
-- تست از `1280x720` استفاده کرد.
-- فرمت پیکسلی سازگارتر برای NVENC استفاده شد.
-- اگر NVIDIA واقعاً قابل استفاده باشد، باید در GPU Preference نمایش داده شود.
-
----
-
-## v1.3.8 Beta - Dynamic GPU Preference
-
-- فقط مسیرهایی نمایش داده می‌شوند که تست Runtime را پاس کنند.
-- گزینه‌های Auto و CPU Only همیشه باقی می‌مانند.
-- گزینه‌های NVIDIA، Intel و AMD فقط در صورت موفق بودن تست واقعی نمایش داده می‌شوند.
-- متن وضعیت سخت‌افزار با تغییر GPU Preference به‌روزرسانی می‌شود.
-
----
-
-## v1.3.7 Beta - GPU Preference Selection
-
-- گزینه GPU Preference به رابط کاربری اضافه شد.
-- کاربر می‌تواند Auto، NVIDIA، Intel، AMD یا CPU Only را انتخاب کند.
-- حالت CPU Only همه مسیرهای GPU را برای Encode غیرفعال می‌کند.
-
----
-
-## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
-
-نسخه `v1.3.6` جایگزین نسخه ناپایدار `v1.3.5` شد. این نسخه بر پایه `v1.3.4` ساخته شد و قابلیت FFmpeg لگسی انویدیا را بدون خراب شدن رابط کاربری، لاگ‌ها و مسیر فشرده‌سازی اضافه کرد.
-
----
-
-## فعال‌سازی
-
-1. کد دستگاه را کپی کنید.
-2. آن را در تلگرام به آیدی زیر ارسال کنید.
+## ساختار لازم پوشه‌ها
 
 ```text
-@thelouis_mahdi
+VideoX_Compressor_v1.4.4_Beta_Stable_Device_ID/
+├── VideoX.exe
+├── ffmpeg/
+│   ├── modern/
+│   │   └── bin/
+│   │       ├── ffmpeg.exe
+│   │       └── ffprobe.exe
+│   └── legacy-nvidia/
+│       └── bin/
+│           ├── ffmpeg.exe
+│           └── ffprobe.exe
+├── _internal/
+├── README.txt
+└── LICENSE_NOTICE.txt
 ```
 
-3. فایل `license.key` مخصوص همان دستگاه را دریافت کنید.
-4. فایل لایسنس را کنار `VideoX.exe` قرار دهید یا از داخل برنامه انتخاب کنید.
-5. روی Recheck بزنید و وارد برنامه شوید.
-
-لایسنس مخصوص همان دستگاه است و روی دستگاه دیگر فعال نمی‌شود.
-
----
-
-## نکات مهم
-
-- این نسخه در مرحله بتا قرار دارد.
-- بهترین نتیجه فعلی روی ویدیوهای کم‌تحرک انتظار می‌رود.
-- نتیجه فشرده‌سازی به نوع ویدیو، بیت‌ریت، میزان حرکت تصویر، رزولوشن، سخت‌افزار و تنظیمات بستگی دارد.
-- اگر شتاب‌دهنده سخت‌افزاری در دسترس نباشد، برنامه با پردازنده ادامه می‌دهد.
-- برای درایورهای خیلی قدیمی انویدیا، آپدیت درایور همچنان پیشنهاد می‌شود.
-- پوشه‌های `ffmpeg` و `_internal` را حذف نکنید.
-- فایل `license.key` را داخل بسته عمومی منتشر نکنید.
+پوشه‌های `ffmpeg` و `_internal` را حذف نکنید.  
+فایل `license.key` را داخل بسته عمومی منتشر نکنید.
 
 </div>
