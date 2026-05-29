@@ -12,30 +12,46 @@ The project is still in **Beta**. The strongest current results are usually on l
 
 ---
 
+## Important License Compatibility Notice
+
+Starting from **VideoX Compressor v1.4.4 Beta - Stable Device ID**, the Device ID and license-generation structure has changed.
+
+This means:
+
+- Licenses generated for versions before `v1.4.4` are deprecated.
+- Public beta builds before `v1.4.4` should be considered legacy / deprecated for licensing.
+- Users upgrading from older beta builds may need a new `license.key` once.
+- From `v1.4.4` onward, licenses should be generated using the updated v1.4.4 license admin tools.
+- The old beta license flow should not be used for new users.
+
+The reason for this change is stability. Older beta builds could generate a different Device ID after changes in network-related system information. Version `v1.4.4` removes unstable Device ID dependencies such as MAC address and computer name.
+
+---
+
 ## Version Timeline
 
 | Version | Release Focus | Status |
 |---|---|---|
-| v1.2.5 Beta | General Safe Diagnostics, bug reports, safer public testing. | Supported history |
-| v1.2.6 Beta | Already-compressed video warning and bitrate analysis. | Supported history |
-| v1.2.7 Beta | Cleanup of failed, cancelled or corrupted output files. | Supported history |
-| v1.2.8 Beta | Smart Recompression for already-compressed sources. | Supported history |
-| v1.2.9 Beta | Smart Size Target for better real size reduction. | Supported history |
-| v1.3.0 Beta | GPU Quality slider. | Supported history |
-| v1.3.1 Beta | Help buttons for GPU Quality and CPU CRF. | Supported history |
-| v1.3.2 Beta | CPU CRF slider. | Supported history |
-| v1.3.3 Beta | RTL Persian help popup fix. | Supported history |
-| v1.3.4 Beta | File queue panel and safe retry behavior. | Stable base |
-| v1.3.5 Beta | Legacy NVIDIA FFmpeg fallback attempt. | Deprecated / removed because it was not stable |
-| v1.3.6 Beta | Stable Legacy FFmpeg Fallback rebuilt on v1.3.4. | Stable base with legacy fallback |
-| v1.3.7 Beta | Manual GPU Preference selection. | Supported history |
-| v1.3.8 Beta | Dynamic GPU Preference filtering. | Supported history |
-| v1.3.9 Beta | NVENC runtime test fix for hybrid laptops. | Supported history |
-| v1.4.0 Beta | Pipeline Clarity Update. | Supported history |
-| v1.4.1 Beta | Simple and Advanced Mode. | Supported history |
-| v1.4.2 Beta | Simple Safe Mode and no-upscale protection. | Supported history |
-| v1.4.3 Beta | Simple FPS Tuning. | Supported history |
-| v1.4.4 Beta | Stable Device ID. | Current recommended beta |
+| v1.2.5 Beta | General Safe Diagnostics, bug reports, safer public testing. | Deprecated for licensing |
+| v1.2.6 Beta | Already-compressed video warning and bitrate analysis. | Deprecated for licensing |
+| v1.2.7 Beta | Cleanup of failed, cancelled or corrupted output files. | Deprecated for licensing |
+| v1.2.8 Beta | Smart Recompression for already-compressed sources. | Deprecated for licensing |
+| v1.2.9 Beta | Smart Size Target for better real size reduction. | Deprecated for licensing |
+| v1.3.0 Beta | GPU Quality slider. | Deprecated for licensing |
+| v1.3.1 Beta | Help buttons for GPU Quality and CPU CRF. | Deprecated for licensing |
+| v1.3.2 Beta | CPU CRF slider. | Deprecated for licensing |
+| v1.3.3 Beta | RTL Persian help popup fix. | Deprecated for licensing |
+| v1.3.4 Beta | File queue panel and safe retry behavior. | Deprecated for licensing |
+| v1.3.5 Beta | Legacy NVIDIA FFmpeg fallback attempt. | Removed / unstable |
+| v1.3.6 Beta | Stable Legacy FFmpeg Fallback rebuilt on v1.3.4. | Deprecated for licensing |
+| v1.3.7 Beta | Manual GPU Preference selection. | Deprecated for licensing |
+| v1.3.8 Beta | Dynamic GPU Preference filtering. | Deprecated for licensing |
+| v1.3.9 Beta | NVENC runtime test fix for hybrid laptops. | Deprecated for licensing |
+| v1.4.0 Beta | Pipeline Clarity Update. | Deprecated for licensing |
+| v1.4.1 Beta | Simple and Advanced Mode. | Deprecated for licensing |
+| v1.4.2 Beta | Simple Safe Mode and no-upscale protection. | Deprecated for licensing |
+| v1.4.3 Beta | Simple FPS Tuning. | Deprecated for licensing |
+| v1.4.4 Beta | Stable Device ID and updated license structure. | Current recommended beta |
 
 ---
 
@@ -73,24 +89,22 @@ Because of this, the same physical device could occasionally appear as a differe
 - Adds a persistent Install ID fallback when Windows `MachineGuid` is not available.
 - Saves the fallback Install ID in stable local locations.
 - Device ID is no longer affected by GPU, GPU driver, NVIDIA / AMD / Intel selection, Wi-Fi, LAN, Bluetooth, VPN or virtual network adapter changes.
-- Keeps the existing license verification workflow.
 - Keeps the stable v1.4.3 compression behavior.
+- Introduces the updated v1.4.4 license-generation structure.
 
-### Important License Note
+### License Change in v1.4.4
 
-Because the Device ID algorithm is now more stable, users upgrading from older beta builds may need a new `license.key` once after upgrading.
+From this version onward, licenses must be generated using the updated v1.4.4 license admin panel or CLI generator.
 
-After that, the Device ID should remain stable across normal system changes such as network changes, VPN changes, GPU driver updates or switching between Wi-Fi and LAN.
+Old beta licenses and old license-generation tools are now deprecated because they were based on the older Device ID behavior.
+
+Users who upgrade from older beta builds may need a new `license.key` once. After the new license is generated for v1.4.4, the Device ID should remain more stable across normal system changes.
 
 ---
 
 ## v1.4.3 Beta - Simple FPS Tuning
 
-### Main Goal
-
 Version `v1.4.3` refined Simple Mode FPS behavior.
-
-### Changes
 
 | Simple Level | FPS |
 |---|---|
@@ -101,101 +115,45 @@ Version `v1.4.3` refined Simple Mode FPS behavior.
 | Very Very Compressed | 24 |
 | Maximum Compression | 24 |
 
-The goal was to keep normal simple settings smooth while allowing stronger compression levels to reduce FPS moderately.
-
 ---
 
 ## v1.4.2 Beta - Simple Safe Mode
-
-### Main Goal
-
-Version `v1.4.2` improved Simple Mode safety and added no-upscale protection.
-
-### Changes
 
 - Added Fast Mode checkbox in Simple Mode.
 - If Fast Mode is enabled, Simple Mode prefers GPU / hardware encoding and faster processing.
 - If Fast Mode is disabled, Simple Mode uses CPU-only compression.
 - Added no-upscale protection.
 - Smaller videos are not enlarged unnecessarily.
-- Example: a 480p video will not be upscaled to 720p only because a preset requests 720p.
 
 ---
 
 ## v1.4.1 Beta - Simple and Advanced Mode
 
-### Main Goal
-
-Version `v1.4.1` added a two-mode user interface.
-
-### Changes
-
 - Added Simple Mode for normal users.
 - Added Advanced Mode for full control.
-- Simple Mode includes six compression levels:
-  - High Quality
-  - Medium
-  - Compressed
-  - Very Compressed
-  - Very Very Compressed (quality loss)
-  - Maximum Compression
+- Simple Mode includes six compression levels.
 - Advanced Mode preserves the full v1.4.0 settings interface.
 
 ---
 
 ## v1.4.0 Beta - Pipeline Clarity Update
 
-### Main Goal
-
-Version `v1.4.0` kept the stable `v1.3.9` compression logic and improved the user interface explanations around the real video-processing pipeline.
-
-### New / Improved
-
 - Added clearer UI hints for `Performance Mode`.
 - Added clearer UI hints for `Processing Strategy`.
 - Added clearer UI hints for `Hardware Decode`.
-- Added a `Pipeline Preview` label in the UI.
-- Pipeline Preview explains Decode / Scale / Encode.
-- UI explains that `Hardware Decode: Off` is safest and can still use GPU encoding.
-- UI explains that `High Throughput` mainly helps when processing multiple files.
-- UI explains that `Maximum Hardware Acceleration` is most meaningful for NVIDIA with `Hardware Decode: Aggressive`.
-- UI explains that AMD AMF and Intel QSV usually mean GPU encoding while scaling may remain CPU-based.
+- Added `Pipeline Preview`.
+- Explained Decode / Scale / Encode behavior more clearly.
 
 ---
 
 ## v1.3.9 Beta - NVENC Runtime Test Fix
 
-Version `v1.3.9` fixed an important hardware-detection issue found on a hybrid laptop with AMD + NVIDIA RTX GPU.
-
-- NVIDIA was detected correctly.
-- The NVIDIA driver was current.
-- FFmpeg listed `hevc_nvenc` and `h264_nvenc`.
-- The runtime test failed because the internal test frame was too small.
-- VideoX incorrectly selected AMD AMF instead of NVIDIA NVENC.
-
-Fixes:
+Version `v1.3.9` fixed an important hardware-detection issue found on hybrid GPU laptops.
 
 - NVENC runtime test now uses a safer `1280x720` test input.
 - NVIDIA NVENC should appear in GPU Preference when it actually works.
 - Dynamic GPU Preference filtering was preserved.
 - Legacy NVIDIA FFmpeg fallback was preserved.
-
----
-
-## v1.3.6 Beta - Stable Legacy FFmpeg Fallback
-
-Version `v1.3.6` replaced the unstable `v1.3.5` build.
-
-The goal was to keep the stable behavior of `v1.3.4 File Queue & Safe Retry` and add Legacy NVIDIA FFmpeg fallback without breaking the UI, logs, buttons or compression workflow.
-
-Version `v1.3.5` was removed / deprecated because it was not stable enough for public use.
-
-Known problems in v1.3.5 included:
-
-- Some UI buttons and controls were missing compared to v1.3.4.
-- Log behavior was not consistent with v1.3.4.
-- Compression behavior was not reliable enough.
-- The implementation changed more than intended instead of only adding Legacy FFmpeg fallback.
 
 ---
 
@@ -270,7 +228,7 @@ After opening the app:
 @thelouis_mahdi
 ```
 
-3. Receive your device-specific `license.key` file.
+3. Receive your device-specific `license.key` file generated with the v1.4.4 license tools.
 4. Place `license.key` next to `VideoX.exe`, or select it from inside the app.
 5. Click Recheck and enter the program.
 
@@ -290,15 +248,31 @@ VideoX Compressor v1.4.4 Beta - Stable Device ID
 
 ---
 
+## اطلاعیه مهم درباره لایسنس
+
+از نسخه **v1.4.4 Beta - Stable Device ID** به بعد، ساختار Device ID و ساخت لایسنس تغییر کرده است.
+
+یعنی:
+
+- لایسنس‌های ساخته‌شده برای نسخه‌های قبل از `v1.4.4` منسوخ هستند.
+- نسخه‌های قبل از `v1.4.4` از نظر لایسنس‌دهی قدیمی محسوب می‌شوند.
+- کاربران نسخه‌های قبلی ممکن است بعد از ارتقا یک بار به `license.key` جدید نیاز داشته باشند.
+- از این نسخه به بعد، لایسنس باید با پنل یا ابزار جدید v1.4.4 ساخته شود.
+- ابزارهای قدیمی ساخت لایسنس دیگر برای کاربران جدید پیشنهاد نمی‌شوند.
+
+دلیل این تغییر، پایدار کردن Device ID است. در نسخه‌های قبلی، Device ID ممکن بود با تغییرات شبکه، VPN، وای‌فای، بلوتوث یا آداپتورهای مجازی عوض شود.
+
+---
+
 ## جدول نسخه‌ها
 
 | نسخه | تمرکز اصلی | وضعیت |
 |---|---|---|
-| v1.4.0 Beta | شفاف‌سازی مسیر Decode / Scale / Encode. | تاریخچه پشتیبانی‌شده |
-| v1.4.1 Beta | حالت ساده و حرفه‌ای. | تاریخچه پشتیبانی‌شده |
-| v1.4.2 Beta | حالت ساده امن و جلوگیری از Upscale. | تاریخچه پشتیبانی‌شده |
-| v1.4.3 Beta | تنظیم FPS در حالت ساده. | تاریخچه پشتیبانی‌شده |
-| v1.4.4 Beta | پایدارسازی Device ID. | نسخه پیشنهادی فعلی |
+| v1.4.0 Beta | شفاف‌سازی مسیر Decode / Scale / Encode. | منسوخ از نظر لایسنس |
+| v1.4.1 Beta | حالت ساده و حرفه‌ای. | منسوخ از نظر لایسنس |
+| v1.4.2 Beta | حالت ساده امن و جلوگیری از Upscale. | منسوخ از نظر لایسنس |
+| v1.4.3 Beta | تنظیم FPS در حالت ساده. | منسوخ از نظر لایسنس |
+| v1.4.4 Beta | پایدارسازی Device ID و ساختار جدید لایسنس. | نسخه پیشنهادی فعلی |
 
 ---
 
@@ -331,51 +305,14 @@ VideoX Compressor v1.4.4 Beta - Stable Device ID
 - مبنای اصلی Device ID مقدار Windows MachineGuid شد.
 - اگر MachineGuid در دسترس نباشد، یک Install ID پایدار ساخته و ذخیره می‌شود.
 - تغییر GPU، درایور، وای‌فای، VPN، بلوتوث یا کارت شبکه نباید Device ID را عوض کند.
-- مسیر لایسنس قبلی برنامه حفظ شد.
 - رفتار فشرده‌سازی پایدار v1.4.3 حفظ شد.
+- ساختار جدید ساخت لایسنس برای v1.4.4 معرفی شد.
 
 ### نکته مهم لایسنس
 
 به دلیل تغییر الگوریتم Device ID، کاربران نسخه‌های قبلی ممکن است بعد از ارتقا به v1.4.4 یک بار به فایل `license.key` جدید نیاز داشته باشند.
 
 بعد از آن، Device ID باید پایدارتر بماند.
-
----
-
-## تغییرات اخیر قبل از v1.4.4
-
-### v1.4.3
-
-تنظیم FPS حالت ساده:
-
-| سطح | FPS |
-|---|---|
-| کیفیت بالا | 30 |
-| متوسط | 30 |
-| فشرده | 25 |
-| خیلی فشرده | 25 |
-| خیلی خیلی فشرده | 24 |
-| فشرده‌ترین حالت ممکن | 24 |
-
-### v1.4.2
-
-- اضافه شدن تیک Fast Mode در حالت ساده.
-- اگر Fast Mode روشن باشد، برنامه GPU / پردازش سریع‌تر را ترجیح می‌دهد.
-- اگر Fast Mode خاموش باشد، برنامه با CPU Only اجرا می‌شود.
-- جلوگیری از Upscale اضافه شد.
-
-### v1.4.1
-
-- حالت Simple اضافه شد.
-- حالت Advanced حفظ شد.
-- حالت ساده برای کاربر عمومی طراحی شد.
-
-### v1.4.0
-
-- توضیح بهتر Performance Mode.
-- توضیح بهتر Processing Strategy.
-- توضیح بهتر Hardware Decode.
-- اضافه شدن Pipeline Preview.
 
 ---
 
