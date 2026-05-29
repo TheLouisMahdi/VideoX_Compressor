@@ -11,6 +11,7 @@
   <a href="#activation-en">Activation</a> •
   <a href="#settings-en">Settings</a> •
   <a href="#pipeline-en">Pipeline</a> •
+  <a href="#roadmap-en">Roadmap</a> •
   <a href="#persian">فارسی</a>
 </p>
 
@@ -292,6 +293,27 @@ Do not delete `ffmpeg/` or `_internal/`. Do not include `license.key` in the pub
 
 ---
 
+<a id="roadmap-en"></a>
+
+## Roadmap / Next Direction
+
+The current Python version has reached a mature beta stage. The next development direction is to move from prototype-style beta builds toward a more commercial and maintainable product.
+
+Planned direction:
+
+| Stage | Goal |
+|---|---|
+| Final Python Beta | Keep v1.4.x as the stable Python reference version. |
+| Stability Testing | Collect feedback from real systems: NVIDIA, Intel, AMD, hybrid laptops and CPU-only devices. |
+| Licensing Cleanup | Keep the v1.4.4 Stable Device ID flow as the new licensing base. |
+| UI Polish | Improve Simple Mode for non-technical users and keep Advanced Mode for power users. |
+| Commercial Packaging | Improve release packaging, installer structure and documentation. |
+| C++ / Qt Research | Evaluate a future C++/Qt version for faster startup, smaller packaging, stronger desktop integration and better commercial distribution. |
+
+The Python version remains the behavior reference for future versions. A possible future C++ version should preserve the same core behavior: Simple Mode, Advanced Mode, Stable Device ID, GPU Preference, safe fallback, no-upscale protection and diagnostic logs.
+
+---
+
 <a id="persian"></a>
 
 <div dir="rtl" align="right">
@@ -382,6 +404,25 @@ VideoX_Compressor_v1.4.4_Beta_Stable_Device_ID/
 ```
 
 پوشه‌های `ffmpeg` و `_internal` را حذف نکنید. فایل `license.key` را داخل بسته عمومی قرار ندهید.
+
+---
+
+## مسیر پیش رو
+
+نسخه پایتون پروژه به مرحله بتای پخته و قابل اتکا رسیده است. مسیر بعدی توسعه، عبور از حالت نمونه اولیه و نزدیک شدن به یک محصول تجاری‌تر و قابل نگهداری‌تر است.
+
+برنامه مسیر آینده:
+
+| مرحله | هدف |
+|---|---|
+| آخرین بتای پایتون | نگه داشتن نسخه v1.4.x به عنوان مرجع پایدار رفتار برنامه. |
+| تست پایداری | دریافت بازخورد از سیستم‌های واقعی شامل NVIDIA، Intel، AMD، لپتاپ‌های دو گرافیکه و سیستم‌های CPU-only. |
+| تثبیت لایسنس | نگه داشتن ساختار Stable Device ID نسخه v1.4.4 به عنوان پایه جدید لایسنس‌دهی. |
+| بهبود UI | ساده‌تر کردن حالت Simple برای کاربران عمومی و حفظ حالت Advanced برای کاربران حرفه‌ای. |
+| بسته‌بندی تجاری | بهبود ساختار انتشار، نصب‌کننده، فایل‌های راهنما و مستندات. |
+| بررسی نسخه C++ / Qt | بررسی مسیر ساخت نسخه آینده با C++ و Qt برای شروع سریع‌تر، حجم کمتر، یکپارچگی بهتر با دسکتاپ و توزیع تجاری‌تر. |
+
+نسخه پایتون فعلی مرجع رفتاری نسخه‌های آینده باقی می‌ماند. هر نسخه C++ احتمالی باید رفتارهای اصلی مثل حالت ساده، حالت حرفه‌ای، Stable Device ID، انتخاب GPU، fallback امن، جلوگیری از Upscale و لاگ‌های عیب‌یابی را حفظ کند.
 
 </div>
 
