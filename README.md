@@ -57,6 +57,22 @@ After downloading:
 
 ---
 
+## Important License Compatibility Notice
+
+Starting from **VideoX Compressor v1.4.4 Beta - Stable Device ID**, the Device ID and license-generation structure has changed.
+
+This means:
+
+- Licenses generated for versions before `v1.4.4` are deprecated.
+- Public beta builds before `v1.4.4` should be considered legacy / deprecated for licensing.
+- Users upgrading from older beta builds may need a new `license.key` once.
+- From `v1.4.4` onward, licenses should be generated using the updated v1.4.4 license admin tools.
+- The old beta license flow should not be used for new users.
+
+The reason for this change is stability. Older beta builds could generate a different Device ID after changes in network-related system information. Version `v1.4.4` removes unstable Device ID dependencies such as MAC address and computer name.
+
+---
+
 <a id="english"></a>
 
 # 🇬🇧 English
@@ -65,15 +81,7 @@ After downloading:
 
 **VideoX Compressor** is a Windows GUI video compression tool designed to reduce large video files with a simple workflow.
 
-It is best optimized for:
-
-- recorded classes
-- tutorials
-- screen recordings
-- online meetings
-- slide-based educational videos
-- low-motion lecture videos
-- already-compressed videos that need smaller output size
+It is best optimized for recorded classes, tutorials, screen recordings, online meetings, slide-based educational videos, low-motion lecture videos and already-compressed videos that need smaller output size.
 
 Depending on the system, VideoX can try **NVIDIA NVENC**, **Intel QSV / Quick Sync**, **AMD AMF**, or fall back to CPU mode. It uses FFmpeg and FFprobe internally.
 
@@ -87,23 +95,12 @@ Depending on the system, VideoX can try **NVIDIA NVENC**, **Intel QSV / Quick Sy
 
 For most users, use **Simple Mode**.
 
-Recommended simple setup:
-
 ```text
 Interface Mode: Simple
 Compression Level: Medium or Compressed
 Fast Mode: On for GPU / parallel processing
 Fast Mode: Off for CPU-only compression
 ```
-
-Then:
-
-1. Select videos.
-2. Check the selected file queue.
-3. Remove unwanted files using the `X` button.
-4. Choose the output folder.
-5. Click **Start Compress**.
-6. Check the final report after compression.
 
 VideoX avoids upscaling smaller videos, especially in Simple Mode. For example, a 480p source will not be enlarged to 720p only because a preset requested 720p.
 
@@ -148,8 +145,6 @@ Important: users of older beta builds may need a new `license.key` once after up
 
 ## Simple Mode vs Advanced Mode
 
-VideoX has two interface modes.
-
 | Mode | Purpose |
 |---|---|
 | Simple | For normal users. Choose only one compression level and optionally enable Fast Mode. |
@@ -166,24 +161,6 @@ Simple Mode levels:
 | Very Very Compressed | Aggressive compression with possible visible quality loss. |
 | Maximum Compression | Smallest-size simple mode; quality loss may happen. |
 
-Simple Mode FPS behavior:
-
-| Level | FPS |
-|---|---|
-| High Quality | 30 |
-| Medium | 30 |
-| Compressed | 25 |
-| Very Compressed | 25 |
-| Very Very Compressed | 24 |
-| Maximum Compression | 24 |
-
-Simple Mode Fast Mode:
-
-| Fast Mode | Behavior |
-|---|---|
-| On | Prefers GPU / hardware encoding and may use faster parallel processing. |
-| Off | Uses CPU-only compression for safer compatibility. |
-
 ---
 
 ## Why VideoX?
@@ -196,50 +173,11 @@ Simple Mode Fast Mode:
 | Dynamic GPU Preference | Shows only hardware paths that pass real runtime tests. |
 | Pipeline preview | Explains the real Decode / Scale / Encode path before compression. |
 | Legacy NVIDIA fallback | Can use a legacy NVIDIA FFmpeg build for older NVIDIA driver compatibility. |
-| CPU fallback | Uses CPU mode when hardware acceleration is unavailable or unstable. |
 | Smart Size Target | Improves size reduction on already-compressed videos. |
 | No upscale protection | Prevents smaller sources from being enlarged unnecessarily. |
 | File queue | Shows selected input files before compression. |
 | Output validation | Checks output files and deletes invalid/corrupted partial outputs. |
 | Diagnostic reports | Saves useful logs for debugging hardware and FFmpeg issues. |
-
----
-
-<a id="screenshots-en"></a>
-
-## Screenshots
-
-### License / Device ID Activation
-
-<div align="center">
-
-![VideoX License Activation](screenshots/license.png)
-
-</div>
-
-### Main Compression Settings
-
-<div align="center">
-
-![VideoX Main Settings](screenshots/english-menu.png)
-
-</div>
-
-### File Queue and Removable Input List
-
-<div align="center">
-
-![VideoX File Queue](screenshots/file_selection.png)
-
-</div>
-
-### Progress and Final Report
-
-<div align="center">
-
-![VideoX Compression Report](screenshots/example.png)
-
-</div>
 
 ---
 
@@ -278,28 +216,11 @@ GPU Quality: 32 to 36
 CPU CRF: 30 to 34
 ```
 
-### Already-compressed videos
-
-```text
-Height: keep original height
-FPS: 0 or Simple Mode default
-GPU Preference: Auto Best Available
-GPU Quality: 35 to 40
-CPU CRF: 34 to 38
-Audio Bitrate: 32k
-Audio Channels: 1
-Performance Mode: Stable
-Processing Strategy: Auto Balanced
-Hardware Decode: Off
-```
-
 ---
 
 <a id="pipeline-en"></a>
 
 ## Pipeline Clarity Guide
-
-VideoX explains the real processing path so users can understand what is running on CPU and what is running on GPU.
 
 ### Performance Mode
 
@@ -307,8 +228,6 @@ VideoX explains the real processing path so users can understand what is running
 |---|---|
 | Stable | Safer mode. Usually processes one hardware job at a time. |
 | High Throughput | May process up to 2 hardware jobs in parallel on supported hardware. |
-
-High Throughput does not directly improve quality and may not make one single file faster.
 
 ### Processing Strategy
 
@@ -332,8 +251,6 @@ High Throughput does not directly improve quality and may not make one single fi
 
 VideoX shows only hardware options that pass real runtime tests.
 
-Possible options:
-
 ```text
 Auto Best Available
 NVIDIA NVENC
@@ -349,62 +266,6 @@ VideoX.exe
 ffmpeg/modern/bin/ffmpeg.exe
 ffmpeg/legacy-nvidia/bin/ffmpeg.exe
 ```
-
-NVIDIA Control Panel alone may not always be enough because the actual encoding process is performed by `ffmpeg.exe`.
-
----
-
-## Quality Controls
-
-### GPU Quality
-
-| Range | Meaning |
-|---|---|
-| 18 to 25 | Very high quality, larger file |
-| 26 to 32 | Balanced quality and size |
-| 33 to 36 | Smaller file, good for classes and low-motion videos |
-| 37 to 45 | Strong compression, higher quality-loss risk |
-
-### CPU CRF
-
-| Range | Meaning |
-|---|---|
-| 18 to 24 | High quality, larger file |
-| 25 to 30 | Balanced mode |
-| 31 to 34 | Smaller file, good for classes and tutorials |
-| 35 to 45 | Strong compression, higher quality-loss risk |
-
----
-
-## Diagnostic Logs and Bug Reports
-
-If an error happens, VideoX can save diagnostic information that helps identify the problem.
-
-Reports may include:
-
-- app version
-- local and UTC timestamp
-- Windows and system information
-- modern FFmpeg path
-- legacy NVIDIA FFmpeg path
-- available encoders
-- runtime encoder test results
-- NVIDIA driver information
-- selected GPU Preference
-- selected encoder
-- FFmpeg profile used
-- pipeline preview
-- current input file
-- FFmpeg error output
-- UI log
-
-Default log folder:
-
-```text
-C:\Users\<User>\AppData\Local\TheLouisMahdi\VideoXCompressor\logs
-```
-
-Use **Open Logs** or **Export Bug Report** when reporting a problem.
 
 ---
 
@@ -427,30 +288,7 @@ VideoX_Compressor_v1.4.4_Beta_Stable_Device_ID/
 └── LICENSE_NOTICE.txt
 ```
 
-Do not delete:
-
-```text
-ffmpeg/
-_internal/
-```
-
-Do not include `license.key` in the public ZIP package.
-
----
-
-## Beta Status
-
-VideoX Compressor is currently in **Beta**. It is usable and actively tested, but it is still being improved toward a more polished commercial-level release.
-
-Current focus:
-
-- better results on recorded classes and low-motion videos
-- better behavior for already-compressed videos
-- stable Device ID and activation workflow
-- better compatibility with Intel, NVIDIA and AMD systems
-- clearer UI for non-technical users
-- safer retry and fallback behavior
-- continuous feedback from testers and real users
+Do not delete `ffmpeg/` or `_internal/`. Do not include `license.key` in the public ZIP package.
 
 ---
 
@@ -464,33 +302,27 @@ Current focus:
 
 **ویدیو ایکس کامپرسور** یک نرم‌افزار ویندوزی برای فشرده‌سازی ویدیو است. هدف برنامه این است که کاربر بدون درگیر شدن با دستورهای پیچیده، بتواند فایل‌های ویدیویی سنگین را به خروجی کم‌حجم‌تر تبدیل کند.
 
-تمرکز اصلی برنامه روی فشرده‌سازی شتاب‌داده‌شده با سخت‌افزار است. برنامه بسته به سخت‌افزار و درایور می‌تواند از مسیرهای انویدیا، اینتل، ای‌ام‌دی یا پردازنده استفاده کند.
-
 > نسخه فعلی بتا: **VideoX Compressor v1.4.4 Beta - Stable Device ID**
 
 ---
 
-## دانلود و نصب
+## اطلاعیه مهم درباره لایسنس
 
-آخرین نسخه را از بخش Releases دانلود کنید:
+از نسخه **v1.4.4 Beta - Stable Device ID** به بعد، ساختار Device ID و ساخت لایسنس تغییر کرده است.
 
-```text
-VideoX_Compressor_v1.4.4_Beta_Stable_Device_ID.zip
-```
+یعنی:
 
-بعد از دانلود:
+- لایسنس‌های ساخته‌شده برای نسخه‌های قبل از `v1.4.4` منسوخ هستند.
+- نسخه‌های قبل از `v1.4.4` از نظر لایسنس‌دهی قدیمی محسوب می‌شوند.
+- کاربران نسخه‌های قبلی ممکن است بعد از ارتقا یک بار به `license.key` جدید نیاز داشته باشند.
+- از این نسخه به بعد، لایسنس باید با پنل یا ابزار جدید v1.4.4 ساخته شود.
+- ابزارهای قدیمی ساخت لایسنس دیگر برای کاربران جدید پیشنهاد نمی‌شوند.
 
-1. فایل ZIP را Extract کنید.
-2. فایل `VideoX.exe` را اجرا کنید.
-3. کد دستگاه را از صفحه فعال‌سازی کپی کنید.
-4. کد را در تلگرام به `@thelouis_mahdi` بفرستید.
-5. فایل `license.key` مخصوص همان دستگاه را دریافت کنید.
+دلیل این تغییر، پایدار کردن Device ID است. در نسخه‌های قبلی، Device ID ممکن بود با تغییرات شبکه، VPN، وای‌فای، بلوتوث یا آداپتورهای مجازی عوض شود.
 
 ---
 
 ## شروع سریع برای کاربر عادی
-
-برای بیشتر کاربران، حالت ساده پیشنهاد می‌شود:
 
 ```text
 Interface Mode: Simple
@@ -499,7 +331,7 @@ Fast Mode: On برای استفاده از GPU / پردازش سریع‌تر
 Fast Mode: Off برای فشرده‌سازی فقط با CPU
 ```
 
-برنامه در حالت ساده از بزرگ‌کردن بی‌دلیل ویدیوهای کوچک جلوگیری می‌کند. مثلاً اگر ویدیو 480p باشد، فقط به خاطر انتخاب یک حالت 720p، به 720p تبدیل نمی‌شود.
+برنامه در حالت ساده از بزرگ‌کردن بی‌دلیل ویدیوهای کوچک جلوگیری می‌کند.
 
 ---
 
@@ -517,7 +349,7 @@ Fast Mode: Off برای فشرده‌سازی فقط با CPU
 - اگر MachineGuid در دسترس نباشد، یک Install ID پایدار ساخته و ذخیره می‌شود.
 - تغییر کارت گرافیک، درایور، VPN، وای‌فای، بلوتوث یا کارت شبکه نباید Device ID را عوض کند.
 
-نکته مهم: کاربران نسخه‌های قدیمی‌تر ممکن است بعد از ارتقا به v1.4.4 یک بار به لایسنس جدید نیاز داشته باشند، چون الگوریتم Device ID پایدارتر شده است.
+نکته مهم: کاربران نسخه‌های قدیمی‌تر ممکن است بعد از ارتقا به v1.4.4 یک بار به لایسنس جدید نیاز داشته باشند.
 
 ---
 
@@ -527,71 +359,6 @@ Fast Mode: Off برای فشرده‌سازی فقط با CPU
 |---|---|
 | Simple | مناسب کاربر عمومی؛ فقط سطح فشرده‌سازی و Fast Mode را انتخاب می‌کند. |
 | Advanced | مناسب کاربر حرفه‌ای؛ کنترل کامل روی GPU، CPU، FPS، کیفیت، صدا و Pipeline. |
-
-سطح‌های حالت ساده:
-
-| سطح | کاربرد |
-|---|---|
-| کیفیت بالا | وقتی کیفیت مهم‌تر از کمترین حجم است. |
-| متوسط | تعادل بین حجم و کیفیت. |
-| فشرده | خروجی کم‌حجم‌تر برای کلاس و آموزش. |
-| خیلی فشرده | فشرده‌سازی قوی‌تر برای ویدیوهای کم‌تحرک. |
-| خیلی خیلی فشرده | فشرده‌سازی تهاجمی با احتمال افت کیفیت. |
-| فشرده‌ترین حالت ممکن | کمترین حجم ممکن در حالت ساده؛ افت کیفیت ممکن است. |
-
-رفتار FPS در حالت ساده:
-
-| سطح | FPS |
-|---|---|
-| کیفیت بالا | 30 |
-| متوسط | 30 |
-| فشرده | 25 |
-| خیلی فشرده | 25 |
-| خیلی خیلی فشرده | 24 |
-| فشرده‌ترین حالت ممکن | 24 |
-
----
-
-## راهنمای Pipeline
-
-### Performance Mode
-
-| گزینه | اثر واقعی |
-|---|---|
-| Stable | امن‌تر؛ معمولاً یک پردازش سخت‌افزاری همزمان. |
-| High Throughput | در صورت پشتیبانی سخت‌افزار، ممکن است تا دو پردازش همزمان انجام دهد. |
-
-### Processing Strategy
-
-| گزینه | اثر واقعی |
-|---|---|
-| Auto Balanced | حالت پیشنهادی برای بیشتر کاربران. |
-| Maximum Hardware Acceleration | بیشترین اثر روی NVIDIA همراه با Hardware Decode Aggressive دارد. |
-| CPU Only | پردازش گرافیکی برای Encode را غیرفعال می‌کند. |
-
-### Hardware Decode
-
-| گزینه | Decode | Scale | Encode |
-|---|---|---|---|
-| Off | CPU | CPU | GPU یا CPU بسته به Encoder انتخاب‌شده |
-| Auto | تلاش خودکار FFmpeg برای Decode سخت‌افزاری | معمولاً CPU | GPU یا CPU |
-| Aggressive | عمدتاً NVIDIA CUDA | فقط در NVIDIA + Maximum می‌تواند CUDA Scale شود | NVIDIA NVENC |
-
-خاموش بودن Hardware Decode به معنی خاموش شدن GPU Encode نیست.
-
----
-
-## نکته برای لپتاپ‌های دو گرافیکه
-
-روی لپتاپ‌های دو گرافیکه، بهتر است این فایل‌ها را در Windows Graphics Settings روی High Performance قرار دهید:
-
-```text
-VideoX.exe
-ffmpeg/modern/bin/ffmpeg.exe
-ffmpeg/legacy-nvidia/bin/ffmpeg.exe
-```
-
-تنظیم NVIDIA Control Panel به‌تنهایی همیشه کافی نیست، چون پردازش اصلی توسط `ffmpeg.exe` انجام می‌شود.
 
 ---
 
